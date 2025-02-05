@@ -130,3 +130,5 @@ export default function ArticlePage() {
     </main>
   );
 }
+export const runtime = 'edge';
+

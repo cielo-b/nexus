@@ -190,7 +190,7 @@ const Footer = () => {
         <p className="text-[#000912]/50 font-medium text-center max-sm:text-sm">
           Copyright © 2024{" "}
           <a href="mailto:team.nexus@gmail.com" className="text-[#000912]">
-            team@nexus.com
+            info@insightnexus.africa
           </a>
         </p>
       </div>

@@ -101,3 +101,6 @@ export default function CareerPage() {
     </main>
   );
 }
+
+export const runtime = 'edge';
+

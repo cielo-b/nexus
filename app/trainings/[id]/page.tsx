@@ -99,3 +99,6 @@ export default function TrainingPage() {
     </main>
   );
 }
+
+
+export const runtime = 'edge';

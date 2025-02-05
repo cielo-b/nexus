@@ -124,3 +124,6 @@ export default function CategoryPage() {
     </main>
   );
 }
+
+export const runtime = 'edge';
+

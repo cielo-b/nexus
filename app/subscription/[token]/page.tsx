@@ -77,3 +77,6 @@ const SubscriptionPage = ({ params }: { params: { token: string } }) => {
 };
 
 export default SubscriptionPage;
+
+export const runtime = 'edge';
+

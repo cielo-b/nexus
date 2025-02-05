@@ -125,3 +125,5 @@ export default function ServicePage() {
     </main>
   );
 }
+
+export const runtime = 'edge';

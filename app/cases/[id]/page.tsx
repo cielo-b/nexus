@@ -132,3 +132,5 @@ export default function CasePage() {
     </main>
   );
 }
+
+export const runtime = 'edge';
