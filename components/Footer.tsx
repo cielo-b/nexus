@@ -7,6 +7,7 @@ import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { HiLocationMarker, HiMail, HiPhone } from 'react-icons/hi';
 import ContactUs from "./ContactUs";
+import Link from "next/link";
 
 const Popup = ({
   handleClose,
@@ -52,11 +53,14 @@ const Footer = () => {
       <hr className="border-1 border-[#C6C6C6] w-full " />
       <div className="w-full flex items-center justify-between flex-col-reverse md:flex-row gap-20">
         <div className="lg:w-[50%]">
-          <img
-            src="/images/logo.png"
-            alt="logo"
-            className="max-md:w-[35%] lg:w-[32%]"
-          />
+        <Link href="/" className="w-fit h-fit">
+     
+
+     <p className="text-2xl font-bold italic">
+      Insight<span className="text-blue-600 italic">Nexus</span>
+</p>
+     </Link>
+          
           <p className="text-lg font-medium text-black/70 mt-4">
             All about delivering data-driven insights and comprehensive consultancy services to foster impactful and sustainable change in education, agriculture, public health, and more.
           </p>

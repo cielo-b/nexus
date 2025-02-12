@@ -10,13 +10,11 @@ const NavBar = () => {
   return (
     <div className="w-full bg-[#00051234] backdrop-blur-xl z-50 py-5 px-6 lg:px-[10%] flex flex-row fixed items-center justify-between">
       <Link href="/" className="w-fit h-fit">
-        <Image
-          src={logo as any}
-          alt="logo"
-          width={1000}
-          height={1000}
-          className="w-32 max-sm:w-24"
-        />
+     
+
+      <p className="text-xl font-bold italic">
+  Insight<span className="text-blue-600 italic">Nexus</span>
+</p>
       </Link>
 
       <div className="hidden lg:flex">
