@@ -59,7 +59,7 @@ const HeroSection = ({ articles }: { articles: any[] }) => {
               className=" cursor-pointer flex items-center justify-center gap-2 p-4 w-fit px-20 rounded-full bg-[#2563eb] text-white transition-all ease-in-out delay-150 hover:-translate-y-1  hover:bg-secondary  duration-200"
             >
               <span className="text-sm w-max flex-1 text-center">
-                More About As
+                More About Us
               </span>
               <ChevronRightIcon className="w-5 h-5 text-white" />
             </div>
