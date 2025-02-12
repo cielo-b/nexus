@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 import { Fade } from "react-awesome-reveal";
 import WhyUs from "@/components/WhyUs";
+import ServiceSection from "@/components/ServiceSection";
 import Members from "@/components/Members";
 
 // Create a Loader component
@@ -62,7 +63,10 @@ export default function Home() {
           </Fade>
         </div>
       </div>
-      <Features title="All Our Services" type="all" />
+
+      
+      {/* <Features title="All Our Services" type="all" /> */}
+      <ServiceSection></ServiceSection>
       <WhyUs />
       <Footer />
       

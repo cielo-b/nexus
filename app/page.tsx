@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 import { fetchArticles, fetchOnBoardingArticles } from "@/sanity/queries/articles";
 import { fetchTestimonials } from "@/sanity/queries/others";
+import Values from "@/components/Values";
 
 
 // Create a Loader component
@@ -65,7 +66,9 @@ export default function Home() {
       <NavBar />
       <HeroSection articles={allArticles} />
       <AboutUs />
-      <Features title={"Our Services"} type={"all"} />
+      <Values></Values>
+      
+      {/* <Features title={"Our Services"} type={"all"} /> */}
       <Reviews testimonies={testimonies} />
       <Footer />
       {/* <AnimatedCursor

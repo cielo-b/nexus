@@ -15,6 +15,8 @@ import { TypeAnimation } from "react-type-animation";
 import { Fade } from "react-awesome-reveal";
 import WhyUs from "@/components/WhyUs";
 import Members from "@/components/Members";
+import WhatWeDo from "@/components/WhatWeDo";
+import Services from "@/components/Services";
 
 // Create a Loader component
 function Loader() {
@@ -72,9 +74,9 @@ export default function Home() {
                 </span>{" "}
               </h1>
 
-              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center leading-tight">
-                Insight Nexus, established in Rwanda and duly registered under the Law N° 007/2021 of 05/02/2021 governing companies, excels in delivering a broad spectrum of consultancy services. <br />
-                Our areas of expertise include education, agriculture, public health, gender, and livelihoods, alongside conducting in-depth case studies. <br />
+              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center leading-3">
+                Insight Nexus, established in Rwanda and duly registered under the Law N° 007/2021 of 05/02/2021 governing companies, excels in delivering a broad spectrum of consultancy services.
+                Our areas of expertise include education, agriculture, public health, gender, and livelihoods, alongside conducting in-depth case studies. 
                 We serve a diverse clientele, ranging from international to local NGOs, with a particular emphasis on strengthening local organizations.
               </p>
 
@@ -83,8 +85,9 @@ export default function Home() {
           </Fade>
         </div>
       </div>
-      <AboutUs />
-      <Features title={"Our Services"} type={"all"} />
+      <WhatWeDo></WhatWeDo>
+      {/* <Features title={"Our Services"} type={"all"} />  */}
+      <Services title={"What we do ?"} type={"all"}></Services>
       <WhyUs />
       <Members />
       <Faq />

@@ -86,11 +86,11 @@ export default function Home() {
                 Trainings
               </h1>
 
-              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
+              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
                 At InsightNExus, we offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation.
-                <br />
+                
                 Our expert-led training spans a wide range of sectors, including education, agriculture, public health, and more. We equip individuals and teams with the tools to foster sustainable growth,
-                <br />
+                
                 enhance performance, and achieve long-term success through impactful, evidence-based strategies.
               </p>
 
