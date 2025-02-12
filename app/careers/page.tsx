@@ -86,11 +86,12 @@ export default function Home() {
                 Careers
               </h1>
 
-              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
+              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
                 At InsightNExus, we are committed to helping individuals build rewarding careers by providing data-driven insights and expert guidance.
-                <br />
-                Our career development programs span various sectors, including education, agriculture, and public health, empowering professionals to unlock new opportunities and achieve meaningful career growth.
-                <br />
+                
+                Our career development programs span various sectors, including education, agriculture, and public health, empowering
+                 professionals to unlock new opportunities and achieve meaningful career growth.
+                
                 Join us as we support you in navigating your career path and achieving lasting success.
               </p>
 

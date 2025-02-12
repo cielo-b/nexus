@@ -39,7 +39,7 @@ const WhyUs = () => {
       <div className="w-full flex flex-col items-center justify-center gap-10 z-40">
         <Fade>
           <Header
-            title="Why Us"
+            title="Our Strength ?"
             icon={
               <RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
             }
