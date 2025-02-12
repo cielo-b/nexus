@@ -72,15 +72,13 @@ export default function Home() {
                 </span>{" "}
               </h1>
 
-              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                We provide data-driven insights and expert consultancy services
-                to drive meaningful and sustainable transformation across
-                <br />
-                various sectors. Our work spans education, agriculture, public
-                health, and beyond, helping organizations achieve impactful
-                <br />
-                change and lasting success.
+              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center leading-tight">
+                Insight Nexus, established in Rwanda and duly registered under the Law N° 007/2021 of 05/02/2021 governing companies, excels in delivering a broad spectrum of consultancy services. <br />
+                Our areas of expertise include education, agriculture, public health, gender, and livelihoods, alongside conducting in-depth case studies. <br />
+                We serve a diverse clientele, ranging from international to local NGOs, with a particular emphasis on strengthening local organizations.
               </p>
+
+
             </div>
           </Fade>
         </div>
@@ -91,7 +89,7 @@ export default function Home() {
       <Members />
       <Faq />
       <Footer />
-      
+
       {/* <AnimatedCursor
         innerSize={12}
         outerSize={12}

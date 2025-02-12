@@ -92,7 +92,6 @@ export default function Home() {
         </div>
       </div>
       <Publications
-        title="Categories"
         items={categories}
         isLoading={isFetchingCategories}
         handleItemClick={(item: any) =>
@@ -100,7 +99,7 @@ export default function Home() {
         }
       />
       <Footer />
-      
+
       {/* <AnimatedCursor
         innerSize={12}
         outerSize={12}

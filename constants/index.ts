@@ -20,7 +20,7 @@ export const AboutUsData = [
     title: "Our Mission",
     image: "/images/image1.png",
     content:
-      "At Nexus Consultancy, we are committed to delivering innovative, data-driven solutions that empower businesses to optimize operations, enhance decision-making, and achieve sustainable growth.",
+      "At Nexus Consultancy, we are committed to delivering innovative, data-driven solutions that empower businesses to optimize operations, enhance decision-making, and achieve sustainable growth considering gender equality, social inclusion, and environmental responsibility.",
   },
   {
     title: "Our Vision",
@@ -32,19 +32,7 @@ export const AboutUsData = [
     title: "Our Goals",
     image: "/images/image3.png",
     content:
-      "Our goals are to guide organizations in overcoming challenges, streamline processes, and unlock new opportunities. We aim to foster long-term partnerships by providing actionable insights that lead to impactful change.",
-  },
-  {
-    title: "Our Expertise",
-    image: "/images/image4.png",
-    content:
-      "We specialize in various industries, including healthcare, finance, education, and technology. Our expertise allows us to craft bespoke strategies that address the unique challenges each sector faces.",
-  },
-  {
-    title: "Our Approach",
-    image: "/images/image1.png",
-    content:
-      "At Nexus, we believe in a collaborative approach. We work closely with our clients to understand their needs, analyze data, and deliver solutions that are not only effective but also scalable for the future.",
+      "Our goals are to guide organizations in overcoming challenges, streamline processes, and unlock new opportunities. We aim to foster long-term partnerships by providing actionable insights that lead to impactful change",
   },
 ];
 

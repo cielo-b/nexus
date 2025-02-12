@@ -10,14 +10,14 @@ export default defineType({
       name: "title",
       title: "Title",
       description: "Title of the service.",
-      type: "string",
+      type: "text",
       validation: (Rule) => Rule.required(),
     },
     {
       name: "excerpt",
       title: "Excerpt",
       description: "A short description of the service.",
-      type: "text",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
     {

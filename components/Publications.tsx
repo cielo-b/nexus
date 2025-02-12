@@ -15,32 +15,31 @@ type PublicationItem = {
 };
 
 type PublicationsProps = {
-  title: string;
   items: PublicationItem[];
   isLoading: boolean;
   handleItemClick?: (item: any) => void;
 };
 
 const Publications: React.FC<PublicationsProps> = ({
-  title,
   items,
   isLoading,
   handleItemClick,
 }) => {
+  console.log(items);
   return (
     <div
       className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-36 px-[10%] max-lg:px-6 max-md:gap-10 overflow-hidden bg-[#f2f4fa]"
       id="publications"
     >
       <div className="w-full flex flex-col items-center justify-center gap-10 z-40">
-        <Fade>
+        {/* <Fade>
           <Header
             title={title}
             icon={
               <RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
             }
           />
-        </Fade>
+        </Fade> */}
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
@@ -60,30 +59,22 @@ const Publications: React.FC<PublicationsProps> = ({
             {items.map((item) => (
               <div
                 key={item._id}
-                className="w-full rounded-3xl border border-[#2563eb] bg-gradient-to-br transition-all duration-300 ease-out  backdrop-blur-xl overflow-hidden"
+                className="w-full  bg-gradient-to-br transition-all duration-300 ease-out  backdrop-blur-xl overflow-hidden"
               >
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-64 rounded-t-2xl "
+                  className="w-full h-72 "
                 />
                 <div className="p-3 space-y-4">
-                  <h1 className="font-semibold text-lg text-[#2563eb] ">
+                  <h1 className="font-semibold text-2xl ">
                     {item.title || item.name}
                   </h1>
+
                   {handleItemClick && (
-                    <div className="flex justify-end">
-                      <CustomButton
-                        handleClick={() => handleItemClick(item)}
-                        title={"Read More"}
-                        containerStyles="max-h-fit"
-                        rightIcon={
-                          <ChevronRightIcon
-                            className={`group-hover:stroke-[#2563eb] w-6 h-6 stroke-white max-md:hidden `}
-                          />
-                        }
-                      />
-                    </div>
+                    <div onClick={() => handleItemClick(item)} className="flex items-center gap-2 hover:text-[#2563eb] cursor-pointer"><p>Read More</p>  <ChevronRightIcon
+                      className={`w-5 h-5`}
+                    /></div>
                   )}
                 </div>
               </div>

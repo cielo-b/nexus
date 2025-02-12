@@ -17,7 +17,7 @@ export default defineType({
       name: "description",
       title: "Short Description",
       description: "A short description of the member.",
-      type: "text",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
     {

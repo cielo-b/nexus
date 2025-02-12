@@ -119,14 +119,7 @@ const AboutUs = () => {
               Get To Know <span className="text-[#2563eb]">Nexus</span>
             </h1>
             <p className="text-md text-[#000912]/70 md:text-md max-sm:text-xs text-start">
-              At Nexus, we're on a mission to provide innovative consultancy
-              solutions that enable businesses to overcome challenges, optimize
-              operations, and achieve sustainable growth. We are committed to
-              delivering tailored, data-driven strategies that unlock the full
-              potential of every organization.
-            </p>
-            <p className="text-md text-[#000912]/70 md:text-md max-sm:text-xs text-start max-sm:hidden">
-              At Nexus, we're on a mission to provide innovative consultancy
+              At InsightNexus, we're on a mission to provide innovative consultancy
               solutions that enable businesses to overcome challenges, optimize
               operations, and achieve sustainable growth. We are committed to
               delivering tailored, data-driven strategies that unlock the full

@@ -18,7 +18,7 @@ export default defineType({
       name: "excerpt",
       title: "Excerpt",
       description: "A short description of the training.",
-      type: "text",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
     {

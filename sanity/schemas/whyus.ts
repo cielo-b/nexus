@@ -17,7 +17,7 @@ export default defineType({
       name: "answer",
       title: "Answer",
       description: "A short description of the why-us.",
-      type: "text",
+      type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
   ],

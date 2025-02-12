@@ -18,7 +18,7 @@ export default defineType({
       name: "userTitle",
       title: "User Title",
       description: "Title/Job of the user.",
-      type: "string",
+      type: "blockContent",
     },
     {
       name: "body",

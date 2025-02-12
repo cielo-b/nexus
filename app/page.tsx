@@ -67,7 +67,6 @@ export default function Home() {
       <AboutUs />
       <Features title={"Our Services"} type={"all"} />
       <Reviews testimonies={testimonies} />
-      <ContactUs />
       <Footer />
       {/* <AnimatedCursor
         innerSize={12}

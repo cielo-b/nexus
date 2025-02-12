@@ -23,7 +23,7 @@ export const fetchTestimonials = async () => {
             "userName": userName,
             userTitle,
             body,
-            "userImage": userImage,
+            "userImage": userImage.asset->url,
             rating
         }`;
         const testimonials = await sanityClient.fetch(query);

@@ -86,6 +86,7 @@ const Reviews = ({ testimonies }: { testimonies: any[] }) => {
           </div>
 
           {testimonies.map((testimony, idx) => {
+            console.log(testimony);
             const name = testimony.userName;
             const title = testimony.userTitle;
             const ratings = testimony.rating;

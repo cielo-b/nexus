@@ -23,7 +23,7 @@ function Loader() {
   );
 }
 
-export default function CategoryPage() {
+export default function Page() {
   const { id } = useParams<any>();
   const [loading, setLoading] = useState(true);
   const [isFetchingArticles, setIsFetchingArticles] = useState(true);
@@ -66,29 +66,9 @@ export default function CategoryPage() {
         <div className="w-full flex justify-center z-40">
           <Fade className="px-6 max-sm:px-4 z-40">
             <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
-              {/* <img
-                src="/images/gradient.svg"
-                alt="Gradient"
-                className="w-full absolute z-0 lg:-top-64 max-md:opacity-50"
-              /> */}
-
               <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center">
-                Our{" "}
-                <span className="text-[#2563eb] inline-block relative items-center justify-center">
-                  <img
-                    src="/images/circles.svg"
-                    alt=""
-                    className="absolute w-[300x] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
-                  />
-                  <span className="z-40 relative">Publications</span>
-                </span>{" "}
+                {category?.name}
               </h1>
-
-              <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                Browse the latest insights, news, and resources from our curated
-                category. Dive deep into industry trends and expert
-                perspectives.
-              </p>
             </div>
           </Fade>
         </div>
@@ -99,7 +79,7 @@ export default function CategoryPage() {
         isLoading={isFetchingArticles}
       />
       <Footer />
-      
+
       {/* <AnimatedCursor
         innerSize={12}
         outerSize={12}
@@ -125,5 +105,4 @@ export default function CategoryPage() {
   );
 }
 
-export const runtime = 'edge';
 

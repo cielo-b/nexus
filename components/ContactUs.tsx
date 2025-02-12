@@ -64,19 +64,14 @@ const ContactUs = () => {
   return (
     <div
       id="contactus"
-      className="flex flex-col lg:flex-row gap-10 justify-center items-center lg:items-start pt-20 pb-20 px-[8vw] lg:px-[16vw]  relative"
+      className="flex flex-col  gap-5 justify-center items-center lg:items-start    relative "
     >
-      <img
-        src="/images/zigs.svg"
-        alt="zigs"
-        className="absolute w-2/5 -top-1/3 -left-1/4 z-30"
-      />
       <img
         src="/images/zigs.svg"
         alt="zigs"
         className="absolute w-2/5 -bottom-1/3 -right-1/4 z-30"
       />
-      <div className="flex flex-col items-center lg:items-start justify-center gap-10 w-full max-sm:gap-6 lg:w-[60%]">
+      <div className="flex flex-col items-center lg:items-start justify-center gap-4 ">
         <Fade>
           <Header
             title="Contact Us"
@@ -84,23 +79,17 @@ const ContactUs = () => {
               <ChatBubbleOvalLeftIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
             }
           />
-          <h1 className="text-black font-bold text-5xl max-md:text-4xl max-sm:text-2xl ">
+          <h1 className="text-black font-bold text-3xl max-md:text-4xl max-sm:text-2xl ">
             Any<span className="text-[#2563eb]"> Insights </span>?<br />
             Feel Free To <span className="text-[#2563eb]">Contact</span> Us
           </h1>
-          <p className="md:text-md max-sm:text-xs text-black/60 font-normal z-10 lg:w-full max-sm:w-11/12">
-            Discover valuable insights and bespoke solutions tailored to your
-            organization's needs. Contact us today to learn more about how our
-            consultancy services can drive growth, enhance efficiency, and
-            foster sustainable change in your industry.
-          </p>
         </Fade>
       </div>
       <form
-        className="w-full flex flex-col items-center gap-4 justify-center lg:w-[60%] mt-10"
+        className="w-full flex flex-col items-center gap-4 justify-center  "
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="mb-4 flex items-center justify-between w-full max-sm:flex-col gap-6">
+        <div className="flex items-center justify-between w-full max-sm:flex-col gap-6">
           <div className="flex flex-col w-[48%] items-start justify-between max-sm:w-full">
             <label className="font-normal text-[#2563eb] text-lg max-md:text-md max-sm:text-sm">
               Name
@@ -125,7 +114,7 @@ const ContactUs = () => {
                   <input
                     {...field}
                     placeholder="Enter your name"
-                    className={`w-full h-14 font-normal text-md items-start justify-start flex focus:outline-0 placeholder-black/50 text-black bg-transparent rounded-full hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:shadow-[inset_0_0_0px_1000px_rgb(0,27,14)] autofill:text-black`}
+                    className={`w-full h-12 font-normal text-md items-start justify-start flex focus:outline-0 placeholder-black/50 text-black bg-transparent rounded-full hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:shadow-[inset_0_0_0px_1000px_rgb(0,27,14)] autofill:text-black`}
                   />
                 )}
               />
@@ -158,7 +147,7 @@ const ContactUs = () => {
                   <input
                     {...field}
                     placeholder="Enter your email"
-                    className={`w-full h-16 font-normal text-md items-start justify-start flex focus:outline-0 placeholder-black/50 text-black bg-transparent rounded-full hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:bg-black`}
+                    className={`w-full h-12 font-normal text-md items-start justify-start flex focus:outline-0 placeholder-black/50 text-black bg-transparent rounded-full hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:bg-black`}
                   />
                 )}
               />
@@ -189,7 +178,7 @@ const ContactUs = () => {
                 <textarea
                   {...field}
                   placeholder="Enter your message"
-                  className="w-full placeholder-black/50 h-[100px] font-normal bg-transparent text-md items-start justify-start flex text-black focus:outline-0 hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:bg-black"
+                  className="w-full placeholder-black/50 h-[80px] font-normal bg-transparent text-md items-start justify-start flex text-black focus:outline-0 hover:cursor-pointer autofill:bg-transparent autofill:fill-none autofill:bg-black"
                 />
               )}
             />

@@ -4,6 +4,9 @@ import CustomButton from "./CustomButton";
 import GroupedLinks from "./GroupedLinks";
 import { FooterLinks } from "@/constants";
 import { PaperAirplaneIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { HiLocationMarker, HiMail, HiPhone } from 'react-icons/hi';
+import ContactUs from "./ContactUs";
 
 const Popup = ({
   handleClose,
@@ -42,148 +45,68 @@ const Popup = ({
 );
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setEmail(event.target.value);
-  };
-
-  const handleClosePopup = () => {
-    setSubscribed(false);
-    setAlreadySubscribed(false);
-    setErrorMessage("");
-    setEmail("");
-  };
-
-  const handleSubscribe = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch(
-        "https://api.nexus.rw/api/v1/subscriptions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        setSubscribed(true);
-        setErrorMessage("");
-      } else {
-        const errorData = await response.json();
-        if (errorData.payload.subscription) {
-          setAlreadySubscribed(true);
-        } else {
-          setErrorMessage(errorData.message || "Subscription failed.");
-        }
-      }
-    } catch (error) {
-      console.error("Error subscribing:", error);
-      setErrorMessage("An error occurred while subscribing.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="bg-[#f2f4fa] px-[100px] max-lg:px-6 py-[50px] max-lg:py-[25px]  flex flex-col w-full gap-[34px] max-md:gap-[27px] max-sm:gap-[16px]">
       <hr className="border-1 border-[#C6C6C6] w-full " />
-      <div className="w-full flex items-center justify-between max-md:flex-col">
-        <img
-          src="/images/logo.png "
-          alt="logo"
-          className="max-md:w-[35%] lg:w-[12%]"
-        />
-        <div className="flex flex-col w-3/6 gap-[27px] max-md:w-full border-l-2 pl-10 ">
-          <div className="flex flex-col gap-[10px] max-md:pt-5">
-            <p className="text-[#000912] font-semibold text-2xl ">Subscribe</p>
-            <p className="text-[#000912]/50 font-normal text-lg max-md:text-sm">
-              Get Product updates and our changelog. No spam ever
-            </p>
+      <div className="w-full flex items-center justify-between flex-col-reverse md:flex-row gap-20">
+        <div className="lg:w-[50%]">
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            className="max-md:w-[35%] lg:w-[32%]"
+          />
+          <p className="text-lg font-medium text-black/70 mt-4">
+            All about delivering data-driven insights and comprehensive consultancy services to foster impactful and sustainable change in education, agriculture, public health, and more.
+          </p>
+          <div className='flex flex-col gap-[24px] max-lg:w-[45%] mt-6'>
+            <div className="flex items-center gap-2 text-lg text-[#000912]/70">
+              <HiLocationMarker />
+              <span>Kigali, Rwanda</span>
+            </div>
+            <div className="flex items-center gap-2 text-lg text-[#000912]/70">
+              <HiMail />
+              <span>info@insightnexus.africa</span>
+            </div>
+            <div className="flex items-center gap-2 text-lg text-[#000912]/70">
+              <HiPhone />
+              <span>+250 790 000 000</span>
+            </div>
+
+            <div className="flex gap-[20px] mt-6">
+              <a
+                href="https://x.com/insightnexus_c"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#000912] hover:text-[#1DA1F2]"
+              >
+                <FaTwitter size={30} />
+              </a>
+              <a
+                href="https://www.instagram.com/insightnexus_c?igsh=OTd4ZWpudm95Nmxj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#000912] hover:text-[#C13584]"
+              >
+                <FaInstagram size={30} />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61564435222131"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#000912] hover:text-[#3b5998]"
+              >
+                <FaFacebook size={30} />
+              </a>
+            </div>
           </div>
-          <form
-            onSubmit={handleSubscribe}
-            className="flex gap-[32px] max-md:gap[5%] max-sm:justify-between max-md:flex-col items-center" 
-          >
-            <InputField
-              icon="/images/mail.svg"
-              placeholder="Enter your email"
-              value={email}
-              onChange={handleInputChange}
-              style="dark"
-              name={""}
-              ref={undefined}
-              onBlur={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-              error={undefined}
-            />
-            <CustomButton
-              title={loading ? "Subscribing..." : "Subscribe"}
-              containerStyles="max-h-fit"
-              rightIcon={
-                <PaperAirplaneIcon
-                  className={`group-hover:stroke-[#2563eb] w-6 h-6 stroke-white max-md:hidden ${
-                    loading ? "dance" : ""
-                  }`}
-                />
-              }
-              isDisabled={loading || !email}
-              isLoading={loading}
-            />
-          </form>
-
-          {subscribed && (
-            <Popup
-              handleClose={handleClosePopup}
-              title="Thank you for subscribing to Nexus!"
-              message={`The confirmation email was sent to ${email}`}
-              image="/images/emailsent.svg"
-            />
-          )}
-
-          {alreadySubscribed && (
-            <Popup
-              handleClose={handleClosePopup}
-              title="You are already subscribed!"
-              message={`The email ${email} is already subscribed.`}
-              image="/images/emailnotsent.svg"
-            />
-          )}
-
-          {errorMessage && (
-            <Popup
-              handleClose={handleClosePopup}
-              title={
-                errorMessage === "Unprocessable Entity Error"
-                  ? `This Email contains typos or is wrong`
-                  : `This email is already subscribed`
-              }
-              message={
-                errorMessage === "Unprocessable Entity Error"
-                  ? `Check whether this email is well spelled`
-                  : `This email is already subscribed to Nexus`
-              }
-              image="/images/emailnotsent.svg"
-            />
-          )}
+        </div>
+        <div className="w-full lg:w-[50%] lg:px-[3%]  ">
+          <ContactUs />
         </div>
       </div>
 
-      <hr className="border-1 border-[#C6C6C6] w-full " />
-      <GroupedLinks links={FooterLinks} />
       <hr className="border-1 border-[#C6C6C6] w-full " />
 
       <div className="w-full flex items-center justify-center ">

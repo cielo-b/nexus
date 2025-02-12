@@ -62,7 +62,7 @@ export default function Home() {
           </Fade>
         </div>
       </div>
-      <Features title="All Our Features" type="all" />
+      <Features title="All Our Services" type="all" />
       <WhyUs />
       <Footer />
       

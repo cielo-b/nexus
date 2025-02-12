@@ -115,7 +115,6 @@ export default function Home() {
                 </span>{" "}
                 Blog
               </h1>
-
               <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
                 We provide data-driven insights and expert consultancy services
                 to drive meaningful and sustainable transformation across
@@ -128,69 +127,6 @@ export default function Home() {
             </div>
           </Fade>
         </div>
-        <Swiper
-          modules={[Autoplay]}
-          className="w-full"
-          spaceBetween={20}
-          autoplay={{ delay: 3000, pauseOnMouseEnter: true }}
-          loop
-        >
-          <SwiperSlide>
-            <div className="flex space-x-4 justify-center px-[10vw]">
-              {allArticles
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3)
-                .map((article: any) => (
-                  <Link
-                    href={`/blog/${article._id}`}
-                    key={article._id}
-                    className="bg-white shadow rounded-2xl flex flex-col relative h-72 w-1/3"
-                  >
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="h-full w-full object-cover rounded-2xl mb-4"
-                    />
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black rounded-2xl"></div>
-                    <div className="absolute bottom-0 left-0 p-4">
-                      <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                      <p className="text-lg text-white/70 line-clamp-1">{article.excerpt}</p>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div className="flex space-x-4 justify-center px-[10vw]">
-              {allArticles
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 3)
-                .map((article: any) => (
-                  <Link
-                    href={`/blog/${article._id}`}
-                    key={article._id}
-                    className="bg-white shadow rounded-2xl flex flex-col relative h-72 w-1/3"
-                  >
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                      className="h-full w-full object-cover rounded-2xl mb-4"
-                    />
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black rounded-2xl"></div>
-                    <div className="absolute bottom-0 left-0 p-4">
-                      <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                      <div className="flex items-cente justify-between">
-                        <p className="text-lg text-white/70 line-clamp-1">{article.excerpt}</p>
-                        <p className="text-lg text-white/70">{article.category.name}</p>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </SwiperSlide>
-
-        </Swiper>
       </div>
 
       <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-6 px-[10%] max-lg:px-6 max-md:gap-10 overflow-hidden bg-[#f2f4fa]">
