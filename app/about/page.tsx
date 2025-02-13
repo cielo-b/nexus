@@ -50,7 +50,7 @@ export default function Home() {
     <main className="flex flex-col w-full h-full  overflow-hidden overflow-x-hidden">
       <NavBar />
       <div
-        className="w-full  h-fit items-center lg:pb-20  max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex  flex-col "
+        className="w-full bg-[#f2f4fa] h-fit items-center lg:pb-20  max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex  flex-col "
         id="home"
       >
         <div className="w-full flex justify-center z-40">
@@ -74,11 +74,7 @@ export default function Home() {
                 </span>{" "}
               </h1>
 
-              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center leading-3">
-                Insight Nexus, established in Rwanda and duly registered under the Law N° 007/2021 of 05/02/2021 governing companies, excels in delivering a broad spectrum of consultancy services.
-                Our areas of expertise include education, agriculture, public health, gender, and livelihoods, alongside conducting in-depth case studies. 
-                We serve a diverse clientele, ranging from international to local NGOs, with a particular emphasis on strengthening local organizations.
-              </p>
+             
 
 
             </div>
