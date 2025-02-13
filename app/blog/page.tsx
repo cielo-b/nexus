@@ -1,19 +1,15 @@
-"use client";
-import "ldrs/ring";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+"use client"
+import "ldrs/ring"
+import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
 
-import { useState, useEffect } from "react";
-import { fetchArticleCategories, fetchArticles } from "@/sanity/queries/articles";
-import { Fade } from "react-awesome-reveal";
-import Header from "@/components/Header";
-import { RectangleGroupIcon } from "@heroicons/react/20/solid";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Autoplay } from "swiper/modules";
-import Link from "next/link";
-import RichContent from "@/components/RichContent";
-
+import { useState, useEffect } from "react"
+import { fetchArticleCategories, fetchArticles } from "@/sanity/queries/articles"
+import { Fade } from "react-awesome-reveal"
+import Header from "@/components/Header"
+import { RectangleGroupIcon } from "@heroicons/react/20/solid"
+import "swiper/css"
+import Link from "next/link"
 
 function SkeletonLoader() {
   return (
@@ -22,7 +18,7 @@ function SkeletonLoader() {
         <div key={idx} className="bg-gray-200 animate-pulse h-64 rounded"></div>
       ))}
     </div>
-  );
+  )
 }
 
 function Loader() {
@@ -32,65 +28,65 @@ function Loader() {
         <div className="dot"></div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [articles, setArticles] = useState<any[]>([]);
-  const [isFetchingArticles, setIsFetchingArticles] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [categories, setCategories] = useState<any[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [articles, setArticles] = useState<any[]>([])
+  const [isFetchingArticles, setIsFetchingArticles] = useState(false)
   const [allArticles, setAllArticles] = useState<any>([])
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 6;
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 6
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const data = await fetchArticleCategories();
-        fetchArticlesByCategory(null, currentPage);
-        setCategories(data);
+        const data = await fetchArticleCategories()
+        fetchArticlesByCategory(null, currentPage)
+        setCategories(data)
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
-        setCategories([]);
+        console.error("Failed to fetch categories:", error)
+        setCategories([])
       }
       setLoading(false)
-    };
+    }
 
-    fetchCategories();
-  }, []);
+    fetchCategories()
+  }, [currentPage]) // Added currentPage to dependencies
 
   const fetchArticlesByCategory = async (category: string | null, page: number) => {
-    setIsFetchingArticles(true);
+    setIsFetchingArticles(true)
     try {
-      const { items, total } = await fetchArticles(page, pageSize, category || undefined);
-      setArticles(items);
+      const { items, total } = await fetchArticles(page, pageSize, category || undefined)
+      setArticles(items)
       if (!category) setAllArticles(items)
-      setTotalPages(Math.ceil(total / pageSize));
+      setTotalPages(Math.ceil(total / pageSize))
     } catch (error) {
-      console.error("Failed to fetch articles:", error);
-      setArticles([]);
+      console.error("Failed to fetch articles:", error)
+      setArticles([])
     } finally {
-      setIsFetchingArticles(false);
+      setIsFetchingArticles(false)
     }
-  };
+  }
 
   useEffect(() => {
     if (categories.length > 0) {
-      fetchArticlesByCategory(selectedCategory, currentPage);
+      fetchArticlesByCategory(selectedCategory, currentPage)
     }
-  }, [selectedCategory, currentPage]);
+  }, [selectedCategory, currentPage])
 
   const handleCategoryChange = (category: string | null) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
+    setSelectedCategory(category)
+    setCurrentPage(1)
+  }
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+    setCurrentPage(page)
+  }
 
   return loading ? (
     <Loader />
@@ -104,7 +100,6 @@ export default function Home() {
         <div className="w-full flex justify-center z-40">
           <Fade className="px-6 max-sm:px-4 z-40">
             <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
-
               <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center">
                 <span className="text-[#2563eb] inline-block relative items-center justify-center">
                   <img
@@ -117,11 +112,11 @@ export default function Home() {
                 Blog
               </h1>
               <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                We provide data-driven insights and expert consultancy services
-                to drive meaningful and sustainable transformation across
+                We provide data-driven insights and expert consultancy services to drive meaningful and sustainable
+                transformation across
                 <br />
-                various sectors. Our work spans education, agriculture, public
-                health, and beyond, helping organizations achieve impactful
+                various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations
+                achieve impactful
                 <br />
                 change and lasting success.
               </p>
@@ -134,15 +129,12 @@ export default function Home() {
         <Fade>
           <Header
             title={"Our Articles"}
-            icon={
-              <RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
-            }
+            icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
           />
         </Fade>
         <div className="flex gap-4 flex-wrap mb-8">
           <button
-            className={`px-4 py-2 rounded-xl text-white ${selectedCategory === null ? "bg-blue-600" : "bg-gray-400"
-              }`}
+            className={`px-4 py-2 rounded-lg text-white ${selectedCategory === null ? "bg-blue-600" : "bg-gray-400"}`}
             onClick={() => handleCategoryChange(null)}
           >
             All
@@ -150,8 +142,9 @@ export default function Home() {
           {categories.map((category) => (
             <button
               key={category._id}
-              className={`px-4 py-2 rounded-xl text-white ${selectedCategory === category._id ? "bg-blue-600" : "bg-gray-400"
-                }`}
+              className={`px-4 py-2 rounded-lg text-white ${
+                selectedCategory === category._id ? "bg-blue-600" : "bg-gray-400"
+              }`}
               onClick={() => handleCategoryChange(category._id)}
             >
               {category.name}
@@ -167,17 +160,21 @@ export default function Home() {
               <Link
                 href={`/blog/${article._id}`}
                 key={article._id}
-                className="bg-white shadow rounded-2xl  flex flex-col relative h-72"
+                className="bg-white shadow rounded-lg flex flex-col relative h-72 overflow-hidden group"
               >
                 <img
-                  src={article.image}
+                  src={article.image || "/placeholder.svg"}
                   alt={article.title}
-                  className="h-full w-full object-cover rounded-2xl mb-4"
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black  rounded-2xl"></div>
-                <div className="absolute bottom-0 left-0 p-4 ">
-                  <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                  <p className="text-lg text-white/70"><RichContent content={article.excerpt}/></p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded">
+                    {article.category?.name || "NEWS"}
+                  </span>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 p-4">
+                  <h3 className="text-2xl font-bold text-white">{article.title}</h3>
                 </div>
               </Link>
             ))}
@@ -185,7 +182,7 @@ export default function Home() {
         )}
       </div>
       <Footer />
-
     </main>
-  );
+  )
 }
+
