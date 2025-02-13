@@ -5,25 +5,29 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { fetchServices, fetchCases } from "@/sanity/queries/services"
-import RichContent, { Content } from "./RichContent"
+import RichContent, { type Content } from "./RichContent"
 
 interface Service {
   _id: string
   title: string
-  excerpt: Content[];
+  excerpt: Content[]
   image: string
 }
 
 interface Case {
   _id: string
   title: string
-  excerpt: Content[];
+  excerpt: Content[]
   image: string
+  service?: {
+    _id: string
+    title: string
+  }
 }
 
 export default function ServicesSection() {
   const [services, setServices] = useState<Service[]>([])
-  const [cases, setCases] = useState<{ [serviceId: string]: Case[] }>({})
+  const [cases, setCases] = useState<Case[]>([])
   const [activeSection, setActiveSection] = useState<string>("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string>("")
@@ -36,12 +40,9 @@ export default function ServicesSection() {
       if (fetchedServices.length > 0) {
         setActiveSection(fetchedServices[0].title)
 
-        const casesPromises = fetchedServices.map((service) =>
-          fetchCases(service._id).then((serviceCases) => ({ [service._id]: serviceCases })),
-        )
-        const caseResults = await Promise.all(casesPromises)
-        const allCases = Object.assign({}, ...caseResults)
-        setCases(allCases)
+        const allCases = await Promise.all(fetchedServices.map((service) => fetchCases(service._id)))
+        // Flatten the array of case arrays and keep the original service reference
+        setCases(allCases.flat())
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Failed to fetch services and cases"
@@ -60,14 +61,17 @@ export default function ServicesSection() {
     () =>
       services.find((service) => service.title === activeSection) || {
         title: "",
-        excerpt: "",
+        excerpt: [],
         image: "",
         _id: "",
       },
     [services, activeSection],
   )
 
-  const activeCases = useMemo(() => cases[activeService._id] || [], [cases, activeService._id])
+  const activeCases = useMemo(
+    () => cases.filter((caseItem) => caseItem.service?._id === activeService._id),
+    [cases, activeService._id],
+  )
 
   const handleSectionChange = useCallback((title: string) => {
     setActiveSection(title)
@@ -124,9 +128,9 @@ export default function ServicesSection() {
                 <h2 className="text-3xl font-bold">{activeService.title}</h2>
                 <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
               </div>
-              <p className="text-gray-700 text-md leading-relaxed">
+              <div className="text-gray-700 text-md leading-relaxed">
                 <RichContent content={activeService.excerpt} />
-              </p>
+              </div>
             </div>
 
             <div className="pt-8">
@@ -148,7 +152,9 @@ export default function ServicesSection() {
                         />
                         <div className="p-4">
                           <h4 className="font-semibold text-lg mb-2">{caseItem.title}</h4>
-                          <p className="text-sm text-gray-600 line-clamp-2"><RichContent content={caseItem.excerpt}></RichContent></p>
+                          <div className="text-sm text-gray-600 line-clamp-2">
+                            <RichContent content={caseItem.excerpt} />
+                          </div>
                         </div>
                       </motion.div>
                     </Link>
