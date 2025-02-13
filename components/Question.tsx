@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
+import RichContent, { Content } from "./RichContent";
 
 interface QuestionProps {
   question: string;
-  answer: string;
+  answer: Content[];
   handleChange: (isExpanded: boolean) => void;
   panel: string;
   expanded: boolean;
@@ -46,7 +47,7 @@ const Question: FC<QuestionProps> = ({
         </AccordionSummary>
         <AccordionDetails>
           <span className="font-normal text-[#000912]/50 lg:text-md max-md:text-sm">
-            {answer}
+            <RichContent content={answer} />
           </span>
         </AccordionDetails>
       </Accordion>
