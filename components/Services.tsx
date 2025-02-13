@@ -6,10 +6,10 @@ import { RectangleGroupIcon, ChartBarIcon, CodeBracketIcon, CubeIcon } from "@he
 import { Fade } from "react-awesome-reveal"
 import { fetchServices } from "@/sanity/queries/services"
 import Link from "next/link"
-import RichContent from "./RichContent"
+import RichContent, { Content } from "./RichContent"
 
 const Features = ({ title, type }: { title: any; type: any }) => {
-  const [services, setServices] = useState<{ title: string; excerpt: string; image: string; _id: string }[]>([])
+  const [services, setServices] = useState<{ title: string; excerpt: Content[]; image: string; _id: string }[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

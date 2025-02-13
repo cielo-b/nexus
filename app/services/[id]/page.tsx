@@ -10,14 +10,14 @@ import { useState, useEffect } from "react";
 import { Fade } from "react-awesome-reveal";
 import { fetchCaseById, fetchCases, fetchServiceById, fetchServices } from "@/sanity/queries/services";
 import { useParams } from "next/navigation";
-import RichContent from "@/components/RichContent";
+import RichContent, { Content } from "@/components/RichContent";
 import Link from "next/link";
 import Redirect from "@/components/Redirect";
 
 interface Service {
   _id: string;
   title: string;
-  excerpt: string;
+  excerpt: Content[];
   image?: string;
   content: string;
 }
@@ -111,7 +111,7 @@ export default function ServicePage() {
                     {relatedService.title}
                   </h3>
                   <p className="text-lg text-white/70 group-hover:underline line-clamp-1">
-                    {relatedService.excerpt}
+                    <RichContent content={relatedService.excerpt}></RichContent>
                   </p>
                 </div>
               </Link>
