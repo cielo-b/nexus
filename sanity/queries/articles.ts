@@ -1,10 +1,11 @@
+import { Content } from "@/components/RichContent";
 import { sanityClient } from "../sanity.client";
 
 // TypeScript interfaces for type safety
 interface Article {
   _id: string;
   title: string;
-  excerpt: string;
+  excerpt: Content[];
   image: string;
   content: any;
   category: {
