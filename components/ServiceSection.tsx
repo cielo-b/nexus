@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { fetchServices, fetchCases } from "@/sanity/queries/services"
 import RichContent, { type Content } from "./RichContent"
+import { ArrowRight } from "lucide-react"
 
 interface Service {
   _id: string
@@ -40,8 +41,7 @@ export default function ServicesSection() {
       if (fetchedServices.length > 0) {
         setActiveSection(fetchedServices[0].title)
 
-        const allCases = await Promise.all(fetchedServices.map((service) => fetchCases(service._id)))
-        // Flatten the array of case arrays and keep the original service reference
+        const allCases: Case[][] = await Promise.all(fetchedServices.map((service: Service) => fetchCases(service._id)))
         setCases(allCases.flat())
       }
     } catch (error) {
@@ -141,7 +141,7 @@ export default function ServicesSection() {
                     <Link href={`/cases/${caseItem._id}`} key={caseItem._id}>
                       <motion.div
                         whileHover={{ scale: 1.05 }}
-                        className="bg-white rounded-lg shadow-md overflow-hidden"
+                        className="bg-white rounded-lg shadow-md overflow-hidden relative group"
                       >
                         <Image
                           src={caseItem.image || "/placeholder.svg"}
@@ -156,6 +156,20 @@ export default function ServicesSection() {
                             <RichContent content={caseItem.excerpt} />
                           </div>
                         </div>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                          className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                        >
+                          <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            whileHover={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.2 }}
+                            className="bg-white rounded-full p-3"
+                          >
+                            <ArrowRight className="w-6 h-6 text-blue-600" />
+                          </motion.div>
+                        </motion.div>
                       </motion.div>
                     </Link>
                   ))}
