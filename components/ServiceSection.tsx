@@ -3,73 +3,91 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { fetchServices } from "@/sanity/queries/services"
-import RichContent from "./RichContent"
+import Link from "next/link"
+import { fetchServices, fetchCases } from "@/sanity/queries/services"
+import RichContent, { Content } from "./RichContent"
 
+interface Service {
+  _id: string
+  title: string
+  excerpt: Content[];
+  image: string
+}
 
+interface Case {
+  _id: string
+  title: string
+  excerpt: Content[];
+  image: string
+}
 
 export default function ServicesSection() {
-  const [services, setServices] = useState<any[]>([])
+  const [services, setServices] = useState<Service[]>([])
+  const [cases, setCases] = useState<{ [serviceId: string]: Case[] }>({})
   const [activeSection, setActiveSection] = useState<string>("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string>("")
 
-  // Memoize the data fetching function
-  const loadServices = useCallback(async () => {
+  const loadServicesAndCases = useCallback(async () => {
     try {
       const fetchedServices = await fetchServices()
       setServices(fetchedServices)
-      // Set initial active section if none is set
-      if (!activeSection && fetchedServices.length > 0) {
+
+      if (fetchedServices.length > 0) {
         setActiveSection(fetchedServices[0].title)
+
+        const casesPromises = fetchedServices.map((service) =>
+          fetchCases(service._id).then((serviceCases) => ({ [service._id]: serviceCases })),
+        )
+        const caseResults = await Promise.all(casesPromises)
+        const allCases = Object.assign({}, ...caseResults)
+        setCases(allCases)
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to fetch services"
+      const errorMessage = error instanceof Error ? error.message : "Failed to fetch services and cases"
       setError(errorMessage)
-      console.error("Error fetching services:", error)
+      console.error("Error fetching services and cases:", error)
     } finally {
       setLoading(false)
     }
-  }, [activeSection])
+  }, [])
 
   useEffect(() => {
-    loadServices()
-  }, [loadServices])
+    loadServicesAndCases()
+  }, [loadServicesAndCases])
 
-  // Memoize the active section data
-  const activeService = useMemo(() => 
-    services.find(service => service.title === activeSection) || {
-      title: "",
-      excerpt: "",
-      image: "",
-      _id: ""
-    }
-  , [services, activeSection])
+  const activeService = useMemo(
+    () =>
+      services.find((service) => service.title === activeSection) || {
+        title: "",
+        excerpt: "",
+        image: "",
+        _id: "",
+      },
+    [services, activeSection],
+  )
 
-  // Handle section change
+  const activeCases = useMemo(() => cases[activeService._id] || [], [cases, activeService._id])
+
   const handleSectionChange = useCallback((title: string) => {
     setActiveSection(title)
   }, [])
 
   if (loading) {
-    // make this better when loading
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-gray-600">Loading...</div>
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
   }
 
   if (error) {
-    // make this better when error
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-red-600">Error: {error}</div>
       </div>
     )
   }
-
-  console.log(activeService);
 
   return (
     <div className="flex flex-col lg:flex-row gap-9 p-4 md:p-8 max-w-7xl mx-auto min-h-screen">
@@ -80,8 +98,8 @@ export default function ServicesSection() {
             key={service._id}
             onClick={() => handleSectionChange(service.title)}
             className={`text-left w-full px-4 py-2 rounded-lg transition-colors ${
-              activeSection === service.title 
-                ? "text-blue-600 font-semibold bg-blue-50" 
+              activeSection === service.title
+                ? "text-blue-600 font-semibold bg-blue-50"
                 : "text-gray-700 hover:text-blue-600"
             }`}
           >
@@ -106,14 +124,39 @@ export default function ServicesSection() {
                 <h2 className="text-3xl font-bold">{activeService.title}</h2>
                 <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
               </div>
-              <p className="text-gray-700 text-md leading-relaxed"><RichContent content={activeService.excerpt}/></p>
+              <p className="text-gray-700 text-md leading-relaxed">
+                <RichContent content={activeService.excerpt} />
+              </p>
             </div>
 
             <div className="pt-8">
-              <h3 className="text-xl font-bold mb-4">
-                Check Out Our {activeService.title} Works
-              </h3>
-              <p className="text-gray-600">No Works Yet!!</p>
+              <h3 className="text-xl font-bold mb-4">Check Out Our {activeService.title} Works</h3>
+              {activeCases.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {activeCases.map((caseItem) => (
+                    <Link href={`/cases/${caseItem._id}`} key={caseItem._id}>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="bg-white rounded-lg shadow-md overflow-hidden"
+                      >
+                        <Image
+                          src={caseItem.image || "/placeholder.svg"}
+                          alt={caseItem.title}
+                          width={300}
+                          height={200}
+                          className="w-full h-40 object-cover"
+                        />
+                        <div className="p-4">
+                          <h4 className="font-semibold text-lg mb-2">{caseItem.title}</h4>
+                          <p className="text-sm text-gray-600 line-clamp-2"><RichContent content={caseItem.excerpt}></RichContent></p>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-600">No works available for this service yet.</p>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -144,3 +187,4 @@ export default function ServicesSection() {
     </div>
   )
 }
+
