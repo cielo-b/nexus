@@ -36,7 +36,7 @@ export interface HeaderProps {
 
 export interface FeaturesProps {
   icon?: string;
-  title: string;
+  title: Content[];
   description: Content[];
   image?: string;
   isActive?: boolean;
@@ -46,9 +46,9 @@ export interface FeaturesProps {
 export interface TestimonyProps {
   //   const {name, ratings, description, postDate, profilePic} = props;
   name: string;
-  title: string;
+  title: Content[];
   ratings: number;
-  description: string;
+  description: Content[];
   profilePic: string;
 }
 

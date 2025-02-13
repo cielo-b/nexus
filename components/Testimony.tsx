@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { TestimonyProps } from '@/types'
+import RichContent from './RichContent';
 
 const Testimony = ({ name, title, ratings, description, profilePic }: TestimonyProps) => {
   return (
@@ -11,7 +12,7 @@ const Testimony = ({ name, title, ratings, description, profilePic }: TestimonyP
       </div>
       <div className="flex w-full flex-col items-start justify-center gap-2 md-min3:items-center">
         <span className="text-lg font-black text-black xsm-min:text-base">{name}</span>
-        <span className="text-sm font-black text-black/60 ">{title}</span>
+        <span className="text-sm font-black text-black/60 "><RichContent content={title}/></span>
         <div className="flex items-center justify-center gap-2">
           {new Array(Math.floor(ratings)).fill(null).map((_, idx) => {
             return (
@@ -20,7 +21,9 @@ const Testimony = ({ name, title, ratings, description, profilePic }: TestimonyP
           })}
         </div>
       </div>
-      <span className="text-base font-medium text-gray-600 md-min3:text-center xsm-min:text-sm max-sm:text-sm">{description}</span>
+      <span className="text-base font-medium text-gray-600 md-min3:text-center xsm-min:text-sm max-sm:text-sm">
+        <RichContent content={description}/>
+      </span>
     </div>
   )
 }
