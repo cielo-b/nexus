@@ -1,6 +1,7 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { IconType } from "react-icons";
 import { Control } from 'react-hook-form';
+import { Content } from "@/components/RichContent";
 
 export interface MenuItemProps {
   to: string;
@@ -36,7 +37,7 @@ export interface HeaderProps {
 export interface FeaturesProps {
   icon?: string;
   title: string;
-  description?: string;
+  description: Content[];
   image?: string;
   isActive?: boolean;
   onClick?: () => void; // Add onClick property

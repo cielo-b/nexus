@@ -1,5 +1,6 @@
 import { sanityClient } from "../sanity.client";
 
+
 export const fetchFaqs = async () => {
     try {
         const query = `*[_type == "faq"]{

@@ -6,6 +6,7 @@ import { RectangleGroupIcon, ChartBarIcon, CodeBracketIcon, CubeIcon } from "@he
 import { Fade } from "react-awesome-reveal"
 import { fetchServices } from "@/sanity/queries/services"
 import Link from "next/link"
+import RichContent from "./RichContent"
 
 const Features = ({ title, type }: { title: any; type: any }) => {
   const [services, setServices] = useState<{ title: string; excerpt: string; image: string; _id: string }[]>([])
@@ -127,7 +128,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
                     <div className="absolute bottom-0 left-0 p-4 w-full">
                       <h3 className="text-2xl font-bold mb-2 text-white">{service.title}</h3>
-                      <p className="text-sm text-white/90 line-clamp-2 mb-2">{service.excerpt}</p>
+                      <p className="text-sm text-white/90 line-clamp-2 mb-2"><RichContent content={service.excerpt}></RichContent></p>
                       <div className="flex items-center justify-end">
                         <Link
                           href={`/services/${service._id}`}

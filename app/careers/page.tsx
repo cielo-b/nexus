@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import Link from "next/link";
+import Members from "@/components/Members";
 import { fetchCareers } from "@/sanity/queries/career";
 
 
@@ -136,6 +137,9 @@ export default function Home() {
           </div>
         )}
       </div>
+
+
+      <Members />
       <Footer />
 
     </main>
