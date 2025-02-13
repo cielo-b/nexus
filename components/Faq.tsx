@@ -4,10 +4,11 @@ import Question from "./Question";
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { Fade } from "react-awesome-reveal";
 import { fetchFaqs } from "@/sanity/queries/others";
+import { Content } from "./RichContent";
 
 const Faq = () => {
   const [questions, setQuestions] = useState<
-    { question: string; answer: string; panel: string }[]
+    { question: string; answer: Content[]; panel: string }[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState<string | false>(false);
