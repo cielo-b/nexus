@@ -13,6 +13,7 @@ import { Autoplay } from "swiper/modules";
 import Link from "next/link";
 import Members from "@/components/Members";
 import { fetchCareers } from "@/sanity/queries/career";
+import RichContent from "@/components/RichContent";
 
 
 function SkeletonLoader() {
@@ -130,7 +131,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black  rounded-2xl"></div>
                 <div className="absolute bottom-0 left-0 p-4 ">
                   <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                  <p className="text-lg text-white/70">{article.excerpt}</p>
+                  <p className="text-lg text-white/70"><RichContent content={article.excerpt}/></p>
                 </div>
               </Link>
             ))}
