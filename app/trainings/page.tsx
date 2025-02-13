@@ -1,28 +1,28 @@
-"use client";
-import "ldrs/ring";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
+"use client"
 
-import { useState, useEffect } from "react";
-import { Fade } from "react-awesome-reveal";
-import Header from "@/components/Header";
-import { RectangleGroupIcon } from "@heroicons/react/20/solid";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Autoplay } from "swiper/modules";
-import Link from "next/link";
-import { fetchTrainings } from "@/sanity/queries/trainings";
-import RichContent from "@/components/RichContent";
-
-
+import "ldrs/ring"
+import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
+import { useState, useEffect } from "react"
+import { Fade } from "react-awesome-reveal"
+import Header from "@/components/Header"
+import { RectangleGroupIcon } from "@heroicons/react/20/solid"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { fetchTrainings } from "@/sanity/queries/trainings"
+import WhyTrain from "@/components/WhyTrain"
 function SkeletonLoader() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {Array.from({ length: 6 }).map((_, idx) => (
-        <div key={idx} className="bg-gray-200 animate-pulse h-64 rounded"></div>
+        <div key={idx} className="flex flex-col gap-4">
+          <div className="bg-gray-200 animate-pulse h-64 rounded-lg"></div>
+          <div className="h-8 bg-gray-200 animate-pulse rounded w-3/4"></div>
+          <div className="h-6 bg-gray-200 animate-pulse rounded w-24"></div>
+        </div>
       ))}
     </div>
-  );
+  )
 }
 
 function Loader() {
@@ -32,49 +32,43 @@ function Loader() {
         <div className="dot"></div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function Home() {
-  const [training, setTrainings] = useState<any[]>([]);
-  const [isFetchingTrainings, setIsFetchingTrainings] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 6;
-
+  const [training, setTrainings] = useState<any[]>([])
+  const [isFetchingTrainings, setIsFetchingTrainings] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const pageSize = 6
 
   const fetchTrainingsByCategory = async (page: number) => {
-    setIsFetchingTrainings(true);
+    setIsFetchingTrainings(true)
     try {
-      const { items, total } = await fetchTrainings(page, pageSize);
-      setTrainings(items);
-      setTotalPages(Math.ceil(total / pageSize));
+      const { items, total } = await fetchTrainings(page, pageSize)
+      setTrainings(items)
+      setTotalPages(Math.ceil(total / pageSize))
     } catch (error) {
-      console.error("Failed to fetch training:", error);
-      setTrainings([]);
+      console.error("Failed to fetch training:", error)
+      setTrainings([])
     } finally {
-      setIsFetchingTrainings(false);
+      setIsFetchingTrainings(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchTrainingsByCategory(currentPage);
-  }, [currentPage]);
-
+    fetchTrainingsByCategory(currentPage)
+  }, [currentPage]) // Removed fetchTrainingsByCategory from dependencies
 
   return isFetchingTrainings ? (
     <Loader />
   ) : (
     <main className="flex flex-col w-full h-full overflow-hidden">
       <NavBar />
-      <div
-        className="w-full h-fit items-center lg:pb-20 max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex flex-col "
-        id="home"
-      >
+      <div className="w-full h-fit items-center lg:pb-20 max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex flex-col">
         <div className="w-full flex justify-center z-40">
           <Fade className="px-6 max-sm:px-4 z-40">
             <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
-
               <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center">
                 <span className="text-[#2563eb] inline-block relative items-center justify-center">
                   <img
@@ -86,15 +80,13 @@ export default function Home() {
                 </span>{" "}
                 Trainings
               </h1>
-
               <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                At InsightNExus, we offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation.
-                
-                Our expert-led training spans a wide range of sectors, including education, agriculture, public health, and more. We equip individuals and teams with the tools to foster sustainable growth,
-                
-                enhance performance, and achieve long-term success through impactful, evidence-based strategies.
+                At InsightNExus, we offer tailored training programs designed to empower organizations with the skills
+                and knowledge needed to drive data-driven transformation. Our expert-led training spans a wide range of
+                sectors, including education, agriculture, public health, and more. We equip individuals and teams with
+                the tools to foster sustainable growth, enhance performance, and achieve long-term success through
+                impactful, evidence-based strategies.
               </p>
-
             </div>
           </Fade>
         </div>
@@ -104,40 +96,40 @@ export default function Home() {
         <Fade>
           <Header
             title={"Our Trainings"}
-            icon={
-              <RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
-            }
+            icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
           />
         </Fade>
-
 
         {isFetchingTrainings ? (
           <SkeletonLoader />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {training.map((article) => (
-              <Link
-                href={`/trainings/${article._id}`}
-                key={article._id}
-                className="bg-white shadow rounded-2xl  flex flex-col relative h-72"
-              >
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="h-full w-full object-cover rounded-2xl mb-4"
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black  rounded-2xl"></div>
-                <div className="absolute bottom-0 left-0 p-4 ">
-                  <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                  <p className="text-lg text-white/70"><RichContent content={article.excerpt}/></p>
+              <div key={article._id} className="flex flex-col gap-4">
+                <div className="aspect-video overflow-hidden rounded-lg">
+                  <img
+                    src={article.image || "/placeholder.svg"}
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              </Link>
+                <h3 className="text-2xl font-bold text-gray-900">{article.title}</h3>
+                <Link
+                  href={`/trainings/${article._id}`}
+                  className="flex items-center gap-2 text-gray-900 hover:gap-3 transition-all group"
+                >
+                  Read more
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
             ))}
           </div>
         )}
       </div>
-      <Footer />
 
+      <WhyTrain></WhyTrain>
+      <Footer />
     </main>
-  );
+  )
 }
+
