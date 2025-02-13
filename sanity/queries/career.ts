@@ -1,12 +1,11 @@
 import { sanityClient } from "../sanity.client";
 
-// TypeScript interfaces for type safety
+// TypeScript interfaces
 interface Career {
   _id: string;
   title: string;
-  excerpt: string;
-  image: string;
-  content: any;
+  description: any; // For blockContent
+  details: any; // For blockContent
   link: string;
 }
 
@@ -17,30 +16,25 @@ interface PaginatedResponse<T> {
   pageSize: number;
 }
 
-
+// Fetch all careers with pagination
 export async function fetchCareers(
-  page: number,
-  pageSize: number,
+  page: number = 1,
+  pageSize: number = 10
 ): Promise<PaginatedResponse<Career>> {
   const offset = (page - 1) * pageSize;
 
   try {
-    let itemsQuery = `
-        *[_type == "career"] | order(_createdAt desc) {
-          _id,
-          title,
-          excerpt,
-          "image": image.asset->url,
-          content,
-          category->{_id, name},
-          authors
-        }[${offset}...${offset + pageSize}]
-      `;
+    const itemsQuery = `
+      *[_type == "career"] | order(_createdAt desc) {
+        _id,
+        title,
+        description,
+        details,
+        link
+      }[${offset}...${offset + pageSize}]
+    `;
 
-    let countQuery = `
-        count(*[_type == "career"])
-      `;
-
+    const countQuery = `count(*[_type == "career"])`;
 
     const [items, total] = await Promise.all([
       sanityClient.fetch<Career[]>(itemsQuery),
@@ -54,29 +48,49 @@ export async function fetchCareers(
       pageSize,
     };
   } catch (error) {
+    console.error("Error fetching careers:", error);
     throw new Error("Failed to fetch careers");
   }
 }
 
-
-// Fetch a single career by its ID
-export async function fetchCareerByID(id: string): Promise<Career | null> {
-  const query = `
-    *[_type == "career" && _id == $id] {
-      _id,
-      title,
-      excerpt,
-      "image": image.asset->url,
-      content,
-      link
-    }[0]
-  `;
-
+// Fetch a single career by ID
+export async function fetchCareerById(id: string): Promise<Career | null> {
   try {
+    const query = `
+      *[_type == "career" && _id == $id][0] {
+        _id,
+        title,
+        description,
+        details,
+        link
+      }
+    `;
+
     const career = await sanityClient.fetch<Career | null>(query, { id });
     return career;
   } catch (error) {
     console.error("Error fetching career by ID:", error);
     throw new Error("Failed to fetch career");
+  }
+}
+
+// Fetch all careers without pagination (if needed)
+export async function fetchAllCareers(): Promise<Career[]> {
+  try {
+    const query = `
+      *[_type == "career"] | order(_createdAt desc) {
+        _id,
+        title,
+        description,
+        details,
+        link
+      }
+    `;
+    
+    const careers = await sanityClient.fetch<Career[]>(query);
+    return careers;
+  } catch (error) {
+    console.error("Error fetching all careers:", error);
+    throw new Error("Failed to fetch careers");
   }
 }

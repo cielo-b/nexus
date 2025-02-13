@@ -10,47 +10,41 @@ export default defineType({
     {
       name: "title",
       title: "Title",
-      description: "Title of the career.",
+      description: "Title of the career position",
       type: "string",
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "excerpt",
-      title: "Excerpt",
-      description: "A short description of the career.",
+      name: "description",
+      title: "Description",
+      description: "Brief description of the career position",
       type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "image",
-      title: "Image",
-      type: "image",
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      name: "content",
-      title: "Content",
+      name: "details",
+      title: "Details",
+      description: "Full details of the career position",
       type: "blockContent",
       validation: (Rule) => Rule.required()
     },
     {
       name: "link",
-      title: "Link",
-      description: "Optional link for the publication.",
+      title: "Application Link",
+      description: "Link to apply for the position",
       type: "url",
+      validation: (Rule) => Rule.required(),
     },
   ],
   preview: {
     select: {
       title: "title",
-      date: "date",
       media: "image",
     },
     prepare(selection) {
-      const { title, date, media } = selection;
+      const { title, media } = selection;
       return {
         title,
-        subtitle: date,
         media,
       };
     },
