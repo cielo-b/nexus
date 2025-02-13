@@ -67,7 +67,7 @@ export default function Home() {
       
       {/* <Features title="All Our Services" type="all" /> */}
       <ServiceSection></ServiceSection>
-      <WhyUs />
+      {/* <WhyUs /> */}
       <Footer />
       
     </main>

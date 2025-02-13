@@ -4,10 +4,11 @@ import Feature from "./Feature";
 import { RectangleGroupIcon } from "@heroicons/react/20/solid";
 import { Fade } from "react-awesome-reveal";
 import { fetchWhyUs } from "@/sanity/queries/others";
+import { Content } from "./RichContent";
 
 const WhyUs = () => {
   const [whyUsData, setWhyUsData] = useState<
-    { title: string; answer: string }[]
+    { title: string; answer: Content[] }[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [activeFeature, setActiveFeature] = useState<number | null>(0);

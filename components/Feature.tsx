@@ -2,6 +2,7 @@ import React from "react";
 import { FeaturesProps } from "@/types";
 import { TypeAnimation } from "react-type-animation";
 import { Fade, Slide } from "react-awesome-reveal";
+import RichContent from "./RichContent";
 
 
 const Feature = ({
@@ -23,13 +24,16 @@ const Feature = ({
           {title}
         </h1>
         {isActive && (
-          <TypeAnimation
-            sequence={[`${description}`, 0]}
-            wrapper='span'
-            speed={90}
-            repeat={0}
-            className='font-light w-full text-black max-sm:text-xs transition-opacity duration-300 ease-out'
-          />
+          // <TypeAnimation
+          //   sequence={[`${description}`, 0]}
+          //   wrapper='span'
+          //   speed={90}
+          //   repeat={0}
+          //   className='font-light w-full text-black max-sm:text-xs transition-opacity duration-300 ease-out'
+          // />
+          <>
+            <RichContent  content={description}  />
+          </>
         )}
       </div>
     </div>

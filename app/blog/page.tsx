@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import Link from "next/link";
+import RichContent from "@/components/RichContent";
 
 
 function SkeletonLoader() {
@@ -140,7 +141,7 @@ export default function Home() {
         </Fade>
         <div className="flex gap-4 flex-wrap mb-8">
           <button
-            className={`px-4 py-2 rounded-full text-white ${selectedCategory === null ? "bg-blue-600" : "bg-gray-400"
+            className={`px-4 py-2 rounded-xl text-white ${selectedCategory === null ? "bg-blue-600" : "bg-gray-400"
               }`}
             onClick={() => handleCategoryChange(null)}
           >
@@ -149,7 +150,7 @@ export default function Home() {
           {categories.map((category) => (
             <button
               key={category._id}
-              className={`px-4 py-2 rounded-full text-white ${selectedCategory === category._id ? "bg-blue-600" : "bg-gray-400"
+              className={`px-4 py-2 rounded-xl text-white ${selectedCategory === category._id ? "bg-blue-600" : "bg-gray-400"
                 }`}
               onClick={() => handleCategoryChange(category._id)}
             >
@@ -176,7 +177,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black  rounded-2xl"></div>
                 <div className="absolute bottom-0 left-0 p-4 ">
                   <h3 className="text-2xl font-bold mb-2 text-white">{article.title}</h3>
-                  <p className="text-lg text-white/70">{article.excerpt}</p>
+                  <p className="text-lg text-white/70"><RichContent content={article.excerpt}/></p>
                 </div>
               </Link>
             ))}

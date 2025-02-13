@@ -61,7 +61,7 @@ const RichContent = ({ content }: RichContentProps) => {
         };
 
         return (
-            <span key={_key} className={marks.join(' ')} style={styles}>
+            <span key={_key} className={`${marks.join(' ')}`} style={styles}>
                 {text}
             </span>
         );

@@ -7,7 +7,7 @@ import { schemaTypes } from "./sanity/schemas";
 export default defineConfig({
   name: "default",
   title: "Nexus CMS",
-  projectId: "gceifvqa",
+  projectId: "jgw7ezer",
   dataset: "development",
   basePath: "/studio",
   plugins: [structureTool(), visionTool(), media()],
