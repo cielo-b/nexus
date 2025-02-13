@@ -9,7 +9,7 @@ import Link from "next/link"
 import RichContent from "./RichContent"
 
 const Features = ({ title, type }: { title: any; type: any }) => {
-  const [services, setServices] = useState<{ title: string; excerpt: string; image: string; _id: string }[]>([])
+  const [services, setServices] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

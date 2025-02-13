@@ -10,14 +10,14 @@ import { useState, useEffect } from "react";
 import { Fade } from "react-awesome-reveal";
 import { fetchCaseById, fetchCases } from "@/sanity/queries/services";
 import { useParams } from "next/navigation";
-import RichContent from "@/components/RichContent";
+import RichContent, { Content } from "@/components/RichContent";
 import Link from "next/link";
 import Redirect from "@/components/Redirect";
 
 interface Case {
   _id: string;
   title: string;
-  excerpt: string;
+  excerpt: Content[];
   image?: string;
   content: string;
   category: { _id: string; title: string };
@@ -120,7 +120,7 @@ export default function CasePage() {
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black rounded-2xl"></div>
                 <div className="absolute bottom-0 left-0 p-4">
                   <h3 className="text-2xl font-bold mb-2 text-white">{relatedCase.title}</h3>
-                  <p className="text-lg text-white/70 line-clamp-1">{relatedCase.excerpt}</p>
+                  <p className="text-lg text-white/70 line-clamp-1"><RichContent content={relatedCase.excerpt}></RichContent></p>
                 </div>
               </Link>
             ))}

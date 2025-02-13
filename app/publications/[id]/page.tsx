@@ -4,7 +4,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
 import AnimatedCursor from "react-animated-cursor";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation"; // Correct import for App Router
 import { useState, useEffect } from "react";
 import { Fade } from "react-awesome-reveal";
 import Publications from "@/components/Publications";
@@ -29,6 +29,7 @@ export default function Page() {
   const [isFetchingArticles, setIsFetchingArticles] = useState(true);
   const [articles, setArticles] = useState<any>([]);
   const [category, setCategory] = useState<any>();
+  const router = useRouter(); // Initialize the router for App Router
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -57,12 +58,21 @@ export default function Page() {
   return loading || isFetchingArticles ? (
     <Loader />
   ) : (
-    <main className="flex flex-col w-full h-full  overflow-hidden overflow-x-hidden">
+    <main className="flex flex-col w-full h-full overflow-hidden overflow-x-hidden">
       <NavBar />
       <div
-        className="w-full h-fit items-center lg:pb-20 max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex flex-col "
+        className="w-full h-fit items-center lg:pb-20 max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-20 max-md:gap-10 justify-center flex flex-col"
         id="category-page"
       >
+        {/* Add the "Return to Publications" button */}
+        <div className="w-full flex justify-center z-40">
+          <button
+            onClick={() => router.push("/publications")} // Use navigate to go back to /publications
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4"
+          >
+            Return to Publications
+          </button>
+        </div>
         <div className="w-full flex justify-center z-40">
           <Fade className="px-6 max-sm:px-4 z-40">
             <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
@@ -104,5 +114,3 @@ export default function Page() {
     </main>
   );
 }
-
-

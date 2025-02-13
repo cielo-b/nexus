@@ -7,10 +7,11 @@ import { useState, useEffect } from "react"
 import { Fade } from "react-awesome-reveal"
 import Header from "@/components/Header"
 import { RectangleGroupIcon } from "@heroicons/react/20/solid"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, BookOpen, Target, TrendingUp } from 'lucide-react'
 import Link from "next/link"
 import { fetchTrainings } from "@/sanity/queries/trainings"
 import WhyTrain from "@/components/WhyTrain"
+
 function SkeletonLoader() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -58,7 +59,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchTrainingsByCategory(currentPage)
-  }, [currentPage]) // Removed fetchTrainingsByCategory from dependencies
+  }, [currentPage])
 
   return isFetchingTrainings ? (
     <Loader />
@@ -80,13 +81,47 @@ export default function Home() {
                 </span>{" "}
                 Trainings
               </h1>
-              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                At InsightNExus, we offer tailored training programs designed to empower organizations with the skills
-                and knowledge needed to drive data-driven transformation. Our expert-led training spans a wide range of
-                sectors, including education, agriculture, public health, and more. We equip individuals and teams with
-                the tools to foster sustainable growth, enhance performance, and achieve long-term success through
-                impactful, evidence-based strategies.
-              </p>
+
+              {/* Enhanced subtitle section */}
+              <div className="flex flex-col items-center gap-8 max-w-4xl">
+                <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center leading-relaxed">
+                  At{" "}
+                  <span className="text-[#2563eb] font-semibold">
+                    InsightNexus
+                  </span>
+                  , we offer tailored training programs designed to empower organizations with the skills
+                  and knowledge needed to drive data-driven transformation.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6 w-full">
+                  <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
+                      <BookOpen className="w-7 h-7 text-[#2563eb]" />
+                    </div>
+                    <p className="text-sm md:text-base text-gray-600">
+                      Expert-led training across education, agriculture, and public health sectors
+                    </p>
+                  </div>
+
+                  <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
+                      <TrendingUp className="w-7 h-7 text-[#2563eb]" />
+                    </div>
+                    <p className="text-sm md:text-base text-gray-600">
+                      Equipping teams with tools for sustainable growth and enhanced performance
+                    </p>
+                  </div>
+
+                  <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
+                      <Target className="w-7 h-7 text-[#2563eb]" />
+                    </div>
+                    <p className="text-sm md:text-base text-gray-600">
+                      Achieving long-term success through impactful, evidence-based strategies
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </Fade>
         </div>
@@ -127,9 +162,8 @@ export default function Home() {
         )}
       </div>
 
-      <WhyTrain></WhyTrain>
+      <WhyTrain />
       <Footer />
     </main>
   )
 }
-

@@ -36,7 +36,7 @@ export interface HeaderProps {
 
 export interface FeaturesProps {
   icon?: string;
-  title: Content[];
+  title: string;
   description: Content[];
   image?: string;
   isActive?: boolean;
