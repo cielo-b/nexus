@@ -99,7 +99,7 @@ export default function Home() {
       <Services title={"What we do ?"} type={"all"}></Services>
       <WhyUs />
       <Members />
-      <Faq />
+      {/* <Faq /> */}
       <Footer />
 
       {/* <AnimatedCursor
