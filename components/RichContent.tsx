@@ -31,6 +31,7 @@ interface RichContentProps {
 const RichContent = ({ content }: RichContentProps) => {
   if (!content) return null
 
+  // Image Component
   const ImageComponent = ({ value, isInline }: any) => {
     if (!value?.asset) return null
 
@@ -55,38 +56,42 @@ const RichContent = ({ content }: RichContentProps) => {
     )
   }
 
+  // Span Element
   const SpanElement = ({ child }: { child: Children }) => {
     const { _key, marks = [], text = "" } = child
 
     const styles = {
       textDecoration: marks?.includes("underline") ? "underline" : "none",
-      fontWeight: marks?.includes("medium") ? "semibold" : "normal",
+      fontWeight: marks?.includes("strong") ? "bold" : "normal",
       fontStyle: marks?.includes("em") ? "italic" : "normal",
     }
 
     return (
-      <span key={_key} className={marks?.join(" ") || ""} style={styles}>
+      <span key={_key} style={styles}>
         {text}
       </span>
     )
   }
 
+  // Block Component
   const BlockComponent = ({ value }: { value: Content }) => {
     if (!value?._key || !value?.children) return null
 
+    // Handle lists
     if (value.listItem) {
+      const ListTag = value.listItem === "bullet" ? "ul" : "ol"
       return (
-        <ul key={value._key} className="list-disc list-inside my-1">
+        <ListTag key={value._key} className={value.listItem === "bullet" ? "list-disc pl-5 my-4" : "list-decimal pl-5 my-4"}>
           {value.children.map((child) => (
             <li key={child._key}>
               <SpanElement child={child} />
             </li>
           ))}
-        </ul>
+        </ListTag>
       )
     }
 
-    // Handle different block styles
+    // Handle block styles
     const getStyleClasses = (style?: string) => {
       switch (style) {
         case "h1":
@@ -99,6 +104,8 @@ const RichContent = ({ content }: RichContentProps) => {
           return "text-xl font-bold my-2"
         case "blockquote":
           return "border-l-4 border-gray-300 pl-4 italic my-4"
+        case "normal":
+          return "my-1"
         default:
           return "my-1"
       }
@@ -113,6 +120,7 @@ const RichContent = ({ content }: RichContentProps) => {
     )
   }
 
+  // PortableText Components
   const components: Partial<PortableTextReactComponents> = {
     types: {
       image: ImageComponent,
@@ -147,4 +155,3 @@ const RichContent = ({ content }: RichContentProps) => {
 }
 
 export default RichContent
-
