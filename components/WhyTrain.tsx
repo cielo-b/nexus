@@ -50,14 +50,14 @@ export default function WhyTrain() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <Link
+          {/* <Link
             href="#contact"
             onClick={scrollToContact}
             className="group inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-400 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
           >
             Contact Us Today
             <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
+          </Link> */}
         </motion.div>
       </div>
     </section>

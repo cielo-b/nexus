@@ -49,7 +49,7 @@ export default function CareerPage() {
       if (!id) return;
       try {
         const careerData = await fetchCareerById(id)
-        setCareer(careerData as any);
+        setCareer(careerData);
       } catch (error) {
         console.error("Failed to fetch content:", error);
       } finally {
