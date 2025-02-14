@@ -73,7 +73,7 @@ const ContactUs = () => {
       />
       <div className="flex flex-col items-center lg:items-start justify-center gap-4 ">
         <h1 className="text-black font-bold text-3xl max-md:text-4xl max-sm:text-2xl ">
-          Any<span className="text-[#2563eb]"> Insights </span>?<br />
+          Any<span className="text-[#2563eb]"> Insights </span>?
           Feel Free To <span className="text-[#2563eb]">Contact</span> Us
         </h1>
       </div>
