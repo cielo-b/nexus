@@ -4,14 +4,14 @@ import { Fade } from "react-awesome-reveal"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/autoplay"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import Link from "next/link"
-import AnalyticItem from "./AnalyticItem"
-import { Analytics } from "@/constants"
+
 import RichContent, { type Content } from "./RichContent"
 
 interface Category {
@@ -32,6 +32,15 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
   const router = useRouter()
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % Math.ceil(articles.length / 3))
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + Math.ceil(articles.length / 3)) % Math.ceil(articles.length / 3))
+  }
   const [swiper, setSwiper] = useState<any>(null)
 
   return (
@@ -41,7 +50,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
     >
       <div className="w-full flex justify-center z-40">
         <Fade className="px-6 max-sm:px-4 z-40">
-          <div className="flex flex-col lg:gap-5 md:gap-3 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
+          <div className="flex flex-col lg:gap-8 md:gap-5 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
             <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center ">
               <span className="text-[#2563eb] inline-block relative items-center justify-center">
                 <img
@@ -50,7 +59,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
                   className="absolute w-[300px] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
                 />
                 <span className="z-40 relative">Empowering </span>
-              </span>{" "}
+              </span>{"  "}
               Change
               <br />
               Through Expert{" "}
@@ -99,7 +108,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
           }}
           pagination={{
             clickable: true,
-            bulletActiveClass: "swiper-pagination-bullet-active",
+            el: ".swiper-pagination",
+            type: "bullets",
           }}
           onSwiper={setSwiper}
         >
@@ -126,22 +136,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10 rounded-full p-3  cursor-pointer">
-          <ChevronLeftIcon className="w-3 h-2 text-[#2563eb]" />
-        </div>
-        <div className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 z-10 rounded-full p-3  cursor-pointer">
-          <ChevronRightIcon className="w-3 h-2 text-[#2563eb]" />
-        </div>
+        
+       
+        
       </div>
-
-      <div className="border-[#2563eb] flex border h-fit p-10 gap-10 max-sm:p-5 inset-0 bg-opacity-20 rounded-full backdrop-blur-lg justify-between w-2/3 z-40 max-lg:w-11/12 max-md:flex-col max-md:rounded-3xl max-md:flex-wrap max-md:gap-5">
-        {Analytics.map((item, index) => (
-          <AnalyticItem title={item.title} key={index} description={item.description} />
-        ))}
-      </div>
+      
     </div>
+    
   )
 }
 
 export default HeroSection
-

@@ -66,17 +66,12 @@ export default function Page() {
       >
         {/* Add the "Return to Publications" button */}
         <div className="w-full flex justify-center z-40">
-          <button
-            onClick={() => router.push("/publications")} // Use navigate to go back to /publications
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors mb-4"
-          >
-            Return to Publications
-          </button>
+         
         </div>
         <div className="w-full flex justify-center z-40">
           <Fade className="px-6 max-sm:px-4 z-40">
             <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
-              <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center">
+              <h1 className="text-black font-bold lg:text-4xl z-20 md:text-3xl max-sm:text-2xl sm:text-3xl w-full text-center">
                 {category?.name}
               </h1>
             </div>

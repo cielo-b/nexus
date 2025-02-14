@@ -106,11 +106,9 @@ const Footer = () => {
       <hr className="border-1 border-[#C6C6C6] w-full" />
 
       <div className="w-full flex items-center justify-center">
-        <p className="text-[#000912]/50 font-medium text-center text-xs sm:text-sm">
-          Copyright © 2024{" "}
-          <a href="mailto:info@insightnexus.africa" className="text-[#000912]">
-            info@insightnexus.africa
-          </a>
+        <p className="text-[#000912] font-medium text-center text-xs sm:text-sm">
+          Insight Nexus || Powered by Y4 Lab.© 2025
+        
         </p>
       </div>
     </div>

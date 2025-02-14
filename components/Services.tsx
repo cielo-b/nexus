@@ -112,7 +112,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
           </Fade>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           {loading
             ? Array.from({ length: 3 }).map((_, index) => (
                 <div key={index} className="animate-pulse w-full relative rounded-xl h-64 bg-gray-300"></div>
@@ -141,7 +141,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                   </div>
                 </Fade>
               ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )

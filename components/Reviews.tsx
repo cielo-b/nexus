@@ -11,6 +11,7 @@ import SlidePrevButton from "./SlidePrevButton";
 import Testimony from "./Testimony";
 import { Fade } from "react-awesome-reveal";
 
+
 const Reviews = ({ testimonies }: { testimonies: any[] }) => {
   const swipingButtonRefNext = useRef<HTMLButtonElement | null>(null);
   const swipingButtonRefPrev = useRef<HTMLButtonElement | null>(null);
@@ -114,6 +115,7 @@ const Reviews = ({ testimonies }: { testimonies: any[] }) => {
           onClick={() => swipingButtonRefNext.current?.click()}
         />
       </div>
+      
     </div>
   );
 };

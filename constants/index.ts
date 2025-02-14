@@ -8,7 +8,7 @@ export const MenuLinks = [
   { title: "Blog", link: "/blog" },
 ];
 
-export const Analytics = [
+export const Analytic = [
   { title: 4, description: "Consultancy Services" },
   { title: 1, description: "Active Projects" },
   { title: 2, description: "Industry Sectors " },
