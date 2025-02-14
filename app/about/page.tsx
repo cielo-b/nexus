@@ -73,7 +73,20 @@ export default function Home() {
                   <span className="z-40 relative">Nexus </span>
                 </span>{" "}
               </h1>
+              <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
+  <p className="text-lg text-[#000912]/70 text-center">
+    Insight Nexus, established in Rwanda and duly registered under the Law N°
+    007/2021 of 05/02/2021 governing companies, 
+    excels in delivering a broad
+    spectrum of consultancy services. Our areas of expertise 
+    include education,
+    agriculture, public health, gender, and livelihoods, alongside conducting
+    in-depth case studies. We serve a diverse clientele, ranging from
+    international to local NGOs, with a particular emphasis on strengthening
+    local organizations.
+  </p>
+</div>
              
 
 

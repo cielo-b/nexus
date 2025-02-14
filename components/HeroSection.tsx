@@ -4,6 +4,7 @@ import { Fade } from "react-awesome-reveal"
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
 import { useRouter } from "next/navigation"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { ArrowRight, ArrowLeft } from "lucide-react"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import "swiper/css"
 import "swiper/css/autoplay"
@@ -31,6 +32,15 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
   const router = useRouter()
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % Math.ceil(articles.length / 3))
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + Math.ceil(articles.length / 3)) % Math.ceil(articles.length / 3))
+  }
   const [swiper, setSwiper] = useState<any>(null)
 
   return (
@@ -98,7 +108,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
           }}
           pagination={{
             clickable: true,
-            bulletActiveClass: "swiper-pagination-bullet-active",
+            el: ".swiper-pagination",
+            type: "bullets",
           }}
           onSwiper={setSwiper}
         >
@@ -125,18 +136,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="swiper-button-prev absolute left-0 top-1/2 transform -translate-y-1/2 z-10 rounded-full p-3  cursor-pointer">
-          <ChevronLeftIcon className="w-3 h-2 text-[#2563eb]" />
-        </div>
-        <div className="swiper-button-next absolute right-0 top-1/2 transform -translate-y-1/2 z-10 rounded-full p-3  cursor-pointer">
-          <ChevronRightIcon className="w-3 h-2 text-[#2563eb]" />
-        </div>
+        
+       
+        
       </div>
-
-     
+      
     </div>
+    
   )
 }
 
 export default HeroSection
-
