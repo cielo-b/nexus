@@ -41,7 +41,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
     >
       <div className="w-full flex justify-center z-40">
         <Fade className="px-6 max-sm:px-4 z-40">
-          <div className="flex flex-col lg:gap-5 md:gap-3 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
+          <div className="flex flex-col lg:gap-8 md:gap-5 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
             <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center ">
               <span className="text-[#2563eb] inline-block relative items-center justify-center">
                 <img
@@ -50,7 +50,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
                   className="absolute w-[300px] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
                 />
                 <span className="z-40 relative">Empowering </span>
-              </span>{" "}
+              </span>{"  "}
               Change
               <br />
               Through Expert{" "}
