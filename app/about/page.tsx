@@ -96,7 +96,7 @@ export default function Home() {
       </div>
       <WhatWeDo></WhatWeDo>
       {/* <Features title={"Our Services"} type={"all"} />  */}
-      <Services title={"What we do ?"} type={"all"}></Services>
+      <Services title={"What we do ?"} type={""}></Services>
       <WhyUs />
       <Members />
       {/* <Faq /> */}
