@@ -1,104 +1,110 @@
-"use client";
+"use client"
 
-import "ldrs/ring";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-import RichContent, { Content } from "@/components/RichContent";
-import Link from "next/link";
-import Redirect from "@/components/Redirect";
-import { fetchTrainingByID } from "@/sanity/queries/trainings";
+import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useParams } from "next/navigation"
+import Image from "next/image"
+import { ArrowLeft, ExternalLink, Loader2 } from "lucide-react"
+import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
+import RichContent, { type Content } from "@/components/RichContent"
+import Redirect from "@/components/Redirect"
+import { fetchTrainingByID } from "@/sanity/queries/trainings"
 
 interface Training {
-  _id: string;
-  title: string;
-  excerpt: Content[];
-  image?: string;
-  content: string;
-  link: string;
-}
-
-interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  page: number;
-  pageSize: number;
+  _id: string
+  title: string
+  excerpt: Content[]
+  image?: string
+  content: string
+  link: string
 }
 
 function Loader() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white backdrop-blur flex-col !z-50">
-      <div className="container">
-        <div className="dot"></div>
-      </div>
+    <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 backdrop-blur-sm z-50">
+      <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
     </div>
-  );
+  )
 }
 
 export default function TrainingPage() {
-  const { id } = useParams<any>();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [training, setTraining] = useState<Training | null>(null);
+  const { id } = useParams<any>()
+  const router = useRouter()
+  const [loading, setLoading] = useState(true)
+  const [training, setTraining] = useState<Training | null>(null)
 
   useEffect(() => {
     const fetchContent = async () => {
-      if (!id) return;
+      if (!id) return
       try {
         const trainingData = await fetchTrainingByID(id)
-        setTraining(trainingData);
+        setTraining(trainingData)
       } catch (error) {
-        console.error("Failed to fetch content:", error);
+        console.error("Failed to fetch content:", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchContent();
-  }, [id]);
+    fetchContent()
+  }, [id])
 
-  return loading ? (
-    <Loader />
-  ) : !training ? (
-    <Redirect to="/" />
-  ) : (
-    <main className="flex flex-col w-full h-full overflow-hidden overflow-x-hidden bg-gray-100">
+  if (loading) return <Loader />
+  if (!training) return <Redirect to="/" />
+
+  return (
+    <main className="flex flex-col min-h-screen bg-gray-50">
       <NavBar />
-      <div className="w-full mt-36 px-[10vw]">
+      <div className="flex-grow  mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-20">
         <button
           onClick={() => router.back()}
-          className="mb-6 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-10 rounded-full"
+          className="mb-8 inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200"
         >
-          Back To Trainings
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          <span className="text-sm font-medium">Back to Trainings</span>
         </button>
-      </div>
-      <div className="flex flex-col lg:flex-row gap-8  px-[10vw] items-center ">
-        {training ? (
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold mb-4">{training.title}</h2>
-            {training.image && (
-              <img
-                src={training.image}
-                alt={training.title}
-                className="w-full h-auto rounded-lg mb-6"
-              />
-            )}
-            <RichContent content={training.content as any} />
-            <div className="mt-5 flex justify-start">
-              <a href={training.link} target="_blank" className={`bg-[#2563eb] text-white rounded-full flex gap-2 flex-row items-center justify-center max-sm:px-2 max-sm:py-2 px-10 py-2.5 hover:bg-[#2563eb11] border-[#2563eb] hover:shadow-sm hover:shadow-[#2563eb45] ease-out duration-300 group border w-fit`}>Apply Now</a>
+        <div className="bg-white  rounded-xl overflow-hidden">
+          <div className="md:flex">
+            <div className="md:w-2/3 p-6 sm:p-8 lg:p-10">
+              <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-800">{training.title}</h1>
+              <div className="prose prose-sm sm:prose lg:prose-lg max-w-none">
+                <RichContent content={training.content as any} />
+              </div>
+              <a
+                href={training.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Apply Now
+                <ExternalLink className="ml-2 h-5 w-5" />
+              </a>
+            </div>
+            <div className="md:w-1/3 relative">
+              {training.image ? (
+                <div className="h-64 md:h-full">
+                  <Image
+                    src={training.image || "/placeholder.svg"}
+                    alt={training.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none"
+                  />
+                </div>
+              ) : (
+                <div className="h-64 md:h-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-400 text-lg">No image available</span>
+                </div>
+              )}
             </div>
           </div>
-        ) : (
-          <div className="text-center text-gray-600 text-lg">No training found.</div>
-        )}
+        </div>
       </div>
       <Footer />
-
     </main>
-  );
+  )
 }
 
+export const runtime = "edge"
 
-export const runtime = 'edge';

@@ -159,7 +159,7 @@ export default function ServicesSection() {
                         <motion.div
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
-                          className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                          className="absolute inset-0  flex items-center justify-center"
                         >
                           <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}
