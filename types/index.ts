@@ -48,7 +48,7 @@ export interface TestimonyProps {
   name: string;
   title: Content[];
   ratings: number;
-  description: Content[];
+  description: string;
   profilePic: string;
 }
 

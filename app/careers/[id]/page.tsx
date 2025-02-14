@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 import RichContent from "@/components/RichContent";
 import Link from "next/link";
 import Redirect from "@/components/Redirect";
-import { fetchCareerByID } from "@/sanity/queries/career";
+import { fetchCareerById } from "@/sanity/queries/career";
 
 interface Career {
   _id: string;
@@ -48,7 +48,7 @@ export default function CareerPage() {
     const fetchContent = async () => {
       if (!id) return;
       try {
-        const careerData = await fetchCareerByID(id)
+        const careerData = await fetchCareerById(id)
         setCareer(careerData);
       } catch (error) {
         console.error("Failed to fetch content:", error);

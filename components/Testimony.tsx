@@ -17,13 +17,17 @@ const Testimony = ({ name, title, ratings, description, profilePic }: TestimonyP
           {new Array(Math.floor(ratings)).fill(null).map((_, idx) => {
             return (
               <img src="/images/star.svg" alt="" className="h-5 w-5 xsm-min:h-3 xsm-min:w-3 max-sm:w-3 max-sm:h-3" key={idx} />
+              
             );
           })}
+          
+      
         </div>
+        <p className="text-base font-medium text-gray-600 md-min3:text-center xsm-min:text-sm max-sm:text-sm">
+           {description}
+      </p>
       </div>
-      <span className="text-base font-medium text-gray-600 md-min3:text-center xsm-min:text-sm max-sm:text-sm">
-        <RichContent content={description}/>
-      </span>
+     
     </div>
   )
 }
