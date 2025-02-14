@@ -69,7 +69,7 @@ const ContactUs = () => {
       <img
         src="/images/zigs.svg"
         alt="zigs"
-        className="absolute w-2/5 top-[330px] -right-1/4 z-30"
+        className="absolute w-2/5 top-[330px] -right-1/4 z- 30"
       />
       <div className="flex flex-col items-center lg:items-start justify-center gap-4 ">
        
