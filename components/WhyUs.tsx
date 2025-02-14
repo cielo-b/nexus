@@ -1,84 +1,227 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import Header from "./Header"
-import { RectangleGroupIcon } from "@heroicons/react/20/solid"
-import { Fade } from "react-awesome-reveal"
-import { fetchWhyUs } from "@/sanity/queries/others"
-import type { Content } from "./RichContent"
-import RichContent from "./RichContent"
-import { Lightbulb, ShieldCheck, Users, BarChart, Globe, BookOpen, HeartHandshake, Target } from "lucide-react"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
+import { fetchServices, fetchCases } from "@/sanity/queries/services"
+import RichContent, { type Content } from "./RichContent"
+import { ArrowRight } from "lucide-react"
 
-const WhyUs = () => {
-  const [whyUsData, setWhyUsData] = useState<{ title: string; answer: Content[] }[]>([])
+interface Service {
+  _id: string
+  title: string
+  excerpt: Content[]
+  image: string
+}
+
+interface Case {
+  _id: string
+  title: string
+  excerpt: Content[]
+  image: string
+  service?: {
+    _id: string
+    title: string
+  }
+}
+
+export default function ServicesSection() {
+  const [services, setServices] = useState<Service[]>([])
+  const [cases, setCases] = useState<Case[]>([])
+  const [activeSection, setActiveSection] = useState<string>("")
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string>("")
+  const [visibleCases, setVisibleCases] = useState<number>(5) // State to track visible cases
 
-  useEffect(() => {
-    const loadWhyUsData = async () => {
-      try {
-        const fetchedData = await fetchWhyUs()
-        setWhyUsData(fetchedData)
-      } catch (error) {
-        console.error("Error fetching Why Us data:", error)
-      } finally {
-        setLoading(false)
+  const loadServicesAndCases = useCallback(async () => {
+    try {
+      const fetchedServices = await fetchServices()
+      setServices(fetchedServices)
+
+      if (fetchedServices.length > 0) {
+        setActiveSection(fetchedServices[0].title)
+
+        const allCases: Case[][] = await Promise.all(fetchedServices.map((service: Service) => fetchCases(service._id)))
+        setCases(allCases.flat())
       }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to fetch services and cases"
+      setError(errorMessage)
+      console.error("Error fetching services and cases:", error)
+    } finally {
+      setLoading(false)
     }
-
-    loadWhyUsData()
   }, [])
 
-  // Map feature titles to Lucide icons
-  const featureIcons = {
-    "Innovation": <Lightbulb className="w-10 h-10 text-blue-500" />,
-    "Reliability": <ShieldCheck className="w-10 h-10 text-blue-500" />,
-    "Expert Team": <Users className="w-10 h-10 text-blue-500" />,
-    "Data-Driven": <BarChart className="w-10 h-10 text-blue-500" />,
-    "Global Reach": <Globe className="w-10 h-10 text-blue-500" />,
-    "Education Focus": <BookOpen className="w-10 h-10 text-blue-500" />,
-    "Community Impact": <HeartHandshake className="w-10 h-10 text-blue-500" />,
-    "Goal-Oriented": <Target className="w-10 h-10 text-blue-500" />,
+  useEffect(() => {
+    loadServicesAndCases()
+  }, [loadServicesAndCases])
+
+  const activeService = useMemo(
+    () =>
+      services.find((service) => service.title === activeSection) || {
+        title: "",
+        excerpt: [],
+        image: "",
+        _id: "",
+      },
+    [services, activeSection],
+  )
+
+  const activeCases = useMemo(
+    () => cases.filter((caseItem) => caseItem.service?._id === activeService._id),
+    [cases, activeService._id],
+  )
+
+  const handleSectionChange = useCallback((title: string) => {
+    setActiveSection(title)
+    setVisibleCases(5) // Reset visible cases when switching sections
+  }, [])
+
+  const handleReadMore = useCallback(() => {
+    setVisibleCases((prev) => prev + 5) // Show 5 more cases
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-600">Error: {error}</div>
+      </div>
+    )
   }
 
   return (
-    <div
-      className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-10 max-md:pb-10 gap-6 px-[10%] max-lg:px-6 max-md:gap-8 overflow-hidden bg-[#f2f4fa]"
-      id="whyus"
-    >
-      <div className="w-full flex flex-col items-center justify-center gap-10 z-40">
-        <Fade>
-          <Header
-            title="Our Strength ?"
-            icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
-          />
-          <h1 className="text-[#000912] font-bold text-5xl text-center max-md:text-4xl max-sm:text-3xl">
-            Why <span className="text-[#2563eb]">Choose</span> Us
-          </h1>
-          
-        </Fade>
+    <div className="flex flex-col lg:flex-row gap-9 p-4 md:p-8 max-w-7xl mx-auto min-h-screen">
+      {/* Navigation Links */}
+      <nav className="lg:w-1/4 space-y-2 order-1 lg:order-1">
+        {services.map((service) => (
+          <button
+            key={service._id}
+            onClick={() => handleSectionChange(service.title)}
+            className={`text-left w-full px-4 py-2 rounded-lg transition-colors ${
+              activeSection === service.title
+                ? "text-blue-600 font-semibold bg-blue-50"
+                : "text-gray-700 hover:text-blue-600"
+            }`}
+          >
+            {service.title}
+          </button>
+        ))}
+      </nav>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
-          {loading
-            ? Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="animate-pulse space-y-4 p-6 bg-white rounded-lg shadow-sm">
-                  <div className="w-10 h-10 bg-emerald-200 rounded-full"></div>
-                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-24 bg-gray-200 rounded"></div>
-                </div>
-              ))
-            : whyUsData.map((feature, index) => (
-                <div key={index} className="flex flex-col space-y-4 p-6 bg-[#f2f4fa] rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                  {featureIcons[feature.title as keyof typeof featureIcons] || <Lightbulb className="w-10 h-10 text-blue-500" />}
-                  <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-                  <div className="text-md text-gray-600 leading-relaxed">
-                    <RichContent content={feature.answer} />
+      {/* Content Area */}
+      <div className="lg:w-2/5 order-2 lg:order-2">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeService._id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-6"
+          >
+            <div className="space-y-4">
+              <div className="relative">
+                <h2 className="text-3xl font-bold">{activeService.title}</h2>
+                <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
+              </div>
+              <div className="text-gray-700 text-md leading-relaxed">
+                <RichContent content={activeService.excerpt} />
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <h3 className="text-xl font-bold mb-4">Check Out Our {activeService.title} Works</h3>
+              {activeCases.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {activeCases.slice(0, visibleCases).map((caseItem) => (
+                      <Link href={`/cases/${caseItem._id}`} key={caseItem._id}>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          className="bg-white rounded-lg shadow-md overflow-hidden relative group"
+                        >
+                          <Image
+                            src={caseItem.image || "/placeholder.svg"}
+                            alt={caseItem.title}
+                            width={300}
+                            height={200}
+                            className="w-full h-40 object-cover"
+                          />
+                          <div className="p-4">
+                            <h4 className="font-semibold text-lg mb-2">{caseItem.title}</h4>
+                            <div className="text-sm text-gray-600 line-clamp-2">
+                              <RichContent content={caseItem.excerpt} />
+                            </div>
+                          </div>
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                            className="absolute inset-0  flex items-center justify-center"
+                          >
+                            <motion.div
+                              initial={{ scale: 0.5, opacity: 0 }}
+                              whileHover={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.2 }}
+                              className="bg-white rounded-full p-3"
+                            >
+                              <ArrowRight className="w-6 h-6 text-blue-600" />
+                            </motion.div>
+                          </motion.div>
+                        </motion.div>
+                      </Link>
+                    ))}
                   </div>
-                </div>
-              ))}
-        </div>
+                  {activeCases.length > visibleCases && (
+                    <div className="flex justify-center mt-6">
+                      <button
+                        onClick={handleReadMore}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Read More
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-gray-600">No works available for this service yet.</p>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Image Area */}
+      <div className="lg:w-1/3 order-3 lg:order-3">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeService._id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative h-[300px] lg:h-[400px] rounded-2xl overflow-hidden"
+          >
+            <Image
+              src={activeService.image || "/placeholder.svg"}
+              alt={activeService.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={false}
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   )
 }
-
-export default WhyUs
