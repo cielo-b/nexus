@@ -2,6 +2,7 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
+import WhyUs from "@/components/WhyUs";
 import { Fade } from "react-awesome-reveal";
 import Header from "@/components/Header";
 import { RectangleGroupIcon } from "@heroicons/react/20/solid";
@@ -137,6 +138,8 @@ export default function Home() {
           </div>
         )}
       </div>
+      <WhyUs></WhyUs>
+
 
       <Members />
       <Footer />
