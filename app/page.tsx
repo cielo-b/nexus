@@ -14,6 +14,7 @@ import { TypeAnimation } from "react-type-animation";
 import { fetchArticles, fetchOnBoardingArticles } from "@/sanity/queries/articles";
 import { fetchTestimonials } from "@/sanity/queries/others";
 import Values from "@/components/Values";
+import Analytics from "@/components/Analytics";
 
 
 // Create a Loader component
@@ -70,6 +71,7 @@ export default function Home() {
       
       {/* <Features title={"Our Services"} type={"all"} /> */}
       <Reviews testimonies={testimonies} />
+      <Analytics></Analytics>
       <Footer />
       {/* <AnimatedCursor
         innerSize={12}
