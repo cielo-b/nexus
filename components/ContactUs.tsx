@@ -69,21 +69,10 @@ const ContactUs = () => {
       <img
         src="/images/zigs.svg"
         alt="zigs"
-        className="absolute w-2/5 -bottom-1/3 -right-1/4 z-30"
+        className="absolute w-2/5 top-[330px] -right-1/4 z-30"
       />
       <div className="flex flex-col items-center lg:items-start justify-center gap-4 ">
-        <Fade>
-          <Header
-            title="Contact Us"
-            icon={
-              <ChatBubbleOvalLeftIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
-            }
-          />
-          <h1 className="text-black font-bold text-3xl max-md:text-4xl max-sm:text-2xl ">
-            Any<span className="text-[#2563eb]"> Insights </span>?<br />
-            Feel Free To <span className="text-[#2563eb]">Contact</span> Us
-          </h1>
-        </Fade>
+       
       </div>
       <form
         className="w-full flex flex-col items-center gap-4 justify-center  "
