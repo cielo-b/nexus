@@ -9,7 +9,7 @@ import { RectangleGroupIcon } from "@heroicons/react/20/solid";
 import Members from "@/components/Members";
 import { fetchCareers } from "@/sanity/queries/career";
 import Career from "@/components/Career";
-
+import Recruitment from "@/components/Recruitment";
 function SkeletonLoader() {
   return (
     <div className="w-full space-y-4">
@@ -138,10 +138,12 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <Recruitment></Recruitment>
       {/* <WhyUs></WhyUs> */}
 
 
-      {/*                                                                                       */}
+      {/* <Members /> */}
       <Footer />
     </main>
   );
