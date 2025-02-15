@@ -51,7 +51,11 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             </h1>
           )}
           <p className="tmd:text-md max-sm:text-xs text-black/60 font-normal z-10 text-center lg:w-full max-sm:w-11/12">
-            Insight Nexus LTD provides comprehensive data science, MEL, and research services, specializing in conducting studies/surveys, market studies, building MEL systems and indicators, data analysis, machine learning, and data visualization to transform raw data into actionable insights.
+            Insight Nexus LTD provides comprehensive data science, MEL, and research services,
+             specializing in conducting studies/surveys, market studies,
+              building MEL systems and indicators, data analysis, 
+              machine learning, and data visualization to transform raw
+               data into actionable insights.
           </p>
         </Fade>
 

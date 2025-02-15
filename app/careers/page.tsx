@@ -138,10 +138,10 @@ export default function Home() {
           </div>
         )}
       </div>
-      <WhyUs></WhyUs>
+      {/* <WhyUs></WhyUs> */}
 
 
-      <Members />
+      {/*                                                                                       */}
       <Footer />
     </main>
   );

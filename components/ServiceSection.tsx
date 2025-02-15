@@ -6,7 +6,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { fetchServices, fetchCases } from "@/sanity/queries/services"
 import RichContent, { type Content } from "./RichContent"
-import { ArrowRight } from "lucide-react"
 
 interface Service {
   _id: string
@@ -94,115 +93,103 @@ export default function ServicesSection() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-9 p-4 md:p-8 max-w-7xl mx-auto min-h-screen">
-      {/* Navigation Links */}
-      <nav className="lg:w-1/4 space-y-2 order-1 lg:order-1">
-        {services.map((service) => (
-          <button
-            key={service._id}
-            onClick={() => handleSectionChange(service.title)}
-            className={`text-left w-full px-4 py-2 rounded-lg transition-colors ${
-              activeSection === service.title
-                ? "text-blue-600 font-semibold bg-blue-50"
-                : "text-gray-700 hover:text-blue-600"
-            }`}
-          >
-            {service.title}
-          </button>
-        ))}
-      </nav>
+    <div className="max-w-7xl mx-auto min-h-screen p-4 md:p-8">
+      <div className="flex flex-col lg:flex-row gap-9">
+        {/* Navigation Links */}
+        <nav className="lg:w-1/4 space-y-2">
+          {services.map((service) => (
+            <button
+              key={service._id}
+              onClick={() => handleSectionChange(service.title)}
+              className={`text-left w-full px-4 py-2 rounded-lg transition-colors ${
+                activeSection === service.title
+                  ? "text-blue-600 font-semibold bg-blue-50"
+                  : "text-gray-700 hover:text-blue-600"
+              }`}
+            >
+              {service.title}
+            </button>
+          ))}
+        </nav>
 
-      {/* Content Area */}
-      <div className="lg:w-2/5 order-2 lg:order-2">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeService._id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-6"
-          >
-            <div className="space-y-4">
-              <div className="relative">
-                <h2 className="text-3xl font-bold">{activeService.title}</h2>
-                <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
-              </div>
-              <div className="text-gray-700 text-md leading-relaxed">
-                <RichContent content={activeService.excerpt} />
-              </div>
+        <div className="flex-1">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Content Area */}
+            <div className="lg:col-span-2">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeService._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <h2 className="text-3xl font-bold">{activeService.title}</h2>
+                      <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
+                    </div>
+                    <div className="text-gray-700 text-md leading-relaxed">
+                      <RichContent content={activeService.excerpt} />
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            <div className="pt-8">
-              <h3 className="text-xl font-bold mb-4">Check Out Our {activeService.title} Works</h3>
-              {activeCases.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {activeCases.map((caseItem) => (
-                    <Link href={`/cases/${caseItem._id}`} key={caseItem._id}>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white rounded-lg shadow-md overflow-hidden relative group"
-                      >
-                        <Image
-                          src={caseItem.image || "/placeholder.svg"}
-                          alt={caseItem.title}
-                          width={300}
-                          height={200}
-                          className="w-full h-40 object-cover"
-                        />
-                        <div className="p-4">
-                          <h4 className="font-semibold text-lg mb-2">{caseItem.title}</h4>
-                          <div className="text-sm text-gray-600 line-clamp-2">
-                            <RichContent content={caseItem.excerpt} />
-                          </div>
-                        </div>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                          className="absolute inset-0  flex items-center justify-center"
-                        >
-                          <motion.div
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            whileHover={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.2 }}
-                            className="bg-white rounded-full p-3"
-                          >
-                            <ArrowRight className="w-6 h-6 text-blue-600" />
-                          </motion.div>
-                        </motion.div>
-                      </motion.div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-600">No works available for this service yet.</p>
-              )}
+            {/* Service Image */}
+            <div className="lg:col-span-1">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeService._id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative h-[300px] lg:h-[400px] rounded-2xl overflow-hidden"
+                >
+                  <Image
+                    src={activeService.image || "/placeholder.svg"}
+                    alt={activeService.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={false}
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          </div>
 
-      {/* Image Area */}
-      <div className="lg:w-1/3 order-3 lg:order-3">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeService._id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative h-[300px] lg:h-[400px] rounded-2xl overflow-hidden"
-          >
-            <Image
-              src={activeService.image || "/placeholder.svg"}
-              alt={activeService.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={false}
-            />
-          </motion.div>
-        </AnimatePresence>
+          {/* Cases Grid */}
+          <div className="mt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {activeCases.map((caseItem) => (
+                <Link href={`/cases/${caseItem._id}`} key={caseItem._id}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-white rounded-lg shadow-md overflow-hidden relative group h-full"
+                  >
+                    <Image
+                      src={caseItem.image || "/placeholder.svg"}
+                      alt={caseItem.title}
+                      width={250}
+                      height={150}
+                      className="w-full h-40 object-cover"
+                    />
+                    <div className="p-4">
+                      <h4 className="font-semibold text-lg mb-2">{caseItem.title}</h4>
+                      <div className="text-sm text-gray-600 line-clamp-2">
+                        <RichContent content={caseItem.excerpt} />
+                      </div>
+                    </div>
+                  </motion.div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

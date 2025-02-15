@@ -28,9 +28,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
   }, [])
 
   const sectors = ["Agriculture", "Public Health", "Socio-economic Research"]
-
   const software = ["Stata", "R", "Excel", "SPSS", "PowerBi", "Python"]
-
   const dataSystems = ["ODK", "KoBocollect", "Cspro", "surveyCTO", "DHIS2", "commcare", "QGIS"]
 
   return (
@@ -41,29 +39,40 @@ const Features = ({ title, type }: { title: any; type: any }) => {
       <img src="/images/dots.svg" alt="dots" className="absolute -left-7 bottom-4 z-30" />
 
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-10 z-40">
-        
-    
+        {/* Flex container for subtitle and image */}
+        <div className="flex flex-row items-center justify-between gap-8 max-lg:flex-col">
+          {/* Subtitle on the left */}
+          <div className="flex-1">
+            <div className="relative w-fit mb-9">
+              <Fade>
+                <Header
+                  title={title ? title : "Features"}
+                  icon={<RectangleGroupIcon className="text-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
+                />
+              </Fade>
+            </div>
 
-      <div className="relative w-fit mb-9 mx-auto">
-  <Fade>
-    <Header
-      title={title ? title : "Features"}
-      icon={<RectangleGroupIcon className="text-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
-    />
-  </Fade>
-</div>
+            {!title && (
+              <h1 className="text-black font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl">
+                What <span className="text-[#2563eb]">We</span> Offer
+              </h1>
+            )}
+            <p className="text-md max-sm:text-sm text-black/60 font-normal z-10 text-start lg:w-2/3 max-sm:w-11/12">
+              Insight Nexus LTD provides comprehensive data science, MEL, and research services, specializing in
+              conducting studies/surveys, market studies, building MEL systems and indicators, data analysis, machine
+              learning, and data visualization to transform raw data into actionable insights.
+            </p>
+          </div>
 
-          {!title && (
-            <h1 className="text-black font-bold text-5xl text-center max-md:text-4xl max-sm:text-3xl">
-              What <span className="text-[#2563eb]">We</span> Offer
-            </h1>
-          )}
-          <p className="text-md max-sm:text-sm text-black/60 font-normal z-10 text-center mx-auto lg:w-2/3 max-sm:w-11/12">
-            Insight Nexus LTD provides comprehensive data science, MEL, and research services, specializing in
-            conducting studies/surveys, market studies, building MEL systems and indicators, data analysis, machine
-            learning, and data visualization to transform raw data into actionable insights.
-          </p>
        
+          <div className="flex-1 flex justify-end">
+            <img
+              src="/images/image1.png" 
+              alt="Features"
+              className="rounded-2xl w-full max-w-md"
+            />
+          </div>
+        </div>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <Fade cascade damping={0.1}>
@@ -111,41 +120,9 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             </div>
           </Fade>
         </div>
-
-        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-          {loading
-            ? Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="animate-pulse w-full relative rounded-xl h-64 bg-gray-300"></div>
-              ))
-            : services.map((service, index) => (
-                <Fade key={index} direction="up" triggerOnce>
-                  <div className="w-full relative rounded-xl h-64 shadow-lg overflow-hidden">
-                    <img
-                      src={service.image || "/placeholder.svg"}
-                      alt={service.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
-                    <div className="absolute bottom-0 left-0 p-4 w-full">
-                      <h3 className="text-2xl font-bold mb-2 text-white">{service.title}</h3>
-                      <p className="text-sm text-white/90 line-clamp-2 mb-2"><RichContent content={service.excerpt}></RichContent></p>
-                      <div className="flex items-center justify-end">
-                        <Link
-                          href={`/services/${service._id}`}
-                          className="text-blue-300 transition-colors duration-300 text-sm font-medium"
-                        >
-                          Read More →
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Fade>
-              ))}
-        </div> */}
       </div>
     </div>
   )
 }
 
 export default Features
-
