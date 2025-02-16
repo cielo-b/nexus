@@ -1,72 +1,94 @@
-"use client";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
-import { useState, useEffect } from "react";
-import WhyUs from "@/components/WhyUs";
-import { Fade } from "react-awesome-reveal";
-import Header from "@/components/Header";
-import { RectangleGroupIcon } from "@heroicons/react/20/solid";
-import Members from "@/components/Members";
-import { fetchCareers } from "@/sanity/queries/career";
-import Career from "@/components/Career";
-import Recruitment from "@/components/Recruitment";
-import WhatWeOffer from "@/components/WhatWeOffer";
-import OurTeams from "@/components/OurTeams";
+"use client"
+import { useState, useEffect } from "react"
+import NavBar from "@/components/NavBar"
+import Footer from "@/components/Footer"
+import { Fade } from "react-awesome-reveal"
+import Header from "@/components/Header"
+import { RectangleGroupIcon } from "@heroicons/react/20/solid"
+import { fetchCareers } from "@/sanity/queries/career"
+import Career from "@/components/Career"
+import WhatWeOffer from "@/components/WhatWeOffer"
+import OurTeams from "@/components/OurTeams"
+import ProfileBlogs from "@/components/ProfileBlogs"
+import { fetchArticles, fetchArticleCategories } from "@/sanity/queries/articles"
+import type { Content } from "@/components/RichContent"
+
+interface Article {
+  _id: string
+  title: string
+  excerpt: Content[]
+  image: string
+  content: any
+  category: {
+    _id: string
+    title: string
+  }
+  authors: string[]
+}
+
 function SkeletonLoader() {
   return (
     <div className="w-full space-y-4">
       {Array.from({ length: 6 }).map((_, idx) => (
-        <div
-          key={idx}
-          className="animate-pulse w-full bg-white p-4 rounded-xl shadow-md"
-        >
+        <div key={idx} className="animate-pulse w-full bg-white p-4 rounded-xl shadow-md">
           <div className="h-6 bg-gray-300 rounded mb-4"></div>
           <div className="h-4 bg-gray-300 rounded"></div>
         </div>
       ))}
     </div>
-  );
-}
-
-function Loader() {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white backdrop-blur flex-col !z-50">
-      <div className="container">
-        <div className="dot"></div>
-      </div>
-    </div>
-  );
+  )
 }
 
 export default function Home() {
-  const [careers, setCareers] = useState<any[]>([]);
-  const [isFetchingCareers, setIsFetchingCareers] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [expanded, setExpanded] = useState<string | false>(false);
-  const pageSize = 6;
+  const [careers, setCareers] = useState<any[]>([])
+  const [isFetchingCareers, setIsFetchingCareers] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [expanded, setExpanded] = useState<string | false>(false)
+  const [profileArticles, setProfileArticles] = useState<Article[]>([])
+  const [categories, setCategories] = useState<any[]>([])
+  const pageSize = 6
 
   const fetchCareersByPage = async (page: number) => {
-    setIsFetchingCareers(true);
+    setIsFetchingCareers(true)
     try {
-      const { items, total } = await fetchCareers(page, pageSize);
-      setCareers(items);
-      setTotalPages(Math.ceil(total / pageSize));
+      const { items, total } = await fetchCareers(page, pageSize)
+      setCareers(items)
+      setTotalPages(Math.ceil(total / pageSize))
     } catch (error) {
-      console.error("Failed to fetch careers:", error);
-      setCareers([]);
+      console.error("Failed to fetch careers:", error)
+      setCareers([])
     } finally {
-      setIsFetchingCareers(false);
+      setIsFetchingCareers(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchCareersByPage(currentPage);
-  }, [currentPage]);
+    fetchCareersByPage(currentPage)
+  }, [currentPage]) // Removed fetchCareersByPage from dependencies
+
+  useEffect(() => {
+    const fetchProfileArticles = async () => {
+      try {
+        const categoriesData = await fetchArticleCategories()
+        setCategories(categoriesData)
+
+        const profileCategory = categoriesData.find((cat: any) => cat.name === "Profiles")
+        if (profileCategory) {
+          const { items } = await fetchArticles(1, 3, profileCategory._id)
+          setProfileArticles(items)
+        }
+      } catch (error) {
+        console.error("Failed to fetch profile articles:", error)
+      }
+    }
+
+    fetchProfileArticles()
+  }, [])
 
   const handleChange = (panel: string) => (isExpanded: boolean) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+    setExpanded(isExpanded ? panel : false)
+  }
 
   return (
     <main className="flex flex-col w-full h-full overflow-hidden">
@@ -87,36 +109,33 @@ export default function Home() {
                 InsightNexus
               </h1>
               <div className="space-y-6 text-muted-foreground mx-auto max-w-4xl">
-        <p className="leading-relaxed">
-          Joining the team at Insight Nexus means working on impactful research projects with the potential to make a
-          difference on key policy and development issues. We only work on projects that are ethically sound and have
-          the potential for social impact. We believe that understanding the context and treating research participants
-          with dignity is key to doing good research.
-        </p>
-        <p className="leading-relaxed ">
-          Insight Nexus aims to be a leading employer in the countries where we work. We offer the chance to work with
-          motivated colleagues from diverse backgrounds, with opportunities for career progression and learning. We work
-          to foster a professional environment that is grounded in a culture of respect and inclusion, and draws on the
-          diverse perspectives, expertise and backgrounds of our team. At Insight Nexus we offer a career, not just a
-          job.
-        </p>
-      </div>
-            
+                <p className="leading-relaxed">
+                  Joining the team at Insight Nexus means working on impactful research projects with the potential to
+                  make a difference on key policy and development issues. We only work on projects that are ethically
+                  sound and have the potential for social impact. We believe that understanding the context and treating
+                  research participants with dignity is key to doing good research.
+                </p>
+                <p className="leading-relaxed ">
+                  Insight Nexus aims to be a leading employer in the countries where we work. We offer the chance to
+                  work with motivated colleagues from diverse backgrounds, with opportunities for career progression and
+                  learning. We work to foster a professional environment that is grounded in a culture of respect and
+                  inclusion, and draws on the diverse perspectives, expertise and backgrounds of our team. At Insight
+                  Nexus we offer a career, not just a job.
+                </p>
+              </div>
             </div>
           </Fade>
         </div>
       </div>
 
-      <WhatWeOffer></WhatWeOffer>
-      <OurTeams></OurTeams>
+      <WhatWeOffer />
+      <OurTeams />
 
       <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
         <Fade>
           <Header
             title="Current Opportunities"
-            icon={
-              <RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
-            }
+            icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
           />
         </Fade>
 
@@ -145,9 +164,7 @@ export default function Home() {
                 key={idx}
                 onClick={() => setCurrentPage(idx + 1)}
                 className={`px-4 py-2 rounded ${
-                  currentPage === idx + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-white text-blue-600"
+                  currentPage === idx + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600"
                 }`}
               >
                 {idx + 1}
@@ -157,12 +174,10 @@ export default function Home() {
         )}
       </div>
 
-      {/* <Recruitment></Recruitment> */}
-      {/* <WhyUs></WhyUs> */}
+      <ProfileBlogs articles={profileArticles} />
 
-
-      {/* <Members /> */}
       <Footer />
     </main>
-  );
+  )
 }
+
