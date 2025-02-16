@@ -63,7 +63,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
               Change
               <br />
               Through Expert{" "}
-              <span className="text-[#2563eb] inline-block relative items-center justify-center">
+              <span className="text-  [#2563eb] inline-block relative items-center justify-center">
                 <img
                   src="/images/circles.svg"
                   alt=""
