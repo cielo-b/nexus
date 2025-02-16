@@ -11,6 +11,7 @@ import { fetchCareers } from "@/sanity/queries/career";
 import Career from "@/components/Career";
 import Recruitment from "@/components/Recruitment";
 import WhatWeOffer from "@/components/WhatWeOffer";
+import OurTeams from "@/components/OurTeams";
 function SkeletonLoader() {
   return (
     <div className="w-full space-y-4">
@@ -107,8 +108,9 @@ export default function Home() {
       </div>
 
       <WhatWeOffer></WhatWeOffer>
+      <OurTeams></OurTeams>
 
-      {/* <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
+      <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
         <Fade>
           <Header
             title="Current Opportunities"
@@ -153,7 +155,7 @@ export default function Home() {
             ))}
           </div>
         )}
-      </div> */}
+      </div>
 
       {/* <Recruitment></Recruitment> */}
       {/* <WhyUs></WhyUs> */}
