@@ -10,6 +10,7 @@ import Members from "@/components/Members";
 import { fetchCareers } from "@/sanity/queries/career";
 import Career from "@/components/Career";
 import Recruitment from "@/components/Recruitment";
+import WhatWeOffer from "@/components/WhatWeOffer";
 function SkeletonLoader() {
   return (
     <div className="w-full space-y-4">
@@ -80,19 +81,34 @@ export default function Home() {
                     alt=""
                     className="absolute w-[300x] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
                   />
-                  <span className="z-40 relative">Our</span>
+                  <span className="z-40 relative">Why work at </span>
                 </span>{" "}
-                Careers
+                InsightNexus
               </h1>
-              <p className="md:text-2xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-                At InsightNExus, we are committed to helping individuals build rewarding careers by providing data-driven insights and expert guidance.
-              </p>
+              <div className="space-y-6 text-muted-foreground mx-auto max-w-4xl">
+        <p className="leading-relaxed">
+          Joining the team at Insight Nexus means working on impactful research projects with the potential to make a
+          difference on key policy and development issues. We only work on projects that are ethically sound and have
+          the potential for social impact. We believe that understanding the context and treating research participants
+          with dignity is key to doing good research.
+        </p>
+        <p className="leading-relaxed ">
+          Insight Nexus aims to be a leading employer in the countries where we work. We offer the chance to work with
+          motivated colleagues from diverse backgrounds, with opportunities for career progression and learning. We work
+          to foster a professional environment that is grounded in a culture of respect and inclusion, and draws on the
+          diverse perspectives, expertise and backgrounds of our team. At Insight Nexus we offer a career, not just a
+          job.
+        </p>
+      </div>
+            
             </div>
           </Fade>
         </div>
       </div>
 
-      <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
+      <WhatWeOffer></WhatWeOffer>
+
+      {/* <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
         <Fade>
           <Header
             title="Current Opportunities"
@@ -137,9 +153,9 @@ export default function Home() {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
 
-      <Recruitment></Recruitment>
+      {/* <Recruitment></Recruitment> */}
       {/* <WhyUs></WhyUs> */}
 
 
