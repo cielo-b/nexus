@@ -44,7 +44,7 @@ const NavBar = () => {
             to={menuLink.link}
             label={menuLink.title}
             isActive={false}
-            onClick={() => handleLinkClick(menuLink.link)}
+
           />
         ))}
       </div>
@@ -85,7 +85,6 @@ const NavBar = () => {
                 to={menuLink.link}
                 label={menuLink.title}
                 isActive={false}
-                onClick={() => handleLinkClick(menuLink.link)}
               />
             ))}
             <Link
