@@ -8,7 +8,7 @@ export default defineConfig({
   name: "default",
   title: "Nexus CMS",
   projectId: "3wthhc90",
-  dataset: "development",
+  dataset: "production",
   basePath: "/studio",
   plugins: [structureTool(), visionTool(), media()],
   schema: {
