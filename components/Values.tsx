@@ -76,7 +76,7 @@ export default function CoreValuesSection() {
           </Fade>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-12 justify-items-center">
           {coreValues.map((value, index) => (
             <CoreValue key={index} {...value} />
           ))}
