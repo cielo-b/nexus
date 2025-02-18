@@ -70,8 +70,8 @@ export default function Home() {
       <Values></Values>
       
       {/* <Features title={"Our Services"} type={"all"} /> */}
-      <Reviews testimonies={testimonies} />
       <Analytics></Analytics>
+      <Reviews testimonies={testimonies} />
       <Footer />
       {/* <AnimatedCursor
         innerSize={12}
