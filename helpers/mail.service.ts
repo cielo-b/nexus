@@ -21,7 +21,9 @@ export class MailService {
   }: MailParameters): Promise<void> {
 
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "Zoho",
+      host:"smtp.zoho.com",
+      port:587,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
