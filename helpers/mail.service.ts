@@ -19,11 +19,9 @@ export class MailService {
     body,
     attachments,
   }: MailParameters): Promise<void> {
-
     const transporter = nodemailer.createTransport({
-      service: "Zoho",
-      host:"smtp.zoho.com",
-      port:587,
+      host: "smtp.zoho.eu",
+      port: 465,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
@@ -43,19 +41,22 @@ export class MailService {
 
     const sendMailAsync = (options: nodemailer.SendMailOptions) =>
       new Promise<void>((resolve, reject) => {
-        transporter.sendMail(options, (error: any, info: { response: string; }) => {
-          if (error) {
-            reject(error);
-          } else {
-            console.log("Email sent: " + info.response);
-            resolve();
+        transporter.sendMail(
+          options,
+          (error: any, info: { response: string }) => {
+            if (error) {
+              reject(error);
+            } else {
+              console.log("Email sent: " + info.response);
+              resolve();
+            }
           }
-        });
+        );
       });
 
     try {
       await sendMailAsync(mailOptions);
-    } catch (error:any) {
+    } catch (error: any) {
       throw new Error(error.message);
     }
   }

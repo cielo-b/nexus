@@ -9,8 +9,6 @@ import { ResponseType } from "@/utils/response";
 import { HttpStatusCode } from "axios";
 
 
-export const runtime = "edge";
-
 export default async function POST(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType<null>>
@@ -21,15 +19,15 @@ export default async function POST(
     const dto = req.body;
 
     await mailService.sendEmail({
-      email: "team.nexus@gmail.com",
+      email: "mugishayves189000@gmail.com",
       subject: "New Submission from Landing Page - Nexus",
-      body: requestDemoAdminMail(dto)
+      body: requestDemoAdminMail(dto),
     });
 
     await mailService.sendEmail({
       email: dto.email,
       body: requestDemoClientMail({ firstName: dto.name.split(" ")[0] }),
-      subject: "Acknowledgment of Your Inquiry - Nexus"
+      subject: "Acknowledgment of Your Inquiry - Nexus",
     });
 
     const response = responseService.makeResponse(
