@@ -18,19 +18,19 @@ export const Analytic = [
 export const AboutUsData = [
   {
     title: "Our Mission",
-    image: "/images/image1.png",
+    image: "/images/image1.jpeg",
     content:
       "At Nexus Consultancy, we are committed to delivering innovative, data-driven solutions that empower businesses to optimize operations, enhance decision-making, and achieve sustainable growth considering gender equality, social inclusion, and environmental responsibility.",
   },
   {
     title: "Our Vision",
-    image: "/images/image2.png",
+    image: "/images/image2.jpeg",
     content:
       "Our vision is to be a leading consultancy agency recognized for transforming organizations with intelligent strategies, insights, and tailored solutions that drive success in an ever-evolving business landscape.",
   },
   {
     title: "Our Goals",
-    image: "/images/image3.png",
+    image: "/images/image3.jpeg",
     content:
       "Our goals are to guide organizations in overcoming challenges, streamline processes, and unlock new opportunities. We aim to foster long-term partnerships by providing actionable insights that lead to impactful change",
   },

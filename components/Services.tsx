@@ -67,9 +67,9 @@ const Features = ({ title, type }: { title: any; type: any }) => {
        
           <div className="flex-1 flex justify-end">
             <img
-              src="/images/image1.png" 
+              src="/images/image3.jpeg" 
               alt="Features"
-              className="rounded-2xl w-full max-w-md"
+              className="rounded-2xl w-full max-w-md object-cover h-80"
             />
           </div>
         </div>

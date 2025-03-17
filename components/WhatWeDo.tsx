@@ -52,9 +52,9 @@ const AboutUs = () => {
         {/* Image Section */}
         <div className="relative flex lg:w-[45%] items-center justify-center w-full">
           <img
-            src="/images/image1.png" // Replace with your image path
+            src="/images/image1.jpeg" // Replace with your image path
             alt="About Us"
-            className="rounded-2xl w-full"
+            className="rounded-2xl w-full h-96 object-cover"
           />
         </div>
 

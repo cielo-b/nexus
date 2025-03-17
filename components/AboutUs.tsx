@@ -93,7 +93,7 @@ const AboutUs = () => {
                   key={idx}
                 >
                   <div className="shadow-shadow-400 hover:shadow-shadow-500 hover:shadow-3xl flex w-full h-fit flex-col items-start justify-center gap-6 rounded-lg p-4 max-sm:p-3 px-8 shadow-xl ring-1 ring-[#f0efef] transition-shadow 3xl-max:px-3 md-min3:items-center xsm-min:gap-3 max-sm:w-full">
-                    <img src={image} className="rounded-2xl w-full " />
+                    <img src={image} className="rounded-2xl w-full h-80 object-cover " />
                     <div className="flex w-full flex-col items-start justify-center gap-2 md-min3:items-center">
                       <span className="text-4xl font-black text-[#2563eb] xsm-min:text-base">
                         {title}
