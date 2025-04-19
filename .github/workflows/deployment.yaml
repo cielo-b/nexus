@@ -1,0 +1,26 @@
+name: Push to another repository
+on:
+  push:
+    branches: [production]
+
+jobs:
+  pushit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Remove .github
+        run: rsync * ./built -r --exclude .github
+
+      - name: Remove http.extraheader
+        run: git config --unset-all http.https://github.com/.extraheader
+
+      - name: push to main branch
+        uses: cpina/github-action-push-to-another-repository@v1.5.1
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAT }}
+        with:
+          source-directory: "built"
+          destination-github-username: "nexushub"
+          destination-repository-name: "nexus-landing"
+          user-email: team.nexus@gmail.com
+          target-branch: main
