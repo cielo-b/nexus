@@ -50,3 +50,5 @@ export default async function POST(
     return;
   }
 }
+
+export const runtime = 'edge';
