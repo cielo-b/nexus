@@ -48,52 +48,52 @@ const Features = ({ title, type }: { title: any; type: any }) => {
     "QGIS",
   ];
   const researchDesign = [
-    "Study design, implementation, and dissemination (quantitative & qualitative)"
-    "Baseline, midline, and endline studies"
-    "Impact evaluations (RCTs, quasi-experimental, etc.)"
-    "Feasibility studies and market research"
-    "Needs assessments and situation analyses"
-    "Development of data collection tools (e.g., KoboToolbox, ODK)"
-    "Real-time monitoring systems with smart dashboards (eg: PowerBi, etc)"
-    "GIS mapping and spatial data analysis"
-    "Documentation of lessons learned, success stories, and best practices"
+    "Study design, implementation, and dissemination (quantitative & qualitative)",
+    "Baseline, midline, and endline studies",
+    "Impact evaluations (RCTs, quasi-experimental, etc.)",
+    "Feasibility studies and market research",
+    "Needs assessments and situation analyses",
+    "Development of data collection tools (e.g., KoboToolbox, ODK)",
+    "Real-time monitoring systems with smart dashboards (eg: PowerBi, etc)",
+    "GIS mapping and spatial data analysis",
+    "Documentation of lessons learned, success stories, and best practices",
   ];
   const capacityBuilding = [
-   "Development of Monitoring, Evaluation, and Learning (MEL) plans"
-    "MEL system setup and strengthening"
-    "Data quality assurance (DQA) and data verification exercises"
-    "Indicator development, tools, and results frameworks"
-    "Logical framework (LogFrame) development and review"
-    "Development of interactive dashboards and data visualizations"
-    "Learning agenda development and implementation"
-    "Design and facilitation of learning events and After Action Reviews (AARs)"
+   "Development of Monitoring, Evaluation, and Learning (MEL) plans",
+    "MEL system setup and strengthening",
+    "Data quality assurance (DQA) and data verification exercises",
+    "Indicator development, tools, and results frameworks",
+    "Logical framework (LogFrame) development and review",
+    "Development of interactive dashboards and data visualizations",
+    "Learning agenda development and implementation",
+    "Design and facilitation of learning events and After Action Reviews (AARs)",
   ];
   const strategicAdvisory = [
-    "Providing technical training on research, M&E, and data systems"
-    "Organizational capacity development for CSOs, NGOs, and institutions"
-    "Training on digital literacy, data science, and tech-enabled data systems"
-    "Workshops on gender equality, disability inclusion, and social inclusion (GESI)"
-    "Coaching on evidence use and data-driven decision-making"
+    "Providing technical training on research, M&E, and data systems",
+    "Organizational capacity development for CSOs, NGOs, and institutions",
+    "Training on digital literacy, data science, and tech-enabled data systems",
+    "Workshops on gender equality, disability inclusion, and social inclusion (GESI)",
+    "Coaching on evidence use and data-driven decision-making",
   ];
   const policyPlanning = [
-    "Strategic plan and capacity action plan development"
-    "Writing project proposals and grants applications"
-    "Theory of Change (ToC) facilitation and design"
-    "Policy brief and technical report writing"
-    "Advisory services for GESI, climate resilience, and cross-cutting themes"
-    "Donor reporting and strategic communications support"
+    "Strategic plan and capacity action plan development",
+    "Writing project proposals and grants applications",
+    "Theory of Change (ToC) facilitation and design",
+    "Policy brief and technical report writing",
+    "Advisory services for GESI, climate resilience, and cross-cutting themes",
+    "Donor reporting and strategic communications support",
   ];
   const environmental = [
-    "Research and evaluation in climate-smart agriculture"
-    "Environmental and climate-related impact assessments"
-    "Climate vulnerability and resilience analysis"
-    "Integration of climate adaptation into MEL systems"
-    "Program design for sustainable agriculture and food systems"
-    "Technical support on green economy, ecosystem services, and circular economy principles"
-    "Climate and environment-focused policy briefs and knowledge products"
-    "Design and evaluation of MEL systems for sustainable agriculture and food security programs"
-    "MEL support for public health resilience and climate-related health interventions"
-    "Technical frameworks for green economy, ecosystem services, and circular economy initiatives"
+    "Research and evaluation in climate-smart agriculture",
+    "Environmental and climate-related impact assessments",
+    "Climate vulnerability and resilience analysis",
+    "Integration of climate adaptation into MEL systems",
+    "Program design for sustainable agriculture and food systems",
+    "Technical support on green economy, ecosystem services, and circular economy principles",
+    "Climate and environment-focused policy briefs and knowledge products",
+    "Design and evaluation of MEL systems for sustainable agriculture and food security programs",
+    "MEL support for public health resilience and climate-related health interventions",
+    "Technical frameworks for green economy, ecosystem services, and circular economy initiatives",
   ];
 
   return (
