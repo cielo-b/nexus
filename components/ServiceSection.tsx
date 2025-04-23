@@ -191,7 +191,7 @@ export default function ServicesSection() {
               {activeService.titleOfExpertise && (
                 <div>
                   <div className="relative">
-                    <h2 className="text-3xl font-bold">Area Of Expertise</h2>
+                    <h2 className="text-3xl font-bold">How we do it</h2>
                     <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
                   </div>
                   <h4 className="text-xl font-semibold mt-5">
