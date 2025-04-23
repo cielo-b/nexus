@@ -10,13 +10,14 @@ import {
   AcademicCapIcon,
   ClipboardDocumentCheckIcon,
   SparklesIcon,
+  DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { Fade } from "react-awesome-reveal";
 import { fetchServices } from "@/sanity/queries/services";
 import Link from "next/link";
 import RichContent, { Content } from "./RichContent";
 
-const Features = ({ title, type }: { title: any; type: any }) => {
+const Features = ({ title, type }: { title?: string; type?: string }) => {
   const [services, setServices] = useState<
     { title: string; excerpt: Content[]; image: string; _id: string }[]
   >([]);
@@ -54,12 +55,12 @@ const Features = ({ title, type }: { title: any; type: any }) => {
     "Feasibility studies and market research",
     "Needs assessments and situation analyses",
     "Development of data collection tools (e.g., KoboToolbox, ODK)",
-    "Real-time monitoring systems with smart dashboards (eg: PowerBi, etc)",
+    "Real-time monitoring systems with smart dashboards (e.g., PowerBi, etc)",
     "GIS mapping and spatial data analysis",
     "Documentation of lessons learned, success stories, and best practices",
   ];
   const capacityBuilding = [
-   "Development of Monitoring, Evaluation, and Learning (MEL) plans",
+    "Development of Monitoring, Evaluation, and Learning (MEL) plans",
     "MEL system setup and strengthening",
     "Data quality assurance (DQA) and data verification exercises",
     "Indicator development, tools, and results frameworks",
@@ -96,6 +97,26 @@ const Features = ({ title, type }: { title: any; type: any }) => {
     "Technical frameworks for green economy, ecosystem services, and circular economy initiatives",
   ];
 
+  const card = (icon: JSX.Element, title: string, items: string[]) => (
+    <div className="flex flex-col h-auto bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+      <div className="flex items-center mb-4">
+        {icon}
+        <h2 className="text-md font-bold text-gray-800 ml-3">{title}</h2>
+      </div>
+      <div className="space-y-2">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+          >
+            <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
+            {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div
       className="flex flex-col relative pt-10 pb-20 max-md:pt-5 max-md:pb-10 gap-16 px-[5%] max-lg:px-4 overflow-hidden"
@@ -108,9 +129,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
       />
 
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-10 z-40">
-        {/* Flex container for subtitle and image */}
         <div className="flex flex-row items-center justify-between gap-8 max-lg:flex-col">
-          {/* Subtitle on the left */}
           <div className="flex-1">
             <div className="relative w-fit mb-9">
               <Fade>
@@ -147,142 +166,12 @@ const Features = ({ title, type }: { title: any; type: any }) => {
         </div>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <ChartBarIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                We offer statistical software support, including:
-              </h2>
-            </div>
-            <ul className="space-y-2">
-              {software.map((sw, index) => (
-                <li key={index} className="text-gray-700 flex items-center">
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {sw}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <CodeBracketIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Data collection and management systems:
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {dataSystems.map((system, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {system}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <ClipboardDocumentCheckIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Monitoring, Evaluation, and Learning (MEL)
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {capacityBuilding.map((cb, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {cb}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <AcademicCapIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Capacity Building & Technical Training
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {strategicAdvisory.map((advisory, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {advisory}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <SparklesIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Strategic Planning & Technical Advisory
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {policyPlanning.map((planning, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {planning}
-                </div>
-              ))}
-            </div>
-          </div> 
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <CodeBracketIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Climate, Agriculture, and Sustainable Development
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {environmental.map((environment, index) => (
-                <div
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {environment}
-                </div>
-              ))}
-            </div>
-          </div> 
-
-          <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
-            <div className="flex items-center mb-4">
-              <RectangleGroupIcon className="w-8 h-8 text-[#2563eb] mr-3" />
-              <h2 className="text-md font-bold text-gray-800">
-                Research Design, Implementation & Dissemination
-              </h2>
-            </div>
-            <div className="space-y-2">
-              {researchDesign.map((research, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-                >
-                  <CubeIcon className="w-4 h-4 mr-2 text-[#2563eb]" />
-                  {research}
-                </span>
-              ))}
-            </div>
-          </div>
+          {card(<ChartBarIcon className="w-8 h-8 text-[#2563eb]" />, "We offer statistical software support, including:", software)}
+          {card(<CodeBracketIcon className="w-8 h-8 text-[#2563eb]" />, "Data collection and management systems:", dataSystems)}
+          {card(<ClipboardDocumentCheckIcon className="w-8 h-8 text-[#2563eb]" />, "Monitoring, Evaluation, and Learning (MEL)", capacityBuilding)}
+          {card(<AcademicCapIcon className="w-8 h-8 text-[#2563eb]" />, "Capacity Building & Technical Training", strategicAdvisory)}
+          {card(<SparklesIcon className="w-8 h-8 text-[#2563eb]" />, "Policy & Strategic Planning", policyPlanning)}
+          {card(<DocumentMagnifyingGlassIcon className="w-8 h-8 text-[#2563eb]" />, "Environmental & Climate Resilience Services", environmental)}
         </div>
       </div>
     </div>
