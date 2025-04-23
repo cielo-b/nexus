@@ -8,6 +8,7 @@ import {
   CodeBracketIcon,
   CubeIcon,
   AcademicCapIcon,
+  ResearchIcon,
   ClipboardDocumentCheckIcon,
   SparklesIcon,
   DocumentMagnifyingGlassIcon,
@@ -168,6 +169,7 @@ const Features = ({ title, type }: { title?: string; type?: string }) => {
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {card(<ChartBarIcon className="w-8 h-8 text-[#2563eb]" />, "We offer statistical software support, including:", software)}
           {card(<CodeBracketIcon className="w-8 h-8 text-[#2563eb]" />, "Data collection and management systems:", dataSystems)}
+          {card(<ResearchIcon className="w-8 h-8 text-[#2563eb]" />, "Research Design, Implementation & Dissemination", researchDesign)}
           {card(<ClipboardDocumentCheckIcon className="w-8 h-8 text-[#2563eb]" />, "Monitoring, Evaluation, and Learning (MEL)", capacityBuilding)}
           {card(<AcademicCapIcon className="w-8 h-8 text-[#2563eb]" />, "Capacity Building & Technical Training", strategicAdvisory)}
           {card(<SparklesIcon className="w-8 h-8 text-[#2563eb]" />, "Policy & Strategic Planning", policyPlanning)}
