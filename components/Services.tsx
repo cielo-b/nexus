@@ -59,7 +59,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
     "Documentation of lessons learned, success stories, and best practices",
   ];
   const capacityBuilding = [
-    "Development of Monitoring, Evaluation, and Learning (MEL) plans",
+   "Development of Monitoring, Evaluation, and Learning (MEL) plans",
     "MEL system setup and strengthening",
     "Data quality assurance (DQA) and data verification exercises",
     "Indicator development, tools, and results frameworks",
@@ -242,7 +242,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> 
 
           <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center mb-4">
@@ -262,7 +262,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> 
 
           <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
             <div className="flex items-center mb-4">
