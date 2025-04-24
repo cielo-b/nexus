@@ -9,10 +9,10 @@ export const MenuLinks = [
 ];
 
 export const Analytic = [
-  { title: 4, description: "Consultancy Services" },
-  { title: 1, description: "Active Projects" },
-  { title: 2, description: "Industry Sectors " },
-  { title: 0, description: "Global Consulting Reach" },
+  { title: 4, description: "Consultancy Services", link: 'services' },
+  { title: 1, description: "Active Projects", link: 'publications' },
+  { title: 2, description: "Industry Sectors ", link: "about" },
+  { title: 0, description: "Global Consulting Reach", link: '' },
 ];
 
 export const AboutUsData = [

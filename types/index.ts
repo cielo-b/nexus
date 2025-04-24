@@ -1,13 +1,12 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { IconType } from "react-icons";
-import { Control } from 'react-hook-form';
+import { Control } from "react-hook-form";
 import { Content } from "@/components/RichContent";
 
 export interface MenuItemProps {
   to: string;
   label: string;
   isActive: boolean;
-
 }
 export interface CustomButtonProps {
   title: string;
@@ -20,7 +19,6 @@ export interface CustomButtonProps {
   isLoading?: boolean; // Add isLoading prop
 }
 
-
 export interface TagButtonProps {
   tagLogo: string;
   tagText: string;
@@ -28,6 +26,7 @@ export interface TagButtonProps {
 export interface AnalyticsProps {
   title: Number;
   description: string;
+  link: string;
 }
 export interface HeaderProps {
   title: string;
@@ -52,13 +51,14 @@ export interface TestimonyProps {
   profilePic: string;
 }
 
-
 export interface InputFieldProps {
   placeholder: string;
   icon?: string;
   label?: string;
   value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange?: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   style: "light" | "dark";
   control?: Control<any>;
   name: string;
@@ -66,7 +66,6 @@ export interface InputFieldProps {
 
 export interface GroupedLinksProps {
   title: string;
-
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -127,4 +126,4 @@ export interface FormFieldProps {
   icon?: string;
   type?: string;
   options?: Option[];
-};
+}

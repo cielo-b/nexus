@@ -10,7 +10,7 @@ const Analytics = () => {
 
 <div className="border-[#2563eb] flex border h-fit p-10 gap-10 max-sm:p-5 inset-0 bg-opacity-20 rounded-full backdrop-blur-lg justify-between w-2/3 z-40 max-lg:w-11/12 max-md:flex-col max-md:rounded-3xl max-md:flex-wrap max-md:gap-5">
         {Analytic.map((item, index) => (
-          <AnalyticItem title={item.title} key={index} description={item.description} />
+          <AnalyticItem title={item.title} key={index} description={item.description} link={item.link} />
         ))}
       </div>
     </div>
