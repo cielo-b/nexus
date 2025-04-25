@@ -190,13 +190,27 @@ export default function ServicesSection() {
             <div className="space-y-4">
               {activeService.titleOfExpertise && (
                 <div>
+                  <div className="px-6 max-sm:px-4 pb-10 z-40 css-1c2fuzs">
+                    <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
+                      <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center ">
+                        {"How "}
+                        <span className="text-[#2563eb] inline-block relative items-center justify-center">
+                          <img
+                            src="/images/circles.svg"
+                            className="absolute w-[300x] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
+                          />
+                          <span className="z-40 relative">We </span>
+                        </span>
+                        {" Do It"}
+                      </h1>
+                    </div>
+                  </div>
                   <div className="relative">
-                    <h2 className="text-3xl font-bold">How we do it</h2>
+                    <h2 className="text-3xl font-bold">
+                      {activeService.titleOfExpertise}
+                    </h2>
                     <div className="absolute -bottom-2 left-0 w-16 h-1 bg-blue-600"></div>
                   </div>
-                  <h4 className="text-xl font-semibold mt-5">
-                    {activeService.titleOfExpertise}
-                  </h4>
                 </div>
               )}
               <div className="text-gray-700 text-md leading-relaxed">
