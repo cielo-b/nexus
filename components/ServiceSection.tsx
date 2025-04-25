@@ -199,9 +199,9 @@ export default function ServicesSection() {
                             src="/images/circles.svg"
                             className="absolute w-[300x] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
                           />
-                          <span className="z-40 relative">We </span>
+                          <span className="z-40 relative">We Do</span>
                         </span>
-                        {" Do It"}
+                        {" It"}
                       </h1>
                     </div>
                   </div>
