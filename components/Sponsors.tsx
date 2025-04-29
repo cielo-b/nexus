@@ -19,7 +19,7 @@ const Sponsors = () => {
     <AnimatedContent>
       <div className="w-full flex flex-col py-16 gap-10 items-center justify-center overflow-hidden bg-background">
         <h1 className="text-[#838383] font-medium">
-          Supported and being used by partners like
+          Partners and Clientele
         </h1>
         <div className="w-full px-4 md:px-0 md:w-4/5 relative">
           <div className="relative w-full">
