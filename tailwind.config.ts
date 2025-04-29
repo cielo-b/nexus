@@ -13,11 +13,27 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      animation: {
+        marquee: "marquee var(--duration, 40s) linear infinite",
+        "marquee-vertical":
+          "marquee-vertical var(--duration, 40s) linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap, 1rem)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap, 1rem)))" },
+        },
+      },
     },
   },
   plugins: [
-    require('tailwindcss'),
-    require('autoprefixer'),
+    require("tailwindcss"),
+    require("autoprefixer"),
+    require("tailwindcss-animate"),
   ],
 };
 export default config;

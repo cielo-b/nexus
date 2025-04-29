@@ -1,4 +1,4 @@
-import * as nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 type AttachmentType = {
   filename: string;
@@ -13,50 +13,37 @@ type MailParameters = {
 };
 
 export class MailService {
+  private resend: Resend;
+
+  constructor() {
+    this.resend = new Resend("re_LhiTgQ2L_Q2aXyR6Q6g2ZawrveSZmTcsL");
+  }
+
   async sendEmail({
     email,
     subject,
     body,
     attachments,
   }: MailParameters): Promise<void> {
-    const transporter = nodemailer.createTransport({
-      host: "smtp.zoho.eu",
-      port: 465,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: {
-        name: "Nexus",
-        address: process.env.EMAIL || "",
-      },
-      to: email,
-      subject,
-      html: body,
-      attachments: attachments || [],
-    };
-
-    const sendMailAsync = (options: nodemailer.SendMailOptions) =>
-      new Promise<void>((resolve, reject) => {
-        transporter.sendMail(
-          options,
-          (error: any, info: { response: string }) => {
-            if (error) {
-              reject(error);
-            } else {
-              console.log("Email sent: " + info.response);
-              resolve();
-            }
-          }
-        );
+    try {
+      const { data, error } = await this.resend.emails.send({
+        from: "Nexus <info@insightnexus.africa>",
+        to: email,
+        subject,
+        html: body,
+        attachments: attachments?.map(attachment => ({
+          filename: attachment.filename,
+          content: attachment.content.toString('base64'),
+        })),
       });
 
-    try {
-      await sendMailAsync(mailOptions);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      console.log("Email sent successfully", data);
     } catch (error: any) {
+      console.error("Error sending email:", error);
       throw new Error(error.message);
     }
   }

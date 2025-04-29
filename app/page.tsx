@@ -15,6 +15,7 @@ import { fetchArticles, fetchOnBoardingArticles } from "@/sanity/queries/article
 import { fetchTestimonials } from "@/sanity/queries/others";
 import Values from "@/components/Values";
 import Analytics from "@/components/Analytics";
+import Sponsors from "@/components/Sponsors";
 
 
 // Create a Loader component
@@ -72,6 +73,7 @@ export default function Home() {
       {/* <Features title={"Our Services"} type={"all"} /> */}
       <Reviews testimonies={testimonies} />
       <Analytics></Analytics>
+      <Sponsors />
       <Footer />
       {/* <AnimatedCursor
         innerSize={12}

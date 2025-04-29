@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import { EResponse } from "@/enums/response.enum";
 import { MailService } from "@/helpers/mail.service";
 import { ResponseService } from "@/helpers/response.service";
@@ -8,18 +7,19 @@ import { requestDemoClientMail } from "@/templates/request-demo/client.template"
 import { ResponseType } from "@/utils/response";
 import { HttpStatusCode } from "axios";
 
+export const config = {
+  runtime: 'edge',
+};
 
-export default async function POST(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseType<null>>
-) {
+export default async function POST(req: Request) {
   const mailService = new MailService();
   const responseService = new ResponseService();
+  
   try {
-    const dto = req.body;
+    const dto = await req.json();
 
     await mailService.sendEmail({
-      email: "mugishayves189000@gmail.com",
+      email: "info@insightnexus.africa",
       subject: "New Submission from Landing Page - Nexus",
       body: requestDemoAdminMail(dto),
     });
@@ -36,8 +36,13 @@ export default async function POST(
       null,
       EResponse.SUCCESS
     );
-    res.status(response.statusCode).json(response);
-    return;
+    
+    return new Response(JSON.stringify(response), {
+      status: response.statusCode,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error: any) {
     console.log("ERROR: ", error);
     const response = responseService.makeResponse(
@@ -46,9 +51,12 @@ export default async function POST(
       null,
       EResponse.ERROR
     );
-    res.status(response.statusCode).json(response);
-    return;
+    
+    return new Response(JSON.stringify(response), {
+      status: response.statusCode,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   }
 }
-
-export const runtime = 'edge';

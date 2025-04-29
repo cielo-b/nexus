@@ -151,19 +151,19 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <RectangleGroupIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Research Design, Implementation & Dissemination
+                Research Design, Implementation & Dissemination
               </h2>
             </div>
             <div className="space-y-2">
               {researchDesign.map((research, index) => (
-          <span
-            key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-          >
-            {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-            <span className="text-xl">&#x2022;</span>
-            <span>{research}</span>
-          </span>
+                <span
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                >
+                  {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                  {/* <span className="text-xl">&#x2022;</span> */}
+                  <span className="text-black/60">&#x2022; {research}</span>
+                </span>
               ))}
             </div>
           </div>
@@ -172,19 +172,19 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <ClipboardDocumentCheckIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Monitoring, Evaluation, and Learning (MEL)
+                Monitoring, Evaluation, and Learning (MEL)
               </h2>
             </div>
             <div className="space-y-2">
               {capacityBuilding.map((cb, index) => (
-          <div
-            key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-          >
-            {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-            <span className="text-xl">&#x2022;</span>
-            <span>{cb}</span>
-          </div>
+                <div
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                >
+                  {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                  {/* <span className="text-xl">&#x2022;</span> */}
+                  <span className="text-black/60">&#x2022; {cb}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -193,19 +193,19 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <AcademicCapIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Capacity Building & Technical Training
+                Capacity Building & Technical Training
               </h2>
             </div>
             <div className="space-y-2">
               {strategicAdvisory.map((advisory, index) => (
-          <div
-            key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-          >
-            {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-            <span className="text-xl">&#x2022;</span>
-            <span>{advisory}</span>
-          </div>
+                <div
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                >
+                  {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                  {/* <span className="text-xl">&#x2022;</span> */}
+                  <span className="text-black/60">&#x2022; {advisory}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -214,19 +214,19 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <SparklesIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Strategic Planning & Technical Advisory
+                Strategic Planning & Technical Advisory
               </h2>
             </div>
             <div className="space-y-2">
               {policyPlanning.map((planning, index) => (
-          <div
-            key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-          >
-            {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-            <span className="text-xl">&#x2022;</span>
-            <span>{planning}</span>
-          </div>
+                <div
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                >
+                  {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                  {/* <span className="text-xl">&#x2022;</span> */}
+                  <span className="text-black/60">&#x2022; {planning}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -235,19 +235,19 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <CodeBracketIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Climate, Agriculture, and Sustainable Development
+                Climate, Agriculture, and Sustainable Development
               </h2>
             </div>
             <div className="space-y-2">
               {environmental.map((environment, index) => (
-          <div
-            key={index}
-            className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
-          >
-            {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-            <span className="text-xl">&#x2022;</span>
-            <span>{environment}</span>
-          </div>
+                <div
+                  key={index}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                >
+                  {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                  {/* <span className="text-xl">&#x2022;</span> */}
+                  <span className="text-black/60">&#x2022; {environment}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -256,66 +256,66 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="flex items-center mb-4">
               <ChartBarIcon className="w-8 h-8 text-[#2563eb] mr-3" />
               <h2 className="text-md font-bold text-gray-800">
-          Data Management Systems and Statistical Software Support
+                Data Management Systems and Statistical Software Support
               </h2>
             </div>
 
             <div className="space-y-4">
               <div>
-          <div className="flex items-center mb-2">
-            <CodeBracketIcon className="w-6 h-6 text-[#2563eb] mr-2" />
-            <h3 className="font-semibold text-gray-800">
-              1: Data Collection and Management Systems:
-            </h3>
-          </div>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-8">
-            {dataSystems.map((system, index) => (
-              <li key={index} className="text-gray-800 flex items-center">
-                {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-                <span className="text-xl">&#x2022;</span>
-                <span>{system}</span>
-              </li>
-            ))}
-          </ul>
+                <div className="flex items-center mb-2">
+                  <CodeBracketIcon className="w-6 h-6 text-[#2563eb] mr-2" />
+                  <h3 className="font-semibold text-gray-800">
+                    1: Data Collection and Management Systems:
+                  </h3>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-8">
+                  {dataSystems.map((system, index) => (
+                    <li key={index} className="text-gray-800 flex items-center">
+                      {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                      {/* <span className="text-xl">&#x2022;</span> */}
+                      <span className="text-black/60 text-md">&#x2022; {system}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               <div>
-          <div className="flex items-center mb-2">
-            <ChartBarIcon className="w-6 h-6 text-[#2563eb] mr-2" />
-            <h3 className="font-semibold text-gray-800">
-              2: Statistical Software Support:
-            </h3>
-          </div>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-8">
-            {software.map((sw, index) => (
-              <li key={index} className="text-gray-800 flex items-center">
-                {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-                <span className="text-4xl">&#x2022;</span>
-                <span>{sw}</span>
-              </li>
-            ))}
-            <li className="text-gray-800 flex items-center">
-              {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-              <span className="text-xl">&#x2022;</span>
-              <span>Dedoose</span>
-            </li>
-            <li className="text-gray-800 flex items-center">
-              {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-              <span className="text-xl">&#x2022;</span>
-              <span>Atlas Ti</span>
-            </li>
-            <li className="text-gray-800 flex items-center">
-              {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
-              <span className="text-xl">&#x2022;</span>
-              <span>Nvivo</span>
-            </li>
-          </ul>
+                <div className="flex items-center mb-2">
+                  <ChartBarIcon className="w-6 h-6 text-[#2563eb] mr-2" />
+                  <h3 className="font-semibold text-gray-800">
+                    2: Statistical Software Support:
+                  </h3>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-8">
+                  {software.map((sw, index) => (
+                    <li key={index} className="text-gray-800 flex items-center">
+                      {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                      {/* <span className="text-xl">&#x2022;</span> */}
+                      <span className="text-black/60 text-md">&#x2022; {sw}</span>
+                    </li>
+                  ))}
+                  <li className="text-gray-800 flex items-center">
+                    {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                    {/* <span className="text-xl">&#x2022;</span> */}
+                    <span className="text-black/60 text-md">&#x2022; Dedoose</span>
+                  </li>
+                  <li className="text-gray-800 flex items-center">
+                    {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                    {/* <span className="text-xl">&#x2022;</span> */}
+                    <span className="text-black/60 text-md">&#x2022; Atlas Ti</span>
+                  </li>
+                  <li className="text-gray-800 flex items-center">
+                    {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
+                    {/* <span className="text-xl">&#x2022;</span> */}
+                    <span className="text-black/60 text-md">&#x2022; Nvivo</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
-    //   </div>
-    // </div>
+      </div>
+    </div>
   );
 };
 
