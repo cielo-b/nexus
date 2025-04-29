@@ -4,12 +4,15 @@ import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Nexus",
-  description:
-    "Nexus is the consultancy company you need to become successful",
-  // icons: {
-  //   icon: "/favicon.ico"
-  // }
+  description: "Nexus is the consultancy company you need to become successful",
+  icons: {
+    icon: [
+      { url: "/logo.avif", type: "image/avif", sizes: '128x128' }, 
+      { url: "/logo.ico", type: "image/x-icon" }, 
+    ],
+  },
 };
+
 
 export default function RootLayout({
   children,
