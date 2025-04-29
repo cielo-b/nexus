@@ -1,96 +1,97 @@
-import type React from "react"
-import { useState } from "react"
-import { Fade } from "react-awesome-reveal"
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
-import { useRouter } from "next/navigation"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { ArrowRight, ArrowLeft } from "lucide-react"
-import { Autoplay, Navigation, Pagination } from "swiper/modules"
-import "swiper/css"
-import "swiper/css/autoplay"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
-import Link from "next/link"
-
-import RichContent, { type Content } from "./RichContent"
+import { useState } from "react";
+import { Fade } from "react-awesome-reveal";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import Link from "next/link";
+import Image from "next/image";
+import image from '@/public/images/land.png';
+import RichContent, { type Content } from "./RichContent";
 
 interface Category {
-  name: string
+  name: string;
 }
 
 interface Article {
-  _id: string
-  title: string
-  excerpt: Content[]
-  image: string
-  category: Category
+  _id: string;
+  title: string;
+  excerpt: Content[];
+  image: string;
+  category: Category;
 }
 
 interface HeroSectionProps {
-  articles: Article[]
+  articles: Article[];
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
-  const router = useRouter()
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % Math.ceil(articles.length / 3))
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + Math.ceil(articles.length / 3)) % Math.ceil(articles.length / 3))
-  }
-  const [swiper, setSwiper] = useState<any>(null)
+const HeroSection = ({ articles }: HeroSectionProps) => {
+  const router = useRouter();
+  const [swiper, setSwiper] = useState<any>(null);
 
   return (
-    <div
-      className="w-full h-fit items-center lg:pb-20 max-md:pt-36 max-sm:pb-10 sm:pb-3 max-sm:pt-36 pt-44 gap-10 max-md:gap-10 justify-center flex flex-col bg-white"
+    <section
+      style={{
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${image.src})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+      className="w-full min-h-screen flex flex-col items-center justify-center"
       id="home"
     >
-      <div className="w-full flex justify-center z-40">
-        <Fade className="px-6 max-sm:px-4 z-40">
-          <div className="flex flex-col lg:gap-8 md:gap-5 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full z-40">
-            <h1 className="text-black font-bold lg:text-6xl z-20 md:text-5xl max-sm:text-4xl sm:text-4xl w-full text-center ">
-              <span className="text-[#2563eb] inline-block relative items-center justify-center">
-                <img
+      {/* Hero Content */}
+      <div className="w-full flex justify-center z-40 py-12">
+        <Fade className="px-6 max-sm:px-4 z-40" triggerOnce>
+          <div className="flex flex-col gap-6 md:gap-8 items-center justify-center relative w-full z-40">
+            <h1 className="text-black font-bold text-4xl sm:text-5xl lg:text-6xl text-center">
+              <span className="text-[#2563eb] inline-block relative">
+                <Image
                   src="/images/circles.svg"
                   alt=""
-                  className="absolute w-[300px] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
+                  width={300}
+                  height={300}
+                  className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
                 />
-                <span className="z-40 relative">Empowering </span>
-              </span>{"  "}
+                <span className="relative z-10">Empowering </span>
+              </span>
               Change
               <br />
               Through Expert{" "}
-              <span className="text-  [#2563eb] inline-block relative items-center justify-center">
-                <img
+              <span className="text-[#2563eb] inline-block relative">
+                <Image
                   src="/images/circles.svg"
                   alt=""
-                  className="absolute w-[300px] self-center left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30"
-                  style={{ width: "calc(100% + 100px)" }}
+                  width={400}
+                  height={400}
+                  className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0"
                 />
-                <span className="z-40 relative">Consultancy</span>
+                <span className="relative z-10">Consultancy</span>
               </span>
             </h1>
 
-            <p className="md:text-xl max-sm:text-xs text-black/60 font-normal z-10 text-center">
-              Delivering data-driven insights and comprehensive consultancy <br />
-              services to foster impactful and sustainable change in education, <br />
-              agriculture, public health, and more.
+            <p className="text-sm sm:text-base md:text-xl text-black/60 font-normal text-center max-w-3xl">
+              Delivering data-driven insights and comprehensive consultancy services to foster 
+              impactful and sustainable change in education, agriculture, public health, and more.
             </p>
-            <div
+
+            <button
               onClick={() => router.push("/about")}
-              className="cursor-pointer flex items-center justify-center gap-2 p-4 w-fit px-20 rounded-full bg-[#2563eb] text-white transition-all ease-in-out delay-150 hover:-translate-y-1 hover:bg-secondary duration-200"
+              className="flex items-center justify-center gap-2 px-12 py-3 rounded-full bg-[#2563eb] text-white transition-all hover:-translate-y-1 hover:bg-blue-700 duration-200"
             >
-              <span className="text-sm w-max flex-1 text-center">More About Us</span>
+              <span className="text-sm sm:text-base">More About Us</span>
               <ChevronRightIcon className="w-5 h-5 text-white" />
-            </div>
+            </button>
           </div>
         </Fade>
       </div>
 
-      <div className="relative w-full px-4 md:px-[10vw]">
+      {/* Articles Slider */}
+      <div className="w-full px-4 md:px-[10vw] py-12">
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           className="w-full"
@@ -119,13 +120,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
                 href={`/blog/${article._id}`}
                 className="bg-white shadow-lg rounded-2xl flex flex-col relative h-72 w-full overflow-hidden transition-transform duration-300 hover:scale-105"
               >
-                <img
+                <Image
                   src={article.image || "/placeholder.svg"}
                   alt={article.title}
-                  className="h-full w-full object-cover rounded-2xl"
+                  fill
+                  className="object-cover rounded-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black rounded-2xl"></div>
-                <div className="absolute bottom-0 left-0 p-4">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black rounded-2xl" />
+                <div className="absolute bottom-0 left-0 p-4 w-full">
                   <h3 className="text-xl font-bold mb-2 text-white">{article.title}</h3>
                   <div className="text-sm text-white/70 line-clamp-2">
                     <RichContent content={article.excerpt} />
@@ -136,14 +138,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        
-       
-        
       </div>
-      
-    </div>
-    
-  )
-}
+    </section>
+  );
+};
 
-export default HeroSection
+export default HeroSection;
