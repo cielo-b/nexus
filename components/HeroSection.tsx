@@ -36,7 +36,7 @@ const HeroSection = ({ articles }: HeroSectionProps) => {
   return (
     <section
       style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${image.src})`,
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url(${image.src})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
