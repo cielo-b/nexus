@@ -98,7 +98,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
 
   return (
     <div
-      className="flex flex-col relative pt-10 pb-20 max-md:pt-5 max-md:pb-10 gap-16 px-[5%] max-lg:px-4 overflow-hidden"
+      className="flex flex-col relative pt-10 max-md:pt-5 max-md:pb-10 gap-16 px-[5%] max-lg:px-4 overflow-hidden"
       id="features"
     >
       <img
@@ -114,12 +114,9 @@ const Features = ({ title, type }: { title: any; type: any }) => {
           <div className="flex-1">
             <div className="relative w-fit mb-9">
               <Fade>
-                <Header
-                  title={title ? title : "Features"}
-                  icon={
-                    <RectangleGroupIcon className="text-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
-                  }
-                />
+                <h1 className="text-[#000912] font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl ">
+              What We <span className="text-[#2563eb]">Do?</span>
+            </h1>
               </Fade>
             </div>
 

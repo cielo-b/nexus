@@ -43,12 +43,12 @@ const Reviews = ({ testimonies }: { testimonies: any[] }) => {
     >
       <Fade className="lg:w-[45%] w-full">
         <div className="flex flex-col items-start justify-center gap-10 max-sm:gap-6 w-full">
-          <Header
+          {/* <Header
             title="Reviews"
             icon={
               <ChatBubbleBottomCenterIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />
             }
-          />
+          /> */}
           <h1 className="text-[#000912] font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl ">
             What People Think About{" "}
             <span className="text-[#2563eb]">Nexus</span>

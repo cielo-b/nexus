@@ -127,7 +127,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-6 px-[10%] max-lg:px-6 max-md:gap-10 overflow-hidden bg-[#f2f4fa]">
+      <div className="flex flex-col items-center relative pt-5 pb-5 max-md:pt-5 max-md:pb-5 gap-6 px-[10%] max-lg:px-6 max-md:gap-10 overflow-hidden bg-[#f2f4fa]">
         <Fade>
           <Header
             title={"Our Trainings"}

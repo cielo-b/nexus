@@ -35,10 +35,10 @@ const Members = () => {
 
       <div className="w-full flex flex-col items-center justify-center gap-5 z-40">
         <Fade>
-          <Header
+          {/* <Header
             title="Members"
             icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
-          />
+          /> */}
           <h1 className="text-black font-bold text-5xl text-center max-md:text-4xl max-sm:text-3xl">
             Meet The <span className="text-[#2563eb]">Team</span>
           </h1>

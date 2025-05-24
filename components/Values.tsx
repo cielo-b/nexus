@@ -64,19 +64,18 @@ export default function CoreValuesSection() {
   ]
 
   return (
-    <section className="relative px-4 py-16 md:py-24 lg:py-32 bg-gray-50 overflow-hidden">
+    <section className="relative px-4 py-10 md:py-10 bg-gray-50 overflow-hidden">
       <img src="/images/zigs.svg" alt="zigs" className="absolute w-2/5 -bottom-1/3 -left-1/4 z-0" />
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="relative w-fit mb-12">
           <Fade>
-            <Header
-              title="Our core values"
-              icon={<Target className="text-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
-            />
+             <h1 className="text-[#000912] font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl ">
+              Our Core <span className="text-[#2563eb]">Values</span>
+            </h1>
           </Fade>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mt-12 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 gap-y-5 justify-items-center">
           {coreValues.map((value, index) => (
             <CoreValue key={index} {...value} />
           ))}

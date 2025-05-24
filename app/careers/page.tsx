@@ -186,13 +186,13 @@ export default function Home() {
               </div>
             </div>
           </Fade>
-        </div>
+        </div>  
       </div>
 
       <WhatWeOffer />
       <OurTeams />
 
-      <div className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
+      <div className="flex flex-col items-center relative pt-10 pb-10 max-md:pt-5 max-md:pb-5 gap-10 px-[10%] max-lg:px-6 overflow-hidden bg-[#f2f4fa]">
         <Fade>
           <Header
             title="Current Opportunities"

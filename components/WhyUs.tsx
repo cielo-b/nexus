@@ -42,15 +42,15 @@ const WhyUs = () => {
 
   return (
     <div
-      className="flex flex-col items-center relative pt-20 pb-20 max-md:pt-10 max-md:pb-10 gap-6 px-[10%] max-lg:px-6 max-md:gap-8 overflow-hidden bg-[#f2f4fa]"
+      className="flex flex-col items-center relative pt-10 max-md:pt-10 max-md:pb-10 gap-6 px-[10%] max-lg:px-6 max-md:gap-8 overflow-hidden bg-[#f2f4fa]"
       id="whyus"
     >
       <div className="w-full flex flex-col items-center justify-center gap-10 z-40">
         <Fade>
-          <Header
+          {/* <Header
             title="Our Strength ?"
             icon={<RectangleGroupIcon className="fill-[#2563eb] w-6 h-6 max-sm:w-4 max-sm:h-4" />}
-          />
+          /> */}
           <h1 className="text-[#000912] font-bold text-5xl text-center max-md:text-4xl max-sm:text-3xl">
             Why <span className="text-[#2563eb]">Choose</span> Us
           </h1>

@@ -45,7 +45,7 @@ const AboutUs = () => {
 
   return (
     <div
-      className="flex flex-col items-center gap-8 bg-[#f2f4fa] px-[8vw] py-10 relative "
+      className="flex flex-col items-center gap-8 bg-[#f2f4fa] px-[8vw] relative "
       id="aboutUs"
     >
       <img
