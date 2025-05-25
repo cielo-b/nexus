@@ -48,7 +48,7 @@ const Features = ({ title, type }: { title: any; type: any }) => {
     "QGIS",
   ];
   const researchDesign = [
-    "Study design, implementation, and dissemination (quantitative & qualitative)",
+    "Study design, implementation, and dissemination (both quantitative and qualitative)",
     "Baseline, midline, and endline studies",
     "Impact evaluations (RCTs, quasi-experimental, etc.)",
     "Feasibility studies and market research",

@@ -16,6 +16,7 @@ import { fetchTestimonials } from "@/sanity/queries/others";
 import Values from "@/components/Values";
 import Analytics from "@/components/Analytics";
 import Sponsors from "@/components/Sponsors";
+import VideoCarousel from "@/components/VideoCarousel";
 
 
 // Create a Loader component
@@ -74,6 +75,7 @@ export default function Home() {
       <Reviews testimonies={testimonies} />
       <Analytics></Analytics>
       <Sponsors />
+      <VideoCarousel />
       <Footer />
       {/* <AnimatedCursor
         innerSize={12}
