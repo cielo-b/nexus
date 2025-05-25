@@ -1,10 +1,10 @@
-import type React from "react"
-import CustomButton from "./CustomButton"
-import { XMarkIcon } from "@heroicons/react/24/outline"
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
-import { HiLocationMarker, HiMail, HiPhone } from "react-icons/hi"
-import ContactUs from "./ContactUs"
-import Link from "next/link"
+import type React from "react";
+import CustomButton from "./CustomButton";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { HiLocationMarker, HiMail, HiPhone } from "react-icons/hi";
+import ContactUs from "./ContactUs";
+import Link from "next/link";
 
 const Popup = ({
   handleClose,
@@ -12,10 +12,10 @@ const Popup = ({
   message,
   image,
 }: {
-  handleClose: (event: React.MouseEvent<HTMLButtonElement>) => void
-  title: string
-  message: string
-  image: string
+  handleClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  title: string;
+  message: string;
+  image: string;
 }) => (
   <div className="fixed top-0 left-0 w-full h-full bg-[#000000a4] backdrop-blur-lg flex justify-center items-center p-4 z-50">
     <div className="bg-white p-6 rounded-[30px] text-center relative flex flex-col items-center justify-center gap-5 max-w-sm w-full">
@@ -26,9 +26,15 @@ const Popup = ({
         <XMarkIcon className="h-6 w-6" />
       </button>
       <div className="w-[120px] h-[120px] bg-white flex items-center justify-center rounded-full absolute -top-16 z-30">
-        <img src={image || "/placeholder.svg"} alt={title} className="w-[50px] absolute top-8" />
+        <img
+          src={image || "/placeholder.svg"}
+          alt={title}
+          className="w-[50px] absolute top-8"
+        />
       </div>
-      <h2 className="text-[#000912] font-semibold text-lg mt-10 z-50 mb-2 w-full">{title}</h2>
+      <h2 className="text-[#000912] font-semibold text-lg mt-10 z-50 mb-2 w-full">
+        {title}
+      </h2>
       <p className="text-[#000912] text-sm z-50">{message}</p>
       <CustomButton
         title="Got it!"
@@ -38,7 +44,7 @@ const Popup = ({
       />
     </div>
   </div>
-)
+);
 
 const Footer = () => {
   return (
@@ -53,8 +59,9 @@ const Footer = () => {
           </Link>
 
           <p className="text-base sm:text-lg font-medium text-black/70 mt-4">
-            All about delivering data-driven insights and comprehensive consultancy services to foster impactful and
-            sustainable change in education, agriculture, public health, and more.
+            All about delivering data-driven insights and comprehensive
+            consultancy services to foster impactful and sustainable change in
+            education, agriculture, public health, and more.
           </p>
           <div className="flex flex-col gap-4 sm:gap-[24px] mt-6">
             <div className="flex items-center gap-2 text-base sm:text-lg text-[#000912]/70">
@@ -67,7 +74,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-2 text-base sm:text-lg text-[#000912]/70">
               <HiPhone />
-              <span>+250 790 000 000</span>
+              <span>+250782988053</span>
             </div>
 
             <div className="flex gap-4 sm:gap-[20px] mt-4 sm:mt-6">
@@ -108,12 +115,10 @@ const Footer = () => {
       <div className="w-full flex items-center justify-center">
         <p className="text-[#000912] font-medium text-center text-xs sm:text-sm">
           Insight Nexus || Powered by Y4 Lab.© 2025
-        
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
-
+export default Footer;

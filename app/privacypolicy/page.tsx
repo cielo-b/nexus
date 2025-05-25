@@ -23,7 +23,7 @@ const privacyPolicySections = [
           <strong>Email:</strong> team.nexusinsights@gmail.com
         </p>
         <p>
-          <strong>Phone:</strong> +250790603658
+          <strong>Phone:</strong> +250782988053
         </p>
       </div>
     ),
@@ -254,7 +254,7 @@ const privacyPolicySections = [
           <strong>Email:</strong> team.nexusinsights@gmail.com
         </p>
         <p>
-          <strong>Phone:</strong> +250790603658
+          <strong>Phone:</strong> +250782988053
         </p>
       </div>
     ),
