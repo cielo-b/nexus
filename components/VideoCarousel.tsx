@@ -139,6 +139,7 @@ const VideoCarousel = () => {
   const togglePlay = (videoId: number, e: React.MouseEvent) => {
     e.stopPropagation();
     const video: any = videoRefs.current[videoId];
+    
     if (!video) return;
 
     if (isPlaying[videoId]) {
