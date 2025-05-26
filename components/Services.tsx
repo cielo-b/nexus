@@ -106,57 +106,57 @@ const Features = ({ title, type }: { title: any; type: any }) => {
         alt="dots"
         className="absolute -left-7 bottom-4 z-30"
       />
-
-      <div className="w-full max-w-6xl mx-auto flex flex-col gap-10 z-40">
-        {/* Flex container for subtitle and image */}
-        <div className="flex flex-row items-center justify-between gap-8 max-lg:flex-col">
-          {/* Subtitle on the left */}
-          <div className="flex-1">
-            <div className="relative w-fit mb-9">
-              <Fade>
-                <h1 className="text-[#000912] font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl ">
-                  What We <span className="text-[#2563eb]">Do?</span>
-                </h1>
-              </Fade>
-            </div>
-
-            {!title && (
-              <h1 className="text-black font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl">
-                What <span className="text-[#2563eb]">We</span> Offer
-              </h1>
-            )}
-            <p className="text-md max-sm:text-sm text-black/60 font-normal z-10 text-start lg:w-2/3 max-sm:w-11/12">
-              Insight Nexus Ltd is a forward-thinking consultancy firm dedicated
-              to providing holistic, results-driven solutions that help
-              organizations achieve their goals. We offer a broad spectrum of
-              services, including Research Design, Implementation &
-              Dissemination, Monitoring, Evaluation, and Learning (MEL),
-              Capacity Building & Technical Training, and Strategic Planning &
-              Technical Advisory. In addition, we specialize in facilitating
-              grants applications, climate resilience assessments, and
-              developing sustainable strategies across key sectors, including
-              public health, agriculture, education, tourism, technology and
-              innovation, infrastructure and manufacturing, finance and business
-              services, and energy and environment. Whether assisting in
-              securing funding, optimizing operations, or crafting long-term
-              strategies, our team brings a diverse skill set to address the
-              unique challenges faced by our clients. We empower organizations
-              with the knowledge, tools, and support needed to drive innovation,
-              enhance capacity, and promote sustainable growth. By combining
-              expert insights with practical solutions, we help organizations
-              thrive in an increasingly complex and interconnected global
-              environment.
-            </p>
+      <div className="flex flex-row items-center justify-between gap-16 max-lg:flex-col max-lg:gap-10 px-4 md:px-8 lg:px-12">
+        {/* Subtitle and description on the left */}
+        <div className="flex-1 flex flex-col justify-center">
+          <div className="mb-6">
+        <Fade>
+          <h1 className="font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl leading-tight">
+            What We <span className="text-[#2563eb]">Do?</span>
+          </h1>
+        </Fade>
           </div>
-
-          <div className="flex-1 flex justify-end">
+          {!title && (
+        <h1 className="font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl mb-4 leading-tight">
+          What <span className="text-[#2563eb]">We</span> Offer
+        </h1>
+          )}
+          <p className="text-md max-sm:text-sm font-normal text-black/60 text-start max-w-2xl">
+        Insight Nexus Ltd is a forward-thinking consultancy firm dedicated
+        to providing holistic, results-driven solutions that help
+        organizations achieve their goals. We offer a broad spectrum of
+        services, including Research Design, Implementation & Dissemination,
+        Monitoring, Evaluation, and Learning (MEL), Capacity Building &
+        Technical Training, and Strategic Planning & Technical Advisory. In
+        addition, we specialize in facilitating grants applications, climate
+        resilience assessments, and developing sustainable strategies across
+        key sectors, including public health, agriculture, education,
+        tourism, technology and innovation, infrastructure and
+        manufacturing, finance and business services, and energy and
+        environment. Whether assisting in securing funding, optimizing
+        operations, or crafting long-term strategies, our team brings a
+        diverse skill set to address the unique challenges faced by our
+        clients. We empower organizations with the knowledge, tools, and
+        support needed to drive innovation, enhance capacity, and promote
+        sustainable growth. By combining expert insights with practical
+        solutions, we help organizations thrive in an increasingly complex
+        and interconnected global environment.
+          </p>
+        </div>
+        {/* Image on the right */}
+        <div className="flex-1 flex justify-end items-center max-lg:justify-center">
+            <div className="w-full h-full flex items-stretch max-w-2xl">
             <img
               src="/images/image3.jpeg"
               alt="Features"
-              className="rounded-2xl w-full max-w-md object-cover h-80"
+              className="rounded-2xl w-full h-full object-cover min-h-[18rem] max-h-[28rem] shadow-lg"
+              style={{ aspectRatio: "1/1.2" }}
             />
-          </div>
+            </div>
         </div>
+      </div>
+      <div className="w-full max-w-6xl mx-auto flex flex-col gap-10 z-40">
+        {/* Flex container for subtitle and image */}
 
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div className="flex flex-col h-auto  bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
