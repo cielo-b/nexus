@@ -123,11 +123,24 @@ const AboutUs = () => {
               Get To Know <span className="text-[#2563eb]">Nexus</span>
             </h1>
             <p className="text-md text-[#000912]/70 md:text-md max-sm:text-xs text-start">
-              At InsightNexus, we're on a mission to provide innovative
-              consultancy solutions that enable businesses to overcome
-              challenges, optimize operations, and achieve sustainable growth.
-              We are committed to delivering tailored, data-driven strategies
-              that unlock the full potential of every organization.
+              Insight Nexus Ltd is a dynamic consultancy firm committed to
+              empowering organizations through a wide range of tailored services
+              designed to foster growth and operational excellence. By
+              leveraging a deep understanding of data analytics, market trends,
+              and business strategies, Insight Nexus provides customized,
+              data-driven solutions that cater to the unique needs of each
+              client. Beyond just data-driven strategies, we offer comprehensive
+              solutions that include technical support, organizational capacity
+              building, strategic planning, and more. Our team of experts works
+              closely with businesses to navigate challenges, optimize
+              processes, and develop sustainable strategies for success. Whether
+              you're looking to enhance your internal capabilities, streamline
+              your operations, or create a roadmap for the future, Insight Nexus
+              is dedicated to helping you unlock the full potential of your
+              organization. Our holistic approach ensures that we address both
+              immediate needs and long-term goals, positioning your business for
+              resilience, innovation, and lasting impact in an ever-evolving
+              market landscape.
             </p>
             {window.location.pathname == "/" && (
               <CustomButton

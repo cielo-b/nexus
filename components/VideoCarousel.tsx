@@ -33,21 +33,13 @@ const videos: Video[] = [
   },
   {
     id: 2,
-    title: "Digital Transformation Success Story",
-    description:
-      "How we helped Fortune 500 companies modernize their operations",
-    videoUrl: "/videos/vid2.mp4",
-    duration: "8:45",
-  },
-  {
-    id: 3,
     title: "Client Testimonial",
     description: "Real feedback from satisfied customers about our services",
     videoUrl: "/videos/vid3.mp4",
     duration: "3:15",
   },
   {
-    id: 4,
+    id: 3,
     title: "Product Demo",
     description: "See our latest features and capabilities in action",
     videoUrl: "/videos/vid4.mp4",

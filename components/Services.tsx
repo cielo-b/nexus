@@ -115,8 +115,8 @@ const Features = ({ title, type }: { title: any; type: any }) => {
             <div className="relative w-fit mb-9">
               <Fade>
                 <h1 className="text-[#000912] font-bold text-5xl text-start max-md:text-4xl max-sm:text-3xl ">
-              What We <span className="text-[#2563eb]">Do?</span>
-            </h1>
+                  What We <span className="text-[#2563eb]">Do?</span>
+                </h1>
               </Fade>
             </div>
 
@@ -126,11 +126,26 @@ const Features = ({ title, type }: { title: any; type: any }) => {
               </h1>
             )}
             <p className="text-md max-sm:text-sm text-black/60 font-normal z-10 text-start lg:w-2/3 max-sm:w-11/12">
-              Insight Nexus LTD provides comprehensive data science, MEL, and
-              research services, specializing in conducting studies/surveys,
-              market studies, building MEL systems and indicators, data
-              analysis, machine learning, and data visualization to transform
-              raw data into actionable insights.
+              Insight Nexus Ltd is a forward-thinking consultancy firm dedicated
+              to providing holistic, results-driven solutions that help
+              organizations achieve their goals. We offer a broad spectrum of
+              services, including Research Design, Implementation &
+              Dissemination, Monitoring, Evaluation, and Learning (MEL),
+              Capacity Building & Technical Training, and Strategic Planning &
+              Technical Advisory. In addition, we specialize in facilitating
+              grants applications, climate resilience assessments, and
+              developing sustainable strategies across key sectors, including
+              public health, agriculture, education, tourism, technology and
+              innovation, infrastructure and manufacturing, finance and business
+              services, and energy and environment. Whether assisting in
+              securing funding, optimizing operations, or crafting long-term
+              strategies, our team brings a diverse skill set to address the
+              unique challenges faced by our clients. We empower organizations
+              with the knowledge, tools, and support needed to drive innovation,
+              enhance capacity, and promote sustainable growth. By combining
+              expert insights with practical solutions, we help organizations
+              thrive in an increasingly complex and interconnected global
+              environment.
             </p>
           </div>
 
@@ -270,7 +285,9 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                     <li key={index} className="text-gray-800 flex items-center">
                       {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
                       {/* <span className="text-xl">&#x2022;</span> */}
-                      <span className="text-black/60 text-md">&#x2022; {system}</span>
+                      <span className="text-black/60 text-md">
+                        &#x2022; {system}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -288,23 +305,31 @@ const Features = ({ title, type }: { title: any; type: any }) => {
                     <li key={index} className="text-gray-800 flex items-center">
                       {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
                       {/* <span className="text-xl">&#x2022;</span> */}
-                      <span className="text-black/60 text-md">&#x2022; {sw}</span>
+                      <span className="text-black/60 text-md">
+                        &#x2022; {sw}
+                      </span>
                     </li>
                   ))}
                   <li className="text-gray-800 flex items-center">
                     {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
                     {/* <span className="text-xl">&#x2022;</span> */}
-                    <span className="text-black/60 text-md">&#x2022; Dedoose</span>
+                    <span className="text-black/60 text-md">
+                      &#x2022; Dedoose
+                    </span>
                   </li>
                   <li className="text-gray-800 flex items-center">
                     {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
                     {/* <span className="text-xl">&#x2022;</span> */}
-                    <span className="text-black/60 text-md">&#x2022; Atlas Ti</span>
+                    <span className="text-black/60 text-md">
+                      &#x2022; Atlas Ti
+                    </span>
                   </li>
                   <li className="text-gray-800 flex items-center">
                     {/* <CubeIcon className="w-5 h-5 mr-2 text-[#2563eb]" /> */}
                     {/* <span className="text-xl">&#x2022;</span> */}
-                    <span className="text-black/60 text-md">&#x2022; Nvivo</span>
+                    <span className="text-black/60 text-md">
+                      &#x2022; Nvivo
+                    </span>
                   </li>
                 </ul>
               </div>

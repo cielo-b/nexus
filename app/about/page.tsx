@@ -40,7 +40,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000); 
+    const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -75,14 +75,20 @@ export default function Home() {
               </h1>
               <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <p className="text-lg text-[#000912]/70 text-center">
-                  Insight Nexus, established in Rwanda and duly registered under
-                  the Law N° 007/2021 of 05/02/2021 governing companies, excels
-                  in delivering a broad spectrum of consultancy services. Our
-                  areas of expertise include education, agriculture, public
-                  health, gender, and livelihoods, alongside conducting in-depth
-                  case studies. We serve a diverse clientele, ranging from
-                  international to local NGOs, with a particular emphasis on
-                  strengthening local organizations.
+                  Insight Nexus Ltd, established in Rwanda and duly registered
+                  under Law N° 007/2021 of 05/02/2021 governing companies,
+                  excels in delivering a comprehensive range of consultancy
+                  services. Our expertise spans sectors such as public health,
+                  agriculture, education, tourism, technology, energy, and
+                  finance, with a focus on providing sustainable, data-driven
+                  strategies. We support a diverse clientele, including
+                  individual researchers, students, profit-oriented businesses,
+                  government institutions, universities, and both international
+                  and local NGOs. At Insight Nexus, we are committed to
+                  inclusivity by ensuring that our advisory and solutions reach
+                  and benefit all segments of society, helping organizations
+                  address challenges in ways that promote equity, diversity, and
+                  long-term impact.
                 </p>
               </div>
             </div>
