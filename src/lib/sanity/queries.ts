@@ -395,7 +395,6 @@ export const serviceQueries = {
       coverImage,
       relatedPublications,
       order,
-      featured,
       active
     }
   `,
