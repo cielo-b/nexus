@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Read the refs being pushed
+while read local_ref local_sha remote_ref remote_sha
+do
+  # Check if the push is to the 'main' branch
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "Pushing to main - running lint check..."
+    npm run lint 
+    if [ $? -ne 0 ]; then
+      echo "Error: Lint failed. Push to main aborted."
+      exit 1
+    fi
+    echo "Lint succeeded. Proceeding with push to main."
+  fi
+done
