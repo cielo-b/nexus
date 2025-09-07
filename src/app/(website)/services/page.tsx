@@ -46,7 +46,12 @@ export default function ServicesPage() {
 
   const handleServiceClick = (index: number) => {
     setIsAutoRotating(false)
-    setActiveServiceIndex(index)
+    // If clicking on the same service that's already active, close it
+    if (index === activeServiceIndex) {
+      setActiveServiceIndex(-1) // -1 means no service is active
+    } else {
+      setActiveServiceIndex(index)
+    }
   }
 
   const handleServiceHover = (index: number) => {
@@ -74,155 +79,104 @@ export default function ServicesPage() {
       {/* Services Section - Matching Image Design */}
       <section className="py-20">
         <div className="px-[8vw]">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold  mb-12 text-center">Our Services</h2>
+          <div className="max-w-7xl mx-auto">
             
             {loading ? (
-              <div className="space-y-6">
-                {/* Active Service Skeleton */}
-                <div className="bg-gray-800 rounded-2xl p-8 mb-8">
-                  <div className="grid lg:grid-cols-2 gap-8 items-center">
-                    <div className="w-full h-64 bg-gray-700 rounded-xl animate-pulse"></div>
-                    <div className="space-y-4">
-                      <div className="h-8 bg-gray-700 rounded animate-pulse"></div>
-                      <div className="h-4 bg-gray-700 rounded animate-pulse"></div>
-                      <div className="h-4 bg-gray-700 rounded w-3/4 animate-pulse"></div>
-                      <div className="h-12 w-32 bg-gray-700 rounded-lg animate-pulse"></div>
-                    </div>
-                  </div>
-                </div>
-                
+              <div className="space-y-4">
                 {/* Service List Skeleton */}
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="bg-gray-800 rounded-xl p-4 flex items-center justify-between">
+                  <div key={i} className="border border-gray-200 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16 bg-gray-700 rounded-lg animate-pulse"></div>
-                      <div className="h-6 w-48 bg-gray-700 rounded animate-pulse"></div>
+                      <div className="w-16 h-16 bg-gray-200 rounded-lg animate-pulse"></div>
+                      <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
                     </div>
-                    <div className="w-6 h-6 bg-gray-700 rounded animate-pulse"></div>
+                    <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
                   </div>
                 ))}
               </div>
             ) : services.length > 0 ? (
-              <div className="space-y-6">
-                {/* Active Service Display */}
-                <AnimatePresence mode="wait">
-                  {services[activeServiceIndex] && (
-                    <motion.div
-                      key={activeServiceIndex}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -30 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      className="bg-gray-800 rounded-2xl p-8 mb-8"
-                    >
-                      <div className="grid lg:grid-cols-2 gap-8 items-center">
-                        <div className="relative">
-                          {services[activeServiceIndex].coverImage ? (
-                            <Image
-                              src={getSanityImage(services[activeServiceIndex].coverImage)}
-                              alt={services[activeServiceIndex].coverImage.alt || services[activeServiceIndex].title}
-                              width={600}
-                              height={400}
-                              className="w-full h-64 object-cover rounded-xl"
-                            />
-                          ) : (
-                            <div className="w-full h-64 bg-gray-700 rounded-xl flex items-center justify-center">
-                              <span className="text-gray-400 text-lg">Service Image</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="text-right">
-                          <motion.h3
-                            key={`title-${activeServiceIndex}`}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                            className="text-3xl font-bold  mb-4"
-                          >
-                            {services[activeServiceIndex].title}
-                          </motion.h3>
-                          <motion.p
-                            key={`desc-${activeServiceIndex}`}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.4, duration: 0.8 }}
-                            className="text-lg text-gray-300 mb-6"
-                          >
-                            {services[activeServiceIndex].shortDescription}
-                          </motion.p>
-                          <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.6, duration: 0.5 }}
-                          >
-                            <Link
-                              href={`/services/${services[activeServiceIndex].slug.current}`}
-                              className="inline-flex items-center bg-blue-600  px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                            >
-                              Read More
-                              <Icon icon="mdi:arrow-up-right" className="w-5 h-5 ml-2" />
-                            </Link>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Service List */}
-                <div className="space-y-4">
-                  {services.map((service, index) => (
-                    <motion.div
-                      key={service._id}
-                      className={`cursor-pointer transition-all duration-300 rounded-xl p-4 flex items-center justify-between ${
-                        index === activeServiceIndex 
-                          ? 'bg-gray-700 shadow-lg' 
-                          : 'bg-gray-800 hover:bg-gray-750'
-                      }`}
-                      onClick={() => handleServiceClick(index)}
-                      onMouseEnter={() => handleServiceHover(index)}
-                      whileHover={{ scale: 1.01 }}
-                      whileTap={{ scale: 0.99 }}
-                    >
-                      <div className="flex items-center space-x-4">
+              <div className="space-y-4">
+                {/* Service List with Integrated Active Service */}
+                {services.map((service, index) => (
+                  <motion.div
+                    key={service._id}
+                    className={`cursor-pointer transition-all duration-300 border-b border-gray-200  overflow-hidden ${
+                      index === activeServiceIndex 
+                        ? 'shadow-lg' 
+                        : 'hover:shadow-md'
+                    }`}
+                    onClick={() => handleServiceClick(index)}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                  >
+                    {/* Service Header */}
+                    <div className="p-4 flex items-start justify-between">
+                      <div className="flex items-start space-x-4 flex-grow">
                         <div className="flex-shrink-0">
                           {service.coverImage ? (
                             <Image
                               src={getSanityImage(service.coverImage)}
                               alt={service.coverImage.alt || service.title}
-                              width={60}
-                              height={60}
-                              className="w-16 h-16 object-cover rounded-lg"
+                              width={256}
+                              height={index === activeServiceIndex ? 256 : 80}
+                              className={`object-cover rounded-lg w-64 ${
+                                index === activeServiceIndex ? 'h-64' : 'h-10'
+                              }`}
                             />
                           ) : (
-                            <div className="w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center">
+                            <div className={`bg-gray-200 rounded-lg flex items-center justify-center w-64 ${
+                              index === activeServiceIndex ? 'h-64' : 'h-20'
+                            }`}>
                               <span className="text-gray-400 text-xs">No Image</span>
                             </div>
                           )}
                         </div>
-                        <div className="text-left">
-                          <h3 className="text-lg font-semibold ">
+                        <div className="text-left flex-grow">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-2">
                             {service.title}
                           </h3>
+                          <AnimatePresence>
+                            {index === activeServiceIndex && ( 
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                className="overflow-hidden"
+                              >
+                                <p className="text-sm text-gray-600 mb-4">
+                                  {service.shortDescription}
+                                </p>
+                                <Link
+                                  href={`/services/${service.slug.current}`}
+                                  className="inline-flex items-center text-white bg-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                                >
+                                  Read More
+                                  <Icon icon="mdi:arrow-up-right" className="w-5 h-5 ml-2" />
+                                </Link>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
                       </div>
                       <Icon 
-                        icon={index === activeServiceIndex ? "mdi:minus" : "mdi:plus"} 
-                        className="w-6 h-6 " 
+                        icon="mdi:chevron-down" 
+                        className={`w-6 h-6 text-gray-500 transition-transform duration-300 flex-shrink-0 ml-4 ${
+                          index === activeServiceIndex ? 'rotate-180' : ''
+                        }`}
                       />
-                    </motion.div>
-                  ))}
-                </div>
+                    </div>
+
+                  </motion.div>
+                ))}
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="w-24 h-24 mx-auto mb-4 bg-gray-800 rounded-full flex items-center justify-center">
+                <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                   <Icon icon="mdi:briefcase-outline" className="w-12 h-12 text-gray-400" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">No services available</h3>
-                <p className="text-gray-400">Services will appear here once they are added to Sanity CMS.</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No services available</h3>
+                <p className="text-gray-600">Services will appear here once they are added to Sanity CMS.</p>
               </div>
             )}
           </div>

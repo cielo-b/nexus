@@ -29,13 +29,15 @@ export default function Navbar() {
   // Check if current page is a single publication or blog page
   const isSinglePublicationPage = pathname.startsWith('/publications/') && pathname !== '/publications'
   const isSingleBlogPage = pathname.startsWith('/blogs/') && pathname !== '/blogs'
+  const isSingleServicePage = pathname.startsWith('/services/') && pathname !== '/services'
   
   // For pages with scroll effect, use white background only when scrolled
   // For other pages, always use white background
   const shouldUseWhiteBg = alwaysWhitePages.includes(pathname) || 
     (scrollEffectPages.includes(pathname) && isScrolled) ||
     (isSinglePublicationPage && isScrolled) ||
-    (isSingleBlogPage && isScrolled)
+    (isSingleBlogPage && isScrolled) ||
+    (isSingleServicePage && isScrolled)
 
   // Check if a link is active
   const isActiveLink = (href: string) => {

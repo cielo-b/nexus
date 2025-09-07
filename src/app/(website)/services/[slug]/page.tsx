@@ -87,78 +87,60 @@ export default function ServiceDetailPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Breadcrumbs */}
-      <div className=" py-4">
-        <div className="px-[8vw]">
-          <nav className="flex items-center space-x-2 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">Home</Link>
-            <span className="text-gray-400">/</span>
-            <Link href="/services" className="text-gray-500 hover:text-gray-700">Services</Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-900 font-medium">{service.title}</span>
-          </nav>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
-        <div className="absolute inset-0 bg-black/40"></div>
-        {service.coverImage && (
-          <div className="absolute inset-0">
-            <Image
-              src={getSanityImage(service.coverImage)}
-              alt={service.coverImage.alt || service.title}
-              fill
-              className="object-cover"
-            />
+      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
+        <Image src={getSanityImage(service.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
+        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
+          <div className="flex gap-2 mb-4 w-full text-white">
+            <Link href="/publications" className='text-white/50   '>
+              Publications
+            </Link>
+            {">"}
+            <span className=''>
+              {service.title}
+            </span>
           </div>
-        )}
-        <div className="relative px-[8vw]">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl font-bold mb-6">{service.title}</h1>
-            <p className="text-xl text-blue-100">
+          <div className="">
+            <h1 className="max-w-4xl text-5xl font-bold mb-6">{service.title}</h1>
+            <p className="">
               {service.shortDescription}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Testing Experience Section */}
-      {service.testingExperience && (
-        <section className="py-20 bg-gray-50">
-          <div className="px-[8vw]">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-                Testing Experience
-              </h2>
-              <div className="prose prose-lg max-w-none text-gray-700">
-                <p className="text-center leading-relaxed">
-                  {service.testingExperience}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+
+
+
 
 
       {/* Related Publications Section */}
       {relatedPublications.length > 0 && (
         <section className="py-20 ">
-          <div className="px-[8vw]">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Related Publications</h2>
-              <p className="text-xl text-gray-600">
-                Explore our research and insights related to {service.title}
-              </p>
+          <div className="px-[8vw] space-y-8">
+          <div className="mb-8 relative text-center py-[4vh]">
+          <h2 className="text-5xl font-semibold  mb-4">How <span className='text-primary' >We </span> Do It</h2>
+          <p className="max-w-3xl mx-auto">
+          "Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.
+          </p>
+        </div>
+          {service.testingExperience && (
+            <div className="text-left">
+              <h2 className="text-4xl font-semibold  mb-6 ">
+                Testing Experience
+              </h2>
+              <p className=" leading-relaxed">
+                  {service.testingExperience}
+                </p>
             </div>
-
+      )}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedPublications.map((publication) => (
-                <div key={publication._id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div key={publication._id} className="bg-[#F6F6F6] rounded-lg">
                   <Link href={`/publications/${publication.slug.current}`} className="block">
                     {publication.coverImage && (
-                      <div className="relative h-48 w-full">
+                      <div className="relative h-64 w-full">
                         <Image
                           src={getSanityImage(publication.coverImage)}
                           alt={publication.coverImage.alt || publication.title}
@@ -174,12 +156,6 @@ export default function ServiceDetailPage() {
                       <p className="text-gray-600 mb-4 line-clamp-3">
                         {publication.excerpt}
                       </p>
-                      <div className="flex items-center justify-between text-sm text-gray-500">
-                        <span>{publication.author.name}</span>
-                        <span>
-                          {new Date(publication.publicationDate).toLocaleDateString()}
-                        </span>
-                      </div>
                     </div>
                   </Link>
                 </div>
@@ -188,30 +164,6 @@ export default function ServiceDetailPage() {
           </div>
         </section>
       )}
-
-      {/* Call to Action Section */}
-      <section className="py-20 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">Ready to Get Started?</h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Let us help you with {service.title} and achieve your goals.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-            >
-              Contact Us
-            </Link>
-            <Link
-              href="/services"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-            >
-              View All Services
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
