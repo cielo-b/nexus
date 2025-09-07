@@ -90,12 +90,13 @@ export const blogType = defineType({
       type: 'string',
       options: {
         list: [
+          { title: 'Economics', value: 'economics' },
+          { title: 'Agriculture', value: 'agriculture' },
           { title: 'Technology', value: 'technology' },
           { title: 'Politics', value: 'politics' },
           { title: 'Health', value: 'health' },
           { title: 'Environment', value: 'environment' },
           { title: 'Sports', value: 'sports' },
-          { title: 'Healthcare', value: 'healthcare' },
         ],
       },
       validation: (Rule) => Rule.required(),

@@ -22,8 +22,19 @@ export default function Navbar() {
   }, [])
 
   // Check if current page should always have white background
-  const alwaysWhitePages = ['/about', '/career', '/training']
-  const shouldUseWhiteBg = alwaysWhitePages.includes(pathname) || isScrolled
+  const alwaysWhitePages = ['/about', '/career', '/training', '/services']
+  const scrollEffectPages = ['/', '/publications', '/blogs']
+  
+  // Check if current page is a single publication or blog page
+  const isSinglePublicationPage = pathname.startsWith('/publications/') && pathname !== '/publications'
+  const isSingleBlogPage = pathname.startsWith('/blogs/') && pathname !== '/blogs'
+  
+  // For pages with scroll effect, use white background only when scrolled
+  // For other pages, always use white background
+  const shouldUseWhiteBg = alwaysWhitePages.includes(pathname) || 
+    (scrollEffectPages.includes(pathname) && isScrolled) ||
+    (isSinglePublicationPage && isScrolled) ||
+    (isSingleBlogPage && isScrolled)
 
   // Check if a link is active
   const isActiveLink = (href: string) => {

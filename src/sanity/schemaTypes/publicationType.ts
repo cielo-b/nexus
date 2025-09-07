@@ -67,7 +67,6 @@ export const publicationType = defineType({
           },
         },
       ],
-      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'coverImage',
@@ -115,12 +114,13 @@ export const publicationType = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Research Report', value: 'research-report' },
-          { title: 'Policy Brief', value: 'policy-brief' },
-          { title: 'Case Study', value: 'case-study' },
-          { title: 'White Paper', value: 'white-paper' },
-          { title: 'Journal Article', value: 'journal-article' },
-          { title: 'Working Paper', value: 'working-paper' },
+          { title: 'Economics', value: 'economics' },
+          { title: 'Agriculture', value: 'agriculture' },
+          { title: 'Technology', value: 'technology' },
+          { title: 'Politics', value: 'politics' },
+          { title: 'Health', value: 'health' },
+          { title: 'Environment', value: 'environment' },
+          { title: 'Sports', value: 'sports' },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -159,6 +159,18 @@ export const publicationType = defineType({
       type: 'boolean',
       description: 'Show this publication as featured on the homepage',
       initialValue: false,
+    }),
+    defineField({
+      name: 'likes',
+      title: 'Likes Count',
+      type: 'number',
+      initialValue: 0,
+    }),
+    defineField({
+      name: 'views',
+      title: 'Views Count',
+      type: 'number',
+      initialValue: 0,
     }),
   ],
   preview: {

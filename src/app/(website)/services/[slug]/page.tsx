@@ -4,11 +4,10 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { PortableText } from '@portabletext/react'
 import { client } from '@/lib/sanity/client'
 import { serviceQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
-import { Service, ServiceDetail } from '@/types/service'
+import { Service } from '@/types/service'
 import { Publication } from '@/types/publication'
 
 export default function ServiceDetailPage() {
@@ -16,30 +15,19 @@ export default function ServiceDetailPage() {
   const slug = params.slug as string
 
   const [service, setService] = useState<Service | null>(null)
-  const [serviceDetails, setServiceDetails] = useState<ServiceDetail[]>([])
   const [relatedPublications, setRelatedPublications] = useState<Publication[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [serviceData, detailsData] = await Promise.all([
-          client.fetch(serviceQueries.getServiceBySlug, { slug }),
-          client.fetch(serviceQueries.getServiceDetails, { serviceId: service?._id })
-        ])
-
+        const serviceData = await client.fetch(serviceQueries.getServiceBySlug, { slug })
         setService(serviceData)
         
         if (serviceData) {
-          // Fetch service details
-          const details = await client.fetch(serviceQueries.getServiceDetails, { 
-            serviceId: serviceData._id 
-          })
-          setServiceDetails(details)
-
           // Fetch related publications for this service
-          const publications = await client.fetch(serviceQueries.getPublicationsByService, {
-            serviceId: serviceData._id
+          const publications = await client.fetch(serviceQueries.getServicePublications, {
+            publicationIds: serviceData.relatedPublications?.map((pub: any) => pub._ref) || []
           })
           setRelatedPublications(publications)
         }
@@ -71,21 +59,6 @@ export default function ServiceDetailPage() {
     return title
   }
 
-  const renderIcon = (icon?: string, iconType?: string) => {
-    if (iconType === 'emoji' && icon) {
-      return (
-        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-          {icon}
-        </div>
-      )
-    }
-
-    return (
-      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <span className="text-2xl">📊</span>
-      </div>
-    )
-  }
 
   if (loading) {
     return (
@@ -115,7 +88,7 @@ export default function ServiceDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumbs */}
-      <div className="bg-gray-50 py-4">
+      <div className=" py-4">
         <div className="px-[8vw]">
           <nav className="flex items-center space-x-2 text-sm">
             <Link href="/" className="text-gray-500 hover:text-gray-700">Home</Link>
@@ -130,11 +103,11 @@ export default function ServiceDetailPage() {
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
         <div className="absolute inset-0 bg-black/40"></div>
-        {service.heroImage && (
+        {service.coverImage && (
           <div className="absolute inset-0">
             <Image
-              src={getSanityImage(service.heroImage)}
-              alt={service.heroImage.alt || service.title}
+              src={getSanityImage(service.coverImage)}
+              alt={service.coverImage.alt || service.title}
               fill
               className="object-cover"
             />
@@ -143,66 +116,35 @@ export default function ServiceDetailPage() {
         <div className="relative px-[8vw]">
           <div className="max-w-4xl">
             <h1 className="text-5xl font-bold mb-6">{service.title}</h1>
-            <div className="prose prose-lg max-w-none text-blue-100">
-              <PortableText value={service.description} />
-            </div>
+            <p className="text-xl text-blue-100">
+              {service.shortDescription}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Service Details Sections */}
-      {serviceDetails.map((detail) => (
-        <section key={detail._id} className="py-20 bg-white">
+      {/* Testing Experience Section */}
+      {service.testingExperience && (
+        <section className="py-20 bg-gray-50">
           <div className="px-[8vw]">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                {renderHighlightedTitle(detail.title, detail.highlightedText)}
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+                Testing Experience
               </h2>
-              {detail.quote && (
-                <blockquote className="text-xl text-gray-600 italic max-w-3xl mx-auto">
-                  "{detail.quote}"
-                </blockquote>
-              )}
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="prose prose-lg max-w-none text-gray-600">
-                  <PortableText value={detail.content} />
-                </div>
+              <div className="prose prose-lg max-w-none text-gray-700">
+                <p className="text-center leading-relaxed">
+                  {service.testingExperience}
+                </p>
               </div>
-              
-              {detail.image && (
-                <div className="relative">
-                  <div className="bg-white rounded-lg shadow-lg p-6">
-                    <Image
-                      src={getSanityImage(detail.image)}
-                      alt={detail.image.alt || detail.title}
-                      width={400}
-                      height={300}
-                      className="w-full h-64 object-cover rounded-lg mb-4"
-                    />
-                    {detail.imageTitle && (
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {detail.imageTitle}
-                      </h3>
-                    )}
-                    {detail.imageSubtitle && (
-                      <p className="text-gray-600 text-sm">
-                        {detail.imageSubtitle}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </section>
-      ))}
+      )}
+
 
       {/* Related Publications Section */}
       {relatedPublications.length > 0 && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 ">
           <div className="px-[8vw]">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">Related Publications</h2>
@@ -235,7 +177,7 @@ export default function ServiceDetailPage() {
                       <div className="flex items-center justify-between text-sm text-gray-500">
                         <span>{publication.author.name}</span>
                         <span>
-                          {new Date(publication.publishedAt).toLocaleDateString()}
+                          {new Date(publication.publicationDate).toLocaleDateString()}
                         </span>
                       </div>
                     </div>

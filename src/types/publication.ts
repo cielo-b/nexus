@@ -30,6 +30,7 @@ export interface Publication {
     asset: {
       url: string
     }
+    alt?: string
   }
   publicationDate: string
   author: PublicationAuthor
@@ -42,4 +43,6 @@ export interface Publication {
   downloadUrl?: string
   externalUrl?: string
   featured: boolean
+  likes: number
+  views: number
 }

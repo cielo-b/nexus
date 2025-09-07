@@ -25,21 +25,19 @@ export const serviceType = defineType({
       name: 'shortDescription',
       title: 'Short Description',
       type: 'text',
-      rows: 2,
+      rows: 4,
       description: 'Brief description for service cards and listings',
-      validation: (Rule) => Rule.required().max(200),
     }),
     defineField({
-      name: 'description',
-      title: 'Full Description',
-      type: 'array',
-      of: [{ type: 'block' }],
-      description: 'Detailed description for service detail page',
-      validation: (Rule) => Rule.required(),
+      name: 'testingExperience',
+      title: 'Testing Experience',
+      type: 'text',
+      rows: 4,
+      description: 'Detailed paragraph about testing experience and expertise',
     }),
     defineField({
-      name: 'heroImage',
-      title: 'Hero Image',
+      name: 'coverImage',
+      title: 'Cover Image',
       type: 'image',
       options: {
         hotspot: true,
@@ -52,41 +50,6 @@ export const serviceType = defineType({
         }),
       ],
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'cardImage',
-      title: 'Card Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alternative Text',
-          type: 'string',
-        }),
-      ],
-      description: 'Image for service cards and listings',
-    }),
-    defineField({
-      name: 'icon',
-      title: 'Icon',
-      type: 'string',
-      description: 'Icon name or emoji for the service',
-    }),
-    defineField({
-      name: 'iconType',
-      title: 'Icon Type',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Emoji', value: 'emoji' },
-          { title: 'Heroicon', value: 'heroicon' },
-          { title: 'Custom SVG', value: 'svg' },
-        ],
-      },
-      initialValue: 'emoji',
     }),
     defineField({
       name: 'relatedPublications',
@@ -101,38 +64,39 @@ export const serviceType = defineType({
       description: 'Publications related to this service',
     }),
     defineField({
+      name: 'servicesType',
+      title: 'Service Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Monitoring, Evaluation, and Learning (MEL)', value: 'mel' },
+          { title: 'Data Collection', value: 'data-collection' },
+          { title: 'IT Assistance', value: 'it-assistance' },
+          { title: 'Analytics', value: 'analytics' },
+          { title: 'Research', value: 'research' },
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
       description: 'Order in which this service appears (lower number first)',
       initialValue: 0,
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured Service',
-      type: 'boolean',
-      description: 'Show this service prominently',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'active',
-      title: 'Active',
-      type: 'boolean',
-      description: 'Show this service on the website',
-      initialValue: true,
-    }),
   ],
   preview: {
     select: {
       title: 'title',
       subtitle: 'shortDescription',
-      media: 'cardImage',
-      featured: 'featured',
+      media: 'coverImage',
     },
     prepare(selection) {
-      const { title, subtitle, media, featured } = selection
+      const { title, subtitle, media } = selection
       return {
-        title: featured ? `${title} (Featured)` : title,
+        title: title,
         subtitle: subtitle,
         media: media,
       }

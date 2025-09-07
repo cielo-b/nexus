@@ -9,27 +9,46 @@ import { client } from '@/lib/sanity/client'
 import { blogQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { BlogPost } from '@/types/blog'
+import { Icon } from '@iconify/react'
+
+// Skeleton component for related blogs
+const RelatedBlogSkeleton = () => (
+  <div className="overflow-hidden animate-pulse">
+    <div className="w-full h-60 bg-gray-300 rounded-2xl"></div>
+    <div className="p-6">
+      <div className="h-6 bg-gray-300 rounded mb-2"></div>
+      <div className="h-4 bg-gray-300 rounded w-20 mb-4"></div>
+      
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
+            <div className="w-4 h-4 bg-gray-300 rounded"></div>
+            <div className="h-4 bg-gray-300 rounded w-8"></div>
+          </div>
+          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
+            <div className="w-4 h-4 bg-gray-300 rounded"></div>
+            <div className="h-4 bg-gray-300 rounded w-8"></div>
+          </div>
+        </div>
+        <div className="bg-gray-300 px-6 py-2 rounded-lg w-24"></div>
+      </div>
+    </div>
+  </div>
+)
 
 export default function BlogPostPage() {
   const params = useParams()
   const [blog, setBlog] = useState<BlogPost | null>(null)
-  const [similarBlogs, setSimilarBlogs] = useState<BlogPost[]>([])
+  const [relatedBlogs, setRelatedBlogs] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
+  const [relatedLoading, setRelatedLoading] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('')
 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const [blogData, similarData] = await Promise.all([
-          client.fetch(blogQueries.getBlogBySlug, { slug: params.slug }),
-          client.fetch(blogQueries.getSimilarBlogs, { 
-            category: blog?.category || '', 
-            excludeId: blog?._id || '' 
-          })
-        ])
-        
+        const blogData = await client.fetch(blogQueries.getBlogBySlug, { slug: params.slug })
         setBlog(blogData)
-        setSimilarBlogs(similarData)
       } catch (error) {
         console.error('Error fetching blog:', error)
       } finally {
@@ -40,7 +59,29 @@ export default function BlogPostPage() {
     if (params.slug) {
       fetchBlog()
     }
-  }, [params.slug, blog?.category, blog?._id])
+  }, [params.slug])
+
+  // Fetch related blogs when blog is loaded
+  useEffect(() => {
+    const fetchRelatedBlogs = async () => {
+      if (!blog) return
+      
+      setRelatedLoading(true)
+      try {
+        const related = await client.fetch(blogQueries.getSimilarBlogs, { 
+          category: blog.category, 
+          excludeId: blog._id 
+        })
+        setRelatedBlogs(related.slice(0, 6)) // Limit to 6 blogs
+      } catch (error) {
+        console.error('Error fetching related blogs:', error)
+      } finally {
+        setRelatedLoading(false)
+      }
+    }
+
+    fetchRelatedBlogs()
+  }, [blog])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -112,53 +153,40 @@ export default function BlogPostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 py-4">
-        <div className="px-[8vw]">
-          <nav className="text-sm">
-            <Link href="/blogs" className="text-blue-600 hover:underline">
+    <div className="min-h-screen ">
+      {/* Hero Section */}
+      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
+        <Image src={getSanityImage(blog.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
+        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
+          <div className="flex gap-2 mb-4 w-full text-white">
+            <Link href="/blogs" className='text-white/50   '>
               Blogs
             </Link>
-            <span className="mx-2">›</span>
-            <span className="text-gray-600">{blog.title}</span>
-          </nav>
+            {">"}
+            <span className=''>
+              {blog.title}
+            </span>
+          </div>
+          <h1 className="text-7xl font-semibold mb-6 text-center">{blog.title}</h1>
         </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="relative h-96 bg-gradient-to-r from-gray-900 to-gray-700">
-        {blog.coverImage && (
-          <Image
-            src={getSanityImage(blog.coverImage)}
-            alt={blog.coverImage.alt || blog.title}
-            fill
-            className="object-cover"
-          />
-        )}
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 flex items-center justify-center h-full">
-          <h1 className="text-4xl md:text-5xl font-bold text-white text-center px-4">
-            {blog.title}
-          </h1>
-        </div>
-      </div>
+      </section>
 
       {/* Main Content */}
-      <div className="px-[8vw] py-12">
-        <div className="grid lg:grid-cols-3 gap-12">
+      <div className=" ">
+        <div className="grid lg:grid-cols-3 ">
           {/* Blog Content */}
-          <div className="lg:col-span-2">
-            <div className="prose prose-lg max-w-none">
+          <div className="lg:col-span-2 border-r border-r-[#262626]/11">
+            <div className="bg-white rounded-lg ">
               {blog.tableOfContents && blog.tableOfContents.length > 0 ? (
                 <div className="space-y-12">
                   {blog.tableOfContents.map((section, index) => (
                     <div
                       key={section.id.current}
                       id={section.id.current}
-                      className="scroll-mt-24"
+                      className="scroll-mt-24 border-b border-b-[#262626]/11 pl-[8vw] pr-[3vw] py-[4vh]"
                     >
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2">
+                      <h2 className="text-2xl font-bold text-gray-900 mb-6  pb-2">
                         {section.title}
                       </h2>
                       {section.content && (
@@ -198,49 +226,38 @@ export default function BlogPostPage() {
               ) : (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+                    <Icon icon="mdi:file-document-outline" className="w-8 h-8 text-gray-400" />
                   </div>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Content coming soon</h3>
                   <p className="text-gray-500">The full content for this blog post will be available soon.</p>
                 </div>
               )}
             </div>
-            
-            <div className="mt-8">
-              <button className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2">
-                Read Full Blog
-                <span>↓</span>
-              </button>
-            </div>
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-8">
-              {/* Engagement Metrics */}
-              <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                <div className="flex items-center justify-center gap-8 mb-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">❤️</div>
-                    <div className="text-sm text-gray-600">{formatNumber(blog.likes)}</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">👁️</div>
-                    <div className="text-sm text-gray-600">{formatNumber(blog.views)}</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">📤</div>
-                    <div className="text-sm text-gray-600">{formatNumber(blog.shares)}</div>
-                  </div>
+              {/* Views Metadata */}
+              <div className="flex items-center gap-4 mb-4 border-b border-b-[#262626]/11 pr-[8vw] pl-[3vw] py-[4vh]">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                  <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
+                  <span>{blog.likes || 0}</span>
+                </div>
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                  <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
+                  <span>{blog.views || 0}</span>
+                </div>
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                  <Icon icon="mdi:share-outline" className="w-4 h-4 text-[#474747]" />
+                  <span>{blog.shares || 0}</span>
                 </div>
               </div>
-
               {/* Blog Metadata */}
-              <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8">
+              <div className=" mb-8 pr-[8vw] pl-[3vw] py-[4vh] space-y-4 ">
                 <h3 className="font-bold text-gray-900 mb-4">Blog Details</h3>
                 <div className="space-y-3 text-sm">
+
                   <div>
                     <span className="font-medium text-gray-600">Publication Date:</span>
                     <div className="text-gray-900">{formatDate(blog.publishedAt)}</div>
@@ -251,29 +268,27 @@ export default function BlogPostPage() {
                   </div>
                   <div>
                     <span className="font-medium text-gray-600">Category:</span>
-                    <div className="text-gray-900">{blog.category}</div>
+                    <div className="text-gray-900">
+                      {blog.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </div>
                   </div>
                   <div>
                     <span className="font-medium text-gray-600">Author:</span>
                     <div className="text-gray-900">{blog.author.name}</div>
                   </div>
                 </div>
-              </div>
-
-              {/* Table of Contents */}
-              {blog.tableOfContents && blog.tableOfContents.length > 0 && (
-                <div className="bg-white border border-gray-200 rounded-lg p-6">
+                {blog.tableOfContents && blog.tableOfContents.length > 0 && (
+                <div >
                   <h3 className="font-bold text-gray-900 mb-4">Table of Contents</h3>
-                  <ul className="space-y-2 text-sm">
+                  <ul className="space-y-2 text-sm bg-[#E8E8E8] rounded-lg p-6">
                     {blog.tableOfContents.map((section) => (
                       <li key={section.id.current}>
                         <button
                           onClick={() => scrollToSection(section.id.current)}
-                          className={`text-left w-full py-1 px-2 rounded transition-colors ${
-                            activeSection === section.id.current
-                              ? 'text-blue-600 bg-blue-50 border-l-2 border-blue-600 font-medium'
-                              : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
-                          }`}
+                          className={`text-left w-full py-1 px-2 rounded transition-colors ${activeSection === section.id.current
+                           ? 'text-primary bg-blue-50  font-medium'
+                           : 'text-gray-600 hover:text-primary hover:'
+                           }`}
                         >
                           {section.title}
                         </button>
@@ -282,68 +297,74 @@ export default function BlogPostPage() {
                   </ul>
                 </div>
               )}
+              </div>
+
+              {/* Table of Contents */}
+
             </div>
           </div>
         </div>
 
-        {/* Similar News Section */}
-        {similarBlogs.length > 0 && (
-          <div className="mt-16">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Similar News</h2>
-              <Link
-                href="/blogs"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                View All News
-                <span>→</span>
-              </Link>
+        {/* Related Blogs Section */}
+        <div className="mt-16 px-[8vw]">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Blogs</h2>
+          
+          {relatedLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <RelatedBlogSkeleton key={index} />
+              ))}
             </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {similarBlogs.map((similarBlog) => (
-                <div key={similarBlog._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                  {similarBlog.coverImage && (
+          ) : relatedBlogs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedBlogs.map((relatedBlog) => (
+                <div key={relatedBlog._id} className="overflow-hidden">
+                  {relatedBlog.coverImage && (
                     <Image
-                      src={getSanityImage(similarBlog.coverImage)}
-                      alt={similarBlog.coverImage.alt || similarBlog.title}
+                      src={getSanityImage(relatedBlog.coverImage)}
+                      alt={relatedBlog.coverImage.alt || relatedBlog.title}
                       width={400}
                       height={250}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-60 object-cover rounded-2xl"
                     />
                   )}
                   <div className="p-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">
-                        {similarBlog.category}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      {similarBlog.title}
+                    <h3 className="font-semibold line-clamp-2 mb-2">
+                      {relatedBlog.title}
                     </h3>
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                      <span className="flex items-center gap-1">
-                        <span>❤️</span>
-                        {formatNumber(similarBlog.likes)}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <span>💬</span>
-                        {formatNumber(similarBlog.shares)}
-                      </span>
+                    <span className="text-[#98989A] capitalize text-xs">
+                      {relatedBlog.category}
+                    </span>
+
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                          <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
+                          {formatNumber(relatedBlog.likes)}
+                        </div>
+                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                          <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
+                          {formatNumber(relatedBlog.views)}
+                        </span>
+                      </div>
+                      <Link
+                        href={`/blogs/${relatedBlog.slug.current}`}
+                        className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
+                      >
+                        Read More
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </Link>
                     </div>
-                    <Link
-                      href={`/blogs/${similarBlog.slug.current}`}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 w-full justify-center"
-                    >
-                      Read More
-                      <span>→</span>
-                    </Link>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No related blogs found.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

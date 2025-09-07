@@ -81,6 +81,7 @@ export const blogQueries = {
       slug,
       excerpt,
       content,
+      tableOfContents,
       coverImage {
         asset->{
           _id,
@@ -240,9 +241,6 @@ export const coreValueQueries = {
     *[_type == "coreValue"] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       color,
       order,
       featured
@@ -254,9 +252,6 @@ export const coreValueQueries = {
     *[_type == "coreValue" && featured == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       color,
       order,
       featured
@@ -306,9 +301,6 @@ export const whyChooseUsQueries = {
     *[_type == "whyChooseUs" && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -320,9 +312,6 @@ export const whyChooseUsQueries = {
     *[_type == "whyChooseUs" && featured == true && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -336,9 +325,6 @@ export const careerOfferQueries = {
     *[_type == "careerOffer" && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -350,9 +336,6 @@ export const careerOfferQueries = {
     *[_type == "careerOffer" && featured == true && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -366,9 +349,6 @@ export const careerTeamQueries = {
     *[_type == "careerTeam" && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -380,9 +360,6 @@ export const careerTeamQueries = {
     *[_type == "careerTeam" && featured == true && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       order,
       featured,
       active
@@ -393,54 +370,29 @@ export const careerTeamQueries = {
 export const serviceQueries = {
   // Get all active services
   getAllServices: groq`
-    *[_type == "service" && active == true] | order(order asc) {
+    *[_type == "service"] | order(order asc) {
       _id,
       title,
       slug,
       shortDescription,
-      description,
-      heroImage,
-      cardImage,
-      icon,
-      iconType,
+      testingExperience,
+      servicesType,
+      coverImage,
       relatedPublications,
-      order,
-      featured,
-      active
     }
   `,
 
-  // Get featured services
-  getFeaturedServices: groq`
-    *[_type == "service" && featured == true && active == true] | order(order asc) {
-      _id,
-      title,
-      slug,
-      shortDescription,
-      description,
-      heroImage,
-      cardImage,
-      icon,
-      iconType,
-      relatedPublications,
-      order,
-      featured,
-      active
-    }
-  `,
 
   // Get service by slug
   getServiceBySlug: groq`
-    *[_type == "service" && slug.current == $slug && active == true][0] {
+    *[_type == "service" && slug.current == $slug][0] {
       _id,
       title,
       slug,
       shortDescription,
-      description,
-      heroImage,
-      cardImage,
-      icon,
-      iconType,
+      testingExperience,
+      servicesType,
+      coverImage,
       relatedPublications,
       order,
       featured,
@@ -448,63 +400,42 @@ export const serviceQueries = {
     }
   `,
 
-  // Get service details for a specific service
-  getServiceDetails: groq`
-    *[_type == "serviceDetail" && service._ref == $serviceId && active == true] | order(order asc) {
-      _id,
-      service,
-      sectionType,
-      title,
-      highlightedText,
-      quote,
-      content,
-      image,
-      imageTitle,
-      imageSubtitle,
-      order,
-      active
-    }
-  `,
-
-  // Get publications related to a specific service
-  getPublicationsByService: groq`
-    *[_type == "publication" && service._ref == $serviceId && active == true] | order(publicationDate desc) {
-      _id,
-      title,
-      slug,
-      excerpt,
-      author,
-      publicationDate,
-      coverImage,
-      category,
-      tags,
-      service,
-      downloadUrl,
-      externalUrl,
-      featured,
-      active
-    }
-  `,
-
-  // Get related publications for a service (legacy - using relatedPublications field)
+  // Get related publications for a service (using relatedPublications field)
   getServicePublications: groq`
-    *[_type == "publication" && _id in $publicationIds && active == true] | order(publicationDate desc) {
+    *[_type == "publication" && _id in $publicationIds] | order(publicationDate desc) {
       _id,
       title,
       slug,
       excerpt,
-      author,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       publicationDate,
-      coverImage,
+      author {
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
       category,
       tags,
-      service,
       downloadUrl,
       externalUrl,
       featured,
-      active
+      likes,
+      views
     }
   `,
+
 }
 
 export const trainingQueries = {
@@ -513,9 +444,6 @@ export const trainingQueries = {
     *[_type == "training" && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       sector,
       duration,
       level,
@@ -536,9 +464,6 @@ export const trainingQueries = {
     *[_type == "training" && featured == true && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       sector,
       duration,
       level,
@@ -559,9 +484,6 @@ export const trainingQueries = {
     *[_type == "training" && sector == $sector && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       sector,
       duration,
       level,
@@ -584,9 +506,6 @@ export const trainingFeatureQueries = {
     *[_type == "trainingFeature" && active == true] | order(section asc, order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       section,
       order,
       featured,
@@ -599,9 +518,6 @@ export const trainingFeatureQueries = {
     *[_type == "trainingFeature" && section == $section && active == true] | order(order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       section,
       order,
       featured,
@@ -614,9 +530,6 @@ export const trainingFeatureQueries = {
     *[_type == "trainingFeature" && featured == true && active == true] | order(section asc, order asc) {
       _id,
       title,
-      description,
-      icon,
-      iconType,
       section,
       order,
       featured,
@@ -634,6 +547,45 @@ export const faqQueries = {
       content,
       order,
       active
+    }
+  `,
+}
+
+export const publicationQueries = {
+  // Get all publications
+  getAllPublications: groq`
+    *[_type == "publication"] | order(publicationDate desc) {
+      _id,
+      title,
+      slug,
+      excerpt,
+      tableOfContents,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      publicationDate,
+      author {
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      category,
+      tags,
+      downloadUrl,
+      externalUrl,
+      featured,
+      likes,
+      views
     }
   `,
 }

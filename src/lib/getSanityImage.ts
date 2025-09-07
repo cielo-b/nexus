@@ -11,7 +11,7 @@ export const getSanityImage = (
   image: SanityImageSource | null | undefined,
   fallback: string = '/placeholder.jpg'
 ): string => {
-  if (!image || !image.asset) {
+  if (!image || typeof image === 'string' || !('asset' in image)) {
     return fallback
   }
 
@@ -37,7 +37,7 @@ export const getSanityImageWithDimensions = (
   height: number,
   fallback: string = '/placeholder.jpg'
 ): string => {
-  if (!image || !image.asset) {
+  if (!image || typeof image === 'string' || !('asset' in image)) {
     return fallback
   }
 
@@ -67,7 +67,7 @@ export const getSanityImageWithOptions = (
   } = {},
   fallback: string = '/placeholder.jpg'
 ): string => {
-  if (!image || !image.asset) {
+  if (!image || typeof image === 'string' || !('asset' in image)) {
     return fallback
   }
 
