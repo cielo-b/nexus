@@ -9,13 +9,12 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Icon } from '@iconify/react'
 import { client } from '@/lib/sanity/client'
-import { blogQueries, partnerQueries, testimonialQueries, companyInfoQueries, coreValueQueries, faqQueries } from '@/lib/sanity/queries'
+import { blogQueries, partnerQueries, testimonialQueries, companyInfoQueries, faqQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { BlogPost } from '@/types/blog'
 import { Partner } from '@/types/partner'
 import { Testimonial } from '@/types/testimonial'
 import { CompanyInfo } from '@/types/companyInfo'
-import { CoreValue } from '@/types/coreValue'
 import { FAQ } from '@/types/faq'
 
 export default function HomePage() {
@@ -23,7 +22,6 @@ export default function HomePage() {
   const [partners, setPartners] = useState<Partner[]>([])
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo[]>([])
-  const [coreValues, setCoreValues] = useState<CoreValue[]>([])
   const [faqs, setFaqs] = useState<FAQ[]>([])
   const [activeTab, setActiveTab] = useState<string>('vision')
   const [openFaqId, setOpenFaqId] = useState<string | null>(null)
@@ -33,12 +31,11 @@ export default function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [blogs, partnersData, testimonialsData, companyInfoData, coreValuesData, faqsData] = await Promise.all([
+        const [blogs, partnersData, testimonialsData, companyInfoData, faqsData] = await Promise.all([
           client.fetch(blogQueries.getAllBlogs),
           client.fetch(partnerQueries.getAllPartners),
           client.fetch(testimonialQueries.getAllTestimonials),
           client.fetch(companyInfoQueries.getAllCompanyInfo),
-          client.fetch(coreValueQueries.getAllCoreValues),
           client.fetch(faqQueries.getAllFAQs)
         ])
 
@@ -46,7 +43,6 @@ export default function HomePage() {
         setPartners(partnersData)
         setTestimonials(testimonialsData)
         setCompanyInfo(companyInfoData)
-        setCoreValues(coreValuesData)
         setFaqs(faqsData)
 
         // Set initial active tab to the first available type
@@ -107,34 +103,6 @@ export default function HomePage() {
 
   console.log(recentBlogs)
 
-  const renderIcon = (value: CoreValue) => {
-    const colorClasses = {
-      blue: 'bg-blue-100 text-blue-600',
-      green: 'bg-green-100 text-green-600',
-      purple: 'bg-purple-100 text-purple-600',
-      red: 'bg-red-100 text-red-600',
-      yellow: 'bg-yellow-100 text-yellow-600',
-      indigo: 'bg-indigo-100 text-indigo-600',
-      pink: 'bg-pink-100 text-pink-600',
-    }
-
-    const colorClass = colorClasses[value.color] || colorClasses.blue
-
-    if (value.iconType === 'emoji') {
-      return (
-        <div className={`w-20 h-20 ${colorClass} rounded-full flex items-center justify-center mx-auto mb-4 text-2xl`}>
-          {value.icon}
-        </div>
-      )
-    }
-
-    // For heroicons or custom SVG, you can expand this later
-    return (
-      <div className={`w-20 h-20 ${colorClass} rounded-full flex items-center justify-center mx-auto mb-4`}>
-        <span className="text-2xl">{value.icon}</span>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -250,33 +218,52 @@ export default function HomePage() {
             <p className="">"Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
           </div>
 
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="text-xl">Loading core values...</div>
-            </div>
-          ) : coreValues.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {coreValues.map((value) => (
-                <div key={value._id} className="text-center bg-gray-bg p-8 rounded-lg">
-                  {renderIcon(value)}
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600">
-                    {value.description}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {[
+              {
+                icon: "mdi:shield-check",
+                title: "Excellence",
+                description: "We are committed to delivering the highest quality services, using the best practices and methodologies to ensure impactful results."
+              },
+              {
+                icon: "mdi:handshake",
+                title: "Integrity",
+                description: "We operate honestly, transparently, and accountable in all our interactions, maintaining trust with our stakeholders."
+              },
+              {
+                icon: "mdi:lightbulb-outline",
+                title: "Innovation",
+                description: "We embrace new ideas and technological advancements to offer creative, effective, and practical solutions."
+              },
+              {
+                icon: "mdi:megaphone",
+                title: "Collaboration",
+                description: "We believe in the power of teamwork and partnerships, creating synergies that drive sustainable development."
+              },
+              {
+                icon: "mdi:code-tags",
+                title: "Sustainability",
+                description: "We are dedicated to promoting long-term solutions that contribute to communities' social, economic, and environmental well-being."
+              },
+              {
+                icon: "mdi:chip",
+                title: "Inclusivity",
+                description: "We strive to ensure that all voices are heard and considered, promoting equal opportunities for a more inclusive society."
+              }
+            ].map((item, index) => (
+              <div key={index} className="flex flex-col items-start gap-4 sm:gap-5 bg-black/5 rounded-2xl p-4 sm:p-6 lg:p-8 hover:bg-black/10 transition-colors duration-300">
+                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
+                  <Icon icon={item.icon} className="w-5 h-5 sm:w-6 sm:h-6 text-[#014DFE]" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-medium mb-2">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#555555]">
+                    {item.description}
                   </p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                <Icon icon="mdi:heart" className="w-12 h-12 text-gray-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No core values yet</h3>
-              <p className="text-gray-500">Core values will appear here once they are added to Sanity CMS.</p>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -328,7 +315,7 @@ export default function HomePage() {
                           href={partner.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                          className="w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
                         >
                           <Image
                             src={getSanityImage(partner.logo)}

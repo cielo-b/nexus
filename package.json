@@ -9,7 +9,8 @@
     "lint": "next lint",
     "prepare": "husky",
     "studio": "sanity dev",
-    "deploy-studio": "sanity deploy"
+    "deploy-studio": "sanity deploy",
+    "seed": "node scripts/seed-sanity.js"
   },
   "dependencies": {
     "@changey/react-leaflet-markercluster": "4.0.0-rc1",

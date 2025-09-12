@@ -379,6 +379,7 @@ export const serviceQueries = {
       servicesType,
       coverImage,
       relatedPublications,
+      expertise
     }
   `,
 
@@ -559,6 +560,131 @@ export const publicationQueries = {
       slug,
       excerpt,
       tableOfContents,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      publicationDate,
+      author {
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      category,
+      tags,
+      downloadUrl,
+      externalUrl,
+      featured,
+      likes,
+      views,
+      expertise
+    }
+  `,
+
+  // Get publications by expertise
+  getPublicationsByExpertise: groq`
+    *[_type == "publication" && expertise._ref == $expertiseId] | order(publicationDate desc) {
+      _id,
+      title,
+      slug,
+      excerpt,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      publicationDate,
+      author {
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      category,
+      tags,
+      downloadUrl,
+      externalUrl,
+      featured,
+      likes,
+      views,
+      expertise
+    }
+  `,
+}
+
+export const expertiseQueries = {
+  // Get all expertise areas
+  getAllExpertise: groq`
+    *[_type == "expertise"] | order(title asc) {
+      _id,
+      title,
+      description,
+      slug,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  `,
+
+  // Get expertise by slug
+  getExpertiseBySlug: groq`
+    *[_type == "expertise" && slug.current == $slug][0] {
+      _id,
+      title,
+      description,
+      slug,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  `,
+
+  // Get services by expertise
+  getServicesByExpertise: groq`
+    *[_type == "service" && expertise._ref == $expertiseId] | order(order asc) {
+      _id,
+      title,
+      slug,
+      shortDescription,
+      testingExperience,
+      servicesType,
+      coverImage,
+      order,
+      active
+    }
+  `,
+
+  // Get publications by expertise
+  getPublicationsByExpertise: groq`
+    *[_type == "publication" && expertise._ref == $expertiseId] | order(publicationDate desc) {
+      _id,
+      title,
+      slug,
+      excerpt,
       coverImage {
         asset->{
           _id,

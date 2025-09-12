@@ -9,7 +9,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('publication').title('Publications'),
       S.divider(),
       S.documentTypeListItem('service').title('Services'),
-      S.documentTypeListItem('serviceDetail').title('Service Details'),
       S.documentTypeListItem('training').title('Training Programs'),
       S.documentTypeListItem('trainingFeature').title('Training Features'),
       S.divider(),
@@ -23,6 +22,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('testimonial').title('Testimonials'),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['blog', 'publication', 'service', 'serviceDetail', 'training', 'trainingFeature', 'companyInfo', 'coreValue', 'teamMember', 'whyChooseUs', 'careerOffer', 'careerTeam', 'partner', 'testimonial'].includes(item.getId()!),
+        (item) => item.getId() && !['blog', 'publication', 'service', 'training', 'trainingFeature', 'companyInfo', 'coreValue', 'teamMember', 'whyChooseUs', 'careerOffer', 'careerTeam', 'partner', 'testimonial'].includes(item.getId()!),
       ),
     ])

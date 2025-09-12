@@ -80,6 +80,14 @@ export const serviceType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'expertise',
+      title: 'Expertise Area',
+      type: 'reference',
+      to: [{ type: 'expertise' }],
+      description: 'The expertise area this service belongs to',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',

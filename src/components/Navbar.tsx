@@ -4,11 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import ContactModal from './ContactModal'
+import ExpertiseDropdown from './ExpertiseDropdown'
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
   const pathname = usePathname()
 
   // Handle scroll detection
@@ -58,13 +61,18 @@ export default function Navbar() {
   }
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 px-[8vw] transition-all duration-300 ${
-      shouldUseWhiteBg 
-        ? 'bg-white text-black ' 
-        : 'bg-transparent text-white'
-    }`}>
+    <>
+      <nav className={`fixed top-0 left-0 w-full z-50 px-[8vw] transition-all duration-300 ${
+        isDropdownOpen
+          ? 'bg-[#014DFE] text-white'
+          : shouldUseWhiteBg 
+            ? 'bg-white text-black ' 
+            : 'bg-transparent text-white'
+      }`}>
       <div className={`border-b transition-colors duration-300 ${
-        shouldUseWhiteBg ? 'border-gray-200' : 'border-danger'
+        isDropdownOpen
+          ? 'border-white/20'
+          : shouldUseWhiteBg ? 'border-gray-200' : 'border-danger'
       }`}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -78,10 +86,14 @@ export default function Navbar() {
               href="/" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Home
@@ -90,10 +102,14 @@ export default function Navbar() {
               href="/about" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/about') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               About Us
@@ -102,10 +118,14 @@ export default function Navbar() {
               href="/services" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/services') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Services
@@ -114,48 +134,47 @@ export default function Navbar() {
             {/* Expertise Dropdown */}
             <div className="relative">
               <button
+                data-expertise-dropdown
                 className={`flex items-center space-x-1 transition-colors duration-300 ${
-                  shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
                 }`}
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsDropdownOpen(!isDropdownOpen)
+                }}
               >
                 <span>Expertise</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg 
+                  className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {isDropdownOpen && (
-                <div 
-                  className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50"
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                  onMouseLeave={() => setIsDropdownOpen(false)}
-                >
-                  <div className="py-1">
-                    <Link href="/expertise/education" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      Education
-                    </Link>
-                    <Link href="/expertise/agriculture" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      Agriculture
-                    </Link>
-                    <Link href="/expertise/health" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      Public Health
-                    </Link>
-                  </div>
-                </div>
-              )}
+              <ExpertiseDropdown 
+                isOpen={isDropdownOpen}
+                onClose={() => setIsDropdownOpen(false)}
+              />
             </div>
 
             <Link 
               href="/publications" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/publications') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Publications
@@ -164,10 +183,14 @@ export default function Navbar() {
               href="/career" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/career') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Career
@@ -176,10 +199,14 @@ export default function Navbar() {
               href="/training" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/training') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Training
@@ -188,10 +215,14 @@ export default function Navbar() {
               href="/blogs" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/blogs') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Blog
@@ -200,10 +231,14 @@ export default function Navbar() {
               href="/products" 
               className={`transition-colors duration-300 ${
                 isActiveLink('/products') 
-                  ? 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1' 
-                  : shouldUseWhiteBg 
-                    ? 'text-gray-700 hover:text-primary-500' 
-                    : 'text-white hover:text-primary-300'
+                  ? isDropdownOpen
+                    ? 'text-white font-semibold border-b-2 border-white pb-1'
+                    : 'text-primary-500 font-semibold border-b-2 border-primary-500 pb-1'
+                  : isDropdownOpen
+                    ? 'text-white hover:text-blue-100'
+                    : shouldUseWhiteBg 
+                      ? 'text-gray-700 hover:text-primary-500' 
+                      : 'text-white hover:text-primary-300'
               }`}
             >
               Products
@@ -212,16 +247,18 @@ export default function Navbar() {
 
           {/* Contact Us Button */}
           <div className="hidden md:block">
-            <Link
-              href="/contact"
+            <button
+              onClick={() => setIsContactModalOpen(true)}
               className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
-                shouldUseWhiteBg
-                  ? 'bg-primary-500 text-white hover:bg-primary-600 border-2 border-primary-500'
-                  : 'bg-white border-2 border-white text-primary-500 hover:bg-primary-50'
+                isDropdownOpen
+                  ? 'bg-white text-[#014DFE] hover:bg-blue-50 border-2 border-white'
+                  : shouldUseWhiteBg
+                    ? 'bg-primary-500 text-white hover:bg-primary-600 border-2 border-primary-500'
+                    : 'bg-white border-2 border-white text-primary-500 hover:bg-primary-50'
               }`}
             >
               Contact Us
-            </Link>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -229,9 +266,11 @@ export default function Navbar() {
             <button 
               onClick={toggleMobileMenu}
               className={`transition-colors duration-300 ${
-                shouldUseWhiteBg 
-                  ? 'text-gray-700 hover:text-primary-500' 
-                  : 'text-white hover:text-primary-300'
+                isDropdownOpen
+                  ? 'text-white hover:text-blue-100'
+                  : shouldUseWhiteBg 
+                    ? 'text-gray-700 hover:text-primary-500' 
+                    : 'text-white hover:text-primary-300'
               }`}
             >
               {isMobileMenuOpen ? (
@@ -382,18 +421,27 @@ export default function Navbar() {
 
               {/* Contact Us Button */}
               <div className="pt-4 border-t border-gray-200">
-                <Link
-                  href="/contact"
-                  onClick={closeMobileMenu}
+                <button
+                  onClick={() => {
+                    setIsContactModalOpen(true)
+                    closeMobileMenu()
+                  }}
                   className="block w-full text-center bg-primary-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-600 transition-colors duration-300"
                 >
                   Contact Us
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
-    </nav>
+      </nav>
+      
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
+    </>
   )
 }

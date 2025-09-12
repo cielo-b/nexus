@@ -154,6 +154,14 @@ export const publicationType = defineType({
       description: 'Optional service this publication is related to',
     }),
     defineField({
+      name: 'expertise',
+      title: 'Expertise Area',
+      type: 'reference',
+      to: [{ type: 'expertise' }],
+      description: 'The expertise area this publication belongs to',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',
