@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -46,6 +46,7 @@ export default function ExpertisePage() {
   const [services, setServices] = useState<Service[]>([])
   const [publications, setPublications] = useState<Publication[]>([])
   const [loading, setLoading] = useState(true)
+  const sliderRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,6 +81,24 @@ export default function ExpertisePage() {
     }
   }, [params.slug])
 
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({
+        left: -400,
+        behavior: 'smooth'
+      })
+    }
+  }
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({
+        left: 400,
+        behavior: 'smooth'
+      })
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -111,27 +130,36 @@ export default function ExpertisePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="w-32 h-32 mx-auto mb-6 rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src={getSanityImage(expertise.coverImage)}
-                alt={expertise.coverImage.alt || expertise.title}
-                width={128}
-                height={128}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white">
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)] w-full h-full"></div>
+        <Image 
+          src={getSanityImage(expertise.coverImage)} 
+          alt="Hero Background" 
+          fill 
+          className="object-cover absolute inset-0 w-full h-full opacity-20" 
+        />
+        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between pb-[3vh] pt-[9vh]">
+          <div className="flex gap-2 mb-4 w-full text-white">
+            <Link href="/expertise" className='text-white/50'>
+              Expertise
+            </Link>
+            {">"}
+            <span className=''>
               {expertise.title}
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              {expertise.description}
-            </p>
+            </span>
           </div>
+          <h1 className="text-7xl font-semibold mb-6 text-center">{expertise.title}</h1>
         </div>
       </section>
 
@@ -195,110 +223,73 @@ export default function ExpertisePage() {
       {/* Publications Section */}
       <section className="py-16 bg-gray-50">
         <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                Related Publications
+              <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
+                Latest <span className="text-blue-500">Insights</span>
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg ">
                 Research and insights in {expertise.title.toLowerCase()}
               </p>
             </div>
 
             {publications.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {publications.map((publication) => (
-                  <Link
-                    key={publication._id}
-                    href={`/publications/${publication.slug.current}`}
-                    className="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
-                  >
-                    <div className="aspect-w-16 aspect-h-9">
-                      <Image
-                        src={getSanityImage(publication.coverImage)}
-                        alt={publication.title}
-                        width={400}
-                        height={225}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                          {publication.category}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {new Date(publication.publicationDate).toLocaleDateString()}
-                        </span>
+              <div className="relative">
+                {/* Navigation Buttons */}
+                <button
+                  onClick={scrollLeft}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
+                >
+                  <Icon icon="lucide:chevron-left" className="w-6 h-6 text-white group-hover:text-blue-400 transition-colors" />
+                </button>
+                
+                <button
+                  onClick={scrollRight}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
+                >
+                  <Icon icon="lucide:chevron-right" className="w-6 h-6 text-white group-hover:text-blue-400 transition-colors" />
+                </button>
+
+                {/* Horizontal Slider */}
+                <div 
+                  ref={sliderRef}
+                  className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
+                  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                  {publications.map((publication) => (
+                    <Link
+                      key={publication._id}
+                      href={`/publications/${publication.slug.current}`}
+                      className="group flex-shrink-0 w-80 bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 border border-white/10"
+                    >
+                      <div className="aspect-w-16 aspect-h-9">
+                        <Image
+                          src={getSanityImage(publication.coverImage)}
+                          alt={publication.title}
+                          width={320}
+                          height={180}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                        {publication.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm line-clamp-3 mb-4">
-                        {publication.excerpt}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                            <Icon icon="lucide:user" className="w-4 h-4 text-gray-600" />
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">{publication.author.name}</p>
-                            <p className="text-xs text-gray-500">{publication.author.title}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span className="flex items-center">
-                            <Icon icon="lucide:heart" className="w-4 h-4 mr-1" />
-                            {publication.likes}
-                          </span>
-                          <span className="flex items-center">
-                            <Icon icon="lucide:eye" className="w-4 h-4 mr-1" />
-                            {publication.views}
-                          </span>
-                        </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+                          {publication.title}
+                        </h3>
+                        <p className="text-gray-300 text-sm line-clamp-3 leading-relaxed">
+                          {publication.excerpt}
+                        </p>
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : (
               <div className="text-center py-12">
                 <Icon icon="lucide:file-text" className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No Publications Yet</h3>
-                <p className="text-gray-500">Publications in this expertise area will appear here once they are added.</p>
+                <h3 className="text-lg font-medium text-white mb-2">No Publications Yet</h3>
+                <p className="text-gray-400">Publications in this expertise area will appear here once they are added.</p>
               </div>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Ready to Work Together?
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              Let's discuss how our expertise in {expertise.title.toLowerCase()} can help your organization achieve its goals.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-              >
-                <Icon icon="lucide:mail" className="w-5 h-5 mr-2" />
-                Get in Touch
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex items-center px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
-              >
-                <Icon icon="lucide:briefcase" className="w-5 h-5 mr-2" />
-                View All Services
-              </Link>
-            </div>
           </div>
         </div>
       </section>

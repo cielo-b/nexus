@@ -77,29 +77,41 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
               </span>
             </div>
           ) : expertise.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-              {expertise.map((item) => (
-                <Link
-                  key={item._id}
-                  href={`/expertise/${item.slug.current}`}
-                  onClick={onClose}
-                  className="group flex flex-col items-center p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
-                >
-                  <div className="w-24 h-24 rounded-2xl overflow-hidden mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src={getSanityImage(item.coverImage)}
-                      alt={item.coverImage.alt || item.title}
-                      width={96}
-                      height={96}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
-                    {item.title}
-                  </h4>
-                </Link>
-              ))}
-            </div>
+            <>
+              {/* Mobile List View */}
+              <div className="block md:hidden">
+                <div className="space-y-3">
+                  {expertise.map((item) => (
+                    <Link
+                      key={item._id}
+                      href={`/expertise/${item.slug.current}`}
+                      onClick={onClose}
+                      className="group flex items-center p-4 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                    >
+                      <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
+                        {item.title}
+                      </h4>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Desktop Grid View */}
+              <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+                {expertise.map((item) => (
+                  <Link
+                    key={item._id}
+                    href={`/expertise/${item.slug.current}`}
+                    onClick={onClose}
+                    className="group flex flex-col items-center p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                  >
+                    <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
+                      {item.title}
+                    </h4>
+                  </Link>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <Icon 

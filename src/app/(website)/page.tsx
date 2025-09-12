@@ -26,7 +26,10 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<string>('vision')
   const [openFaqId, setOpenFaqId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [coreValuesVisible, setCoreValuesVisible] = useState(false)
+  const [animatedIcons, setAnimatedIcons] = useState<Set<number>>(new Set())
   const swiperRef = useRef<any>(null)
+  const coreValuesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +60,42 @@ export default function HomePage() {
     }
 
     fetchData()
+  }, [])
+
+  // Scroll observer for core values animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setCoreValuesVisible(true)
+            
+            // Trigger icon animations with staggered delay
+            const coreValues = [
+              { icon: "mdi:shield-check", title: "Excellence" },
+              { icon: "mdi:handshake", title: "Integrity" },
+              { icon: "mdi:lightbulb-outline", title: "Innovation" },
+              { icon: "mdi:megaphone", title: "Collaboration" },
+              { icon: "mdi:code-tags", title: "Sustainability" },
+              { icon: "mdi:chip", title: "Inclusivity" }
+            ]
+            
+            coreValues.forEach((_, index) => {
+              setTimeout(() => {
+                setAnimatedIcons(prev => new Set([...prev, index]))
+              }, index * 200) // 200ms delay between each icon
+            })
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (coreValuesRef.current) {
+      observer.observe(coreValuesRef.current)
+    }
+
+    return () => observer.disconnect()
   }, [])
 
   const formatNumber = (num: number) => {
@@ -106,30 +145,43 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <style jsx>{`
+        @keyframes iconRotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          50% {
+            transform: rotate(180deg);
+          }
+          100% {
+            transform: rotate(0deg);
+          }
+        }
+      `}</style>
       {/* Hero Section */}
-      <section className="relative py-[16vh] ">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-[16vh]">
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full" />
         <div className="absolute inset-0 bg-black/25 w-full h-full"></div>
         <div className="relative z-10 flex items-center justify-center h-full">
-          <div className="text-center text-white max-w-4xl mx-auto px-4">
-            <h1 className="text-5xl md:text-7xl font-semibold mb-6 leading-tight">
+          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-4 sm:mb-6 leading-tight">
               Empowering Change Through Expert Consultancy
             </h1>
-            <p className="text-xl  mb-8">
-              Delivering data-driven insights and comprehensive consultancy services to foster impactful and sustainable change <br /> in education, agriculture, public health, and more.
+            <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed">
+              Delivering data-driven insights and comprehensive consultancy services to foster impactful and sustainable change in education, agriculture, public health, and more.
             </p>
           </div>
         </div>
       </section>
 
       {/* Get To Know Nexus Section */}
-      <section className="py-20 ">
-        <div className="px-[8vw]">
-          <div className="flex flex-col md:flex-row justify-between gap-16 items-center mb-16">
-            <h2 className="text-7xl font-semibold text-gray-900 mb-4">Get To Know <br /><span className='text-primary'>Nexus</span> </h2>
-            <div className='lg:w-1/2'>
-              <p className='text-2xl font-semibold'>What is Insight Nexus</p>
-              <p className="">
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="px-4 sm:px-6 lg:px-[8vw]">
+          <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-16 items-center mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-4 sm:mb-6 lg:mb-0">Get To Know <br /><span className='text-primary'>Nexus</span> </h2>
+            <div className='w-full lg:w-1/2'>
+              <p className='text-lg sm:text-xl lg:text-2xl font-semibold mb-3 sm:mb-4'>What is Insight Nexus</p>
+              <p className="text-sm sm:text-base lg:text-lg leading-relaxed">
                 Insight Nexus Ltd is a dynamic consultancy firm committed to empowering organizations through a wide range of tailored services designed to foster growth and operational excellence.
               </p>
             </div>
@@ -211,11 +263,11 @@ export default function HomePage() {
 
 
       {/* Core Values Section */}
-      <section className="py-20 ">
-        <div className="px-[8vw]">
-          <div className="text-center mb-16">
-            <h2 className="text-7xl font-semibold text-gray-900 mb-4">Explain Our Core<br /><span className='text-primary'>Values</span> </h2>
-            <p className="">"Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
+      <section className="py-12 sm:py-16 lg:py-20" ref={coreValuesRef}>
+        <div className="px-4 sm:px-6 lg:px-[8vw]">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-3 sm:mb-4">Explain Our Core<br /><span className='text-primary'>Values</span> </h2>
+            <p className="text-sm sm:text-base lg:text-lg max-w-3xl mx-auto">"Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -251,9 +303,31 @@ export default function HomePage() {
                 description: "We strive to ensure that all voices are heard and considered, promoting equal opportunities for a more inclusive society."
               }
             ].map((item, index) => (
-              <div key={index} className="flex flex-col items-start gap-4 sm:gap-5 bg-black/5 rounded-2xl p-4 sm:p-6 lg:p-8 hover:bg-black/10 transition-colors duration-300">
+              <div 
+                key={index} 
+                className={`flex flex-col items-start gap-4 sm:gap-5 bg-black/5 rounded-2xl p-4 sm:p-6 lg:p-8 hover:bg-black/10 transition-all duration-500 ${
+                  coreValuesVisible 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{
+                  transitionDelay: `${index * 100}ms`
+                }}
+              >
                 <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
-                  <Icon icon={item.icon} className="w-5 h-5 sm:w-6 sm:h-6 text-[#014DFE]" />
+                  <Icon 
+                    icon={item.icon} 
+                    className={`w-5 h-5 sm:w-6 sm:h-6 text-[#014DFE] transition-all duration-700 ${
+                      animatedIcons.has(index) 
+                        ? 'animate-spin' 
+                        : ''
+                    }`}
+                    style={{
+                      animation: animatedIcons.has(index) 
+                        ? 'iconRotate 1.4s ease-in-out' 
+                        : 'none'
+                    }}
+                  />
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-medium mb-2">{item.title}</h3>
@@ -268,10 +342,10 @@ export default function HomePage() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-20 bg-white">
-        <div className="px-[8vw]">
-          <div className="text-center mb-16">
-            <p className="text-2xl  ">Trusted by leading organizations worldwide</p>
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="px-4 sm:px-6 lg:px-[8vw]">
+          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+            <p className="text-lg sm:text-xl lg:text-2xl">Trusted by leading organizations worldwide</p>
           </div>
 
           {loading ? (
@@ -354,15 +428,15 @@ export default function HomePage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-20 bg-primary text-white">
-        <div className="px-[8vw]">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-white">
+        <div className="px-4 sm:px-6 lg:px-[8vw]">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Section - Call to Action */}
             <div>
-              <h2 className="text-6xl font-semibold text-white mb-6 ">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6">
                 Let's us <br /> listen to your <br /> problems
               </h2>
-              <p className="max-w-xl ">
+              <p className="text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed">
                 Made for your convenience for a more beautiful future for you and your family
               </p>
             </div>
@@ -410,27 +484,27 @@ export default function HomePage() {
       </section>
 
       {/* Client Testimonials Section */}
-      <section className="py-20 ">
-        <div className="px-[8vw]">
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="px-4 sm:px-6 lg:px-[8vw]">
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-5xl font-semibold  mb-4 max-w-3xl">The <span className='text-primary'>Clients</span> are the <span className='text-primary'>Heroes</span> of Our Business </h2>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-4 sm:mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 lg:mb-0 max-w-3xl">The <span className='text-primary'>Clients</span> are the <span className='text-primary'>Heroes</span> of Our Business </h2>
               <div className="flex justify-center items-center gap-4">
                 <button
                   onClick={goToPrevSlide}
-                  className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-primary hover:bg-primary/5 transition-all duration-300 group"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-primary hover:bg-primary/5 transition-all duration-300 group"
                 >
-                  <Icon icon="mdi:chevron-left" className="w-6 h-6 text-gray-400 group-hover:text-primary transition-colors" />
+                  <Icon icon="mdi:chevron-left" className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-primary transition-colors" />
                 </button>
                 <button
                   onClick={goToNextSlide}
-                  className="w-12 h-12 rounded-full border-2 border-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group"
                 >
-                  <Icon icon="mdi:chevron-right" className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
+                  <Icon icon="mdi:chevron-right" className="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-white transition-colors" />
                 </button>
               </div>
             </div>
-            <p className="mb-12 max-w-7xl text-[#65676C] text-sm">Clients consistently commend our consultancy agency for its transformative impact on their businesses.Our strategic solutions have streamlined operations, enhanced decision-making, and driven measurable growth, earning the trust and loyalty of organizations across various industries.</p>
+            <p className="mb-8 sm:mb-12 max-w-7xl text-[#65676C] text-xs sm:text-sm leading-relaxed">Clients consistently commend our consultancy agency for its transformative impact on their businesses.Our strategic solutions have streamlined operations, enhanced decision-making, and driven measurable growth, earning the trust and loyalty of organizations across various industries.</p>
           </div>
 
 
@@ -453,10 +527,14 @@ export default function HomePage() {
                 loop={true}
                 breakpoints={{
                   640: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                     spaceBetween: 20,
                   },
                   1024: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                  },
+                  1280: {
                     slidesPerView: 3,
                     spaceBetween: 30,
                   },
@@ -525,16 +603,16 @@ export default function HomePage() {
       </section>
 
       {/* Recent Blogs Section */}
-      <section className="py-20 bg-white text-black">
-        <div className="px-[8vw] w-full ">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-2xl font-bold ">Recent Blogs</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-white text-black">
+        <div className="px-4 sm:px-6 lg:px-[8vw] w-full">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
+            <h2 className="text-xl sm:text-2xl font-bold">Recent Blogs</h2>
             <Link
               href="/blogs"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm sm:text-base"
             >
               View All Blogs
-              <Icon icon="mdi:arrow-right" className="w-5 h-5" />
+              <Icon icon="mdi:arrow-right" className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </div>
 
