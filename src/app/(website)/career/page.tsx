@@ -4,15 +4,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { client } from '@/lib/sanity/client'
-import { careerOfferQueries, careerTeamQueries } from '@/lib/sanity/queries'
 import { CareerOffer } from '@/types/careerOffer'
 import { CareerTeam } from '@/types/careerTeam'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 export default function CareerPage() {
-  const [careerOffers, setCareerOffers] = useState<CareerOffer[]>([])
-  const [careerTeams, setCareerTeams] = useState<CareerTeam[]>([])
-  const [loading, setLoading] = useState(true)
 
   // Static offers data
   const offersData = [
@@ -37,26 +33,6 @@ export default function CareerPage() {
       description: "We believe big ideas emerge from bold thinking. We embrace cutting-edge tools—like geospatial mapping, machine learning, and real-time data collection—to deliver smarter insights and transform how research is done."
     }
   ]
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [offersData, teamsData] = await Promise.all([
-          client.fetch(careerOfferQueries.getAllCareerOffers),
-          client.fetch(careerTeamQueries.getAllCareerTeams)
-        ])
-        
-        setCareerOffers(offersData)
-        setCareerTeams(teamsData)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   const renderIcon = (item: CareerOffer | CareerTeam) => {
     if (item.iconType === 'emoji') {
