@@ -159,7 +159,12 @@ export default function ExpertisePage() {
               {expertise.title}
             </span>
           </div>
-          <h1 className="text-7xl font-semibold mb-6 text-center">{expertise.title}</h1>
+          <div>
+          <h1 className="text-7xl font-semibold mb-6 ">{expertise.title}</h1>
+          <p className="text-lg ">
+              {expertise.description}
+              </p>
+          </div>
         </div>
       </section>
 
