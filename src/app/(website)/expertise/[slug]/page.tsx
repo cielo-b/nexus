@@ -166,15 +166,16 @@ export default function ExpertisePage() {
       {/* Services Section */}
       <section className="py-16 bg-white">
         <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-                Related Services
+          <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
+                Our <span className="text-blue-500">Solutions</span>
               </h2>
-              <p className="text-lg text-gray-600">
-                Explore our services in {expertise.title.toLowerCase()}
+              <p className="text-lg ">
+              , we offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation. 
               </p>
             </div>
+
 
             {services.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -182,29 +183,26 @@ export default function ExpertisePage() {
                   <Link
                     key={service._id}
                     href={`/services/${service.slug.current}`}
-                    className="group bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                    className=""
                   >
-                    <div className="aspect-w-16 aspect-h-9">
+                    <div className="flex flex-col items-center">
+                    <div className="aspect-w-16 aspect-h-9 w-full">
                       <Image
                         src={getSanityImage(service.coverImage)}
                         alt={service.title}
                         width={400}
                         height={225}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-center mb-3">
-                        <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                          {service.servicesType}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    <div className="p-6 text-center">
+                      <h3 className="text-xl font-semibold  mb-3  transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-gray-600 text-sm line-clamp-3">
+                      <p className=" text-sm line-clamp-3">
                         {service.shortDescription}
                       </p>
+                    </div>
                     </div>
                   </Link>
                 ))}
@@ -212,8 +210,8 @@ export default function ExpertisePage() {
             ) : (
               <div className="text-center py-12">
                 <Icon icon="lucide:briefcase" className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No Services Yet</h3>
-                <p className="text-gray-500">Services in this expertise area will appear here once they are added.</p>
+                <h3 className="text-lg font-medium  mb-2">No Services Yet</h3>
+                <p className="text-sm">Services in this expertise area will appear here once they are added.</p>
               </div>
             )}
           </div>
@@ -260,7 +258,7 @@ export default function ExpertisePage() {
                     <Link
                       key={publication._id}
                       href={`/publications/${publication.slug.current}`}
-                      className="group flex-shrink-0 w-80 bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 border border-white/10"
+                      className="flex flex-col items-center w-80"
                     >
                       <div className="aspect-w-16 aspect-h-9">
                         <Image
@@ -271,11 +269,11 @@ export default function ExpertisePage() {
                           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+                      <div className="p-6 text-center">
+                        <h3 className="text-xl font-bold mb-2  transition-colors line-clamp-2">
                           {publication.title}
                         </h3>
-                        <p className="text-gray-300 text-sm line-clamp-3 leading-relaxed">
+                        <p className=" text-sm line-clamp-3 leading-relaxed">
                           {publication.excerpt}
                         </p>
                       </div>

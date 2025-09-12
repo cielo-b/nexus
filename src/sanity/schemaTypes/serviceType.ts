@@ -64,22 +64,6 @@ export const serviceType = defineType({
       description: 'Publications related to this service',
     }),
     defineField({
-      name: 'servicesType',
-      title: 'Service Type',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Monitoring, Evaluation, and Learning (MEL)', value: 'mel' },
-          { title: 'Data Collection', value: 'data-collection' },
-          { title: 'IT Assistance', value: 'it-assistance' },
-          { title: 'Analytics', value: 'analytics' },
-          { title: 'Research', value: 'research' },
-        ],
-        layout: 'radio',
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'expertise',
       title: 'Expertise Area',
       type: 'reference',
