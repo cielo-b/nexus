@@ -138,7 +138,7 @@ export default function AboutPage() {
                 description: "Social change organizations needing better data to improve their impact."
               }
             ].map((item, index) => (
-              <div key={index} className="text-center bg-white/10 backdrop-blur-sm rounded-xl p-6 sm:p-8 hover:bg-white/20 transition-all duration-300">
+              <div key={index} className="text-center b rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 bg-white/20">
                   <Icon icon={item.icon} className="w-6 h-6 sm:w-8 sm:h-8 lg:w-12 lg:h-12 text-white" />
                 </div>
