@@ -26,13 +26,14 @@ export default function Navbar() {
   }, [])
 
   // Check if current page should always have white background
-  const alwaysWhitePages = ['/about', '/career', '/training']
+  const alwaysWhitePages = ['/about', '/career', '/training',"/products"]
   const scrollEffectPages = ['/', '/publications', '/blogs',"/services"]
   
   // Check if current page is a single publication or blog page
   const isSinglePublicationPage = pathname.startsWith('/publications/') && pathname !== '/publications'
   const isSingleBlogPage = pathname.startsWith('/blogs/') && pathname !== '/blogs'
   const isSingleServicePage = pathname.startsWith('/services/') && pathname !== '/services'
+  const isSingleExpertiesPage = pathname.startsWith('/expertise/') && pathname !== '/expertise'
   
   // For pages with scroll effect, use white background only when scrolled
   // For other pages, always use white background
@@ -40,7 +41,8 @@ export default function Navbar() {
     (scrollEffectPages.includes(pathname) && isScrolled) ||
     (isSinglePublicationPage && isScrolled) ||
     (isSingleBlogPage && isScrolled) ||
-    (isSingleServicePage && isScrolled)
+    (isSingleServicePage && isScrolled) ||
+    (isSingleExpertiesPage && isScrolled)
 
   // Check if a link is active
   const isActiveLink = (href: string) => {
@@ -249,12 +251,10 @@ export default function Navbar() {
           <div className="hidden md:block">
             <button
               onClick={() => setIsContactModalOpen(true)}
-              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 ${
-                isDropdownOpen
-                  ? 'bg-white text-[#014DFE] hover:bg-blue-50 border-2 border-white'
-                  : shouldUseWhiteBg
-                    ? 'bg-primary-500 text-white hover:bg-primary-600 border-2 border-primary-500'
-                    : 'bg-white border-2 border-white text-primary-500 hover:bg-primary-50'
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                shouldUseWhiteBg
+                    ? 'bg-black text-white '
+                    : 'bg-white  text-black'
               }`}
             >
               Contact Us
