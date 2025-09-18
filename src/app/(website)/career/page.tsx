@@ -55,7 +55,7 @@ export default function CareerPage() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="py-20 bg-white">
-        <div className="px-[8vw]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h1 className="text-5xl font-bold text-gray-900 mb-8">
@@ -106,7 +106,7 @@ export default function CareerPage() {
 
       {/* What We Offer Section */}
       <section className="py-[10vh] bg-primary text-white ">
-        <div className="px-[8vw] space-y-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
           <div className="text-center">
             <h2 className="text-5xl max-w-4xl font-bold text-white mb-4 mx-auto">
             What We Offer
@@ -134,7 +134,7 @@ export default function CareerPage() {
 
       {/* Our Teams Section */}
       <section className="py-20 bg-white">
-        <div className="px-[8vw] flex items-start flex-col md:flex-row ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start flex-col md:flex-row ">
           <Image src="/images/careerTeams.png" alt="Career Teams" width={500} height={500} />
           <div className=" mb-16 space-y-8 pt-[5vh] md:pt-0 md:pl-[7vw]">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Teams</h2>

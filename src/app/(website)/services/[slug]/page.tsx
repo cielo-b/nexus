@@ -88,22 +88,13 @@ export default function ServiceDetailPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
+      <section className="relative h-[40vh] flex flex-col items-center justify-center text-white ">
+        <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
         <Image src={getSanityImage(service.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
-        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
-          <div className="flex gap-2 mb-4 w-full text-white">
-            <Link href="/publications" className='text-white/50   '>
-              Publications
-            </Link>
-            {">"}
-            <span className=''>
-              {service.title}
-            </span>
-          </div>
+        <div className="relative w-full px-[8vw]">
           <div className="">
-            <h1 className="max-w-4xl text-5xl font-bold mb-6">{service.title}</h1>
-            <p className="">
+            <h1 className="text-6xl font-semibold mb-6">{service.title}</h1>
+            <p className="max-w-3xl leading-relaxed">
               {service.shortDescription}
             </p>
           </div>

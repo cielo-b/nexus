@@ -14,34 +14,26 @@ const categories = ['All', 'Economics', 'Agriculture', 'Technology', 'Politics',
 
 // Skeleton loading components
 const PublicationSkeleton = () => (
-  <div className="bg-[#F3F3F3] rounded-lg overflow-hidden flex h-48 animate-pulse">
-    <div className="w-48 h-full bg-gray-300"></div>
-    <div className="flex-1 p-6 flex flex-col justify-between">
-      <div>
-        <div className="h-6 bg-gray-300 rounded mb-3"></div>
-        <div className="space-y-2">
-          <div className="h-4 bg-gray-300 rounded"></div>
-          <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+  <div className="overflow-hidden animate-pulse">
+    <div className="w-full h-48 bg-gray-300"></div>
+    <div className="p-3">
+      <div className="h-3 bg-gray-300 rounded mb-1"></div>
+      <div className="h-3 bg-gray-300 rounded w-16 mb-2"></div>
+
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center gap-1">
+          <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
+          <div className="h-3 bg-gray-300 rounded w-12"></div>
         </div>
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
-          <div>
-            <div className="h-4 bg-gray-300 rounded w-24 mb-1"></div>
-            <div className="h-3 bg-gray-300 rounded w-16"></div>
-          </div>
-        </div>
-        <div className="w-5 h-5 bg-gray-300 rounded"></div>
+        <div className="bg-gray-300 px-3 py-1 rounded-lg w-12"></div>
       </div>
     </div>
   </div>
 )
 
 const SkeletonGrid = () => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {Array.from({ length: 6 }).map((_, index) => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    {Array.from({ length: 10 }).map((_, index) => (
       <PublicationSkeleton key={index} />
     ))}
   </div>
@@ -83,14 +75,14 @@ export default function PublicationsPage() {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex flex-col items-center justify-center text-white ">
-        <div className="absolute inset-0 bg-primary  w-full h-full"></div>
+      <section className="relative h-[40vh] flex flex-col items-center justify-center text-white ">
+        <div className="absolute inset-0 bg-black/80  w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 
-        <div className="relative px-[8vw]">
-          <div className="text-center">
-            <h1 className="text-7xl font-semibold mb-6">Publications</h1>
-            <p className="max-w-3xl mx-auto leading-relaxed">
+        <div className="relative w-full px-[8vw]">
+          <div className="">
+            <h1 className="text-6xl font-semibold mb-6">Publications</h1>
+            <p className="max-w-3xl  leading-relaxed">
               We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations achieve impactful
             </p>
           </div>
@@ -98,14 +90,14 @@ export default function PublicationsPage() {
       </section>
 
       {/* Category Filter */}
-      <section className='px-[8vw] py-[10vh] space-y-[4vh]'>
+      <section className='px-[8vw] py-[4vh] space-y-[3vh]'>
         <div >
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-start items-center gap-4">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-8 py-4 rounded-lg font-medium transition-all  text-sm text-[#565656] duration-300 ${selectedCategory === category
+                className={`px-8 py-4 rounded font-medium transition-all  text-sm text-[#565656] duration-300 ${selectedCategory === category
                     ? 'bg-primary text-white shadow-lg'
                     : ' text-gray-700 border border-[#262626]/30'
                   }`}
@@ -121,22 +113,30 @@ export default function PublicationsPage() {
           {loading ? (
             <SkeletonGrid />
           ) : filteredPublications.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                <Icon icon="mdi:file-document-outline" className="w-12 h-12 text-gray-400" />
+            <div className="text-center py-20">
+              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full flex items-center justify-center shadow-lg">
+                <Icon icon="mdi:file-document-outline" className="w-16 h-16 text-blue-500" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {selectedCategory === 'All' ? 'No publications yet' : `No publications in ${selectedCategory}`}
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                {selectedCategory === 'All' ? 'No Publications Available' : `No ${selectedCategory} Publications`}
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-600 text-lg max-w-md mx-auto leading-relaxed mb-8">
                 {selectedCategory === 'All'
-                  ? 'Publications will appear here once they are added to Sanity CMS.'
-                  : `No publications found in the ${selectedCategory} category.`
+                  ? 'We\'re working on adding new publications. Check back soon for insightful content!'
+                  : `We don't have any publications in the ${selectedCategory} category yet. Try selecting a different category.`
                 }
               </p>
+              {selectedCategory !== 'All' && (
+                <button
+                  onClick={() => setSelectedCategory('All')}
+                  className="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  View All Publications
+                </button>
+              )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {filteredPublications.map((publication) => {
                 const handlePublicationClick = (e: React.MouseEvent) => {
                   e.preventDefault()
@@ -157,85 +157,69 @@ export default function PublicationsPage() {
                   <div
                     key={publication._id}
                     onClick={handlePublicationClick}
-                    className="bg-[#F3F3F3] rounded-lg overflow-hidden flex h-60 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                    className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300"
                   >
-                  {/* Image Section - Left Side */}
-                  {publication.coverImage && (
-                    <div className="w-60 h-full flex-shrink-0">
-                      <Image
-                        src={getSanityImage(publication.coverImage)}
-                        alt={publication.title}
-                        width={192}
-                        height={192}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
+                    {/* Image Section */}
+                    {publication.coverImage && (
+                      <div className="overflow-hidden">
+                        <Image
+                          src={getSanityImage(publication.coverImage)}
+                          alt={publication.title}
+                          width={400}
+                          height={200}
+                          className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
 
-                  {/* Content Section - Right Side */}
-                  <div className="flex-1 p-6 flex flex-col justify-between">
-                    <div>
-                      {/* Title */}
-                      <h3 className="text-xl font-bold text-black mb-3 leading-tight">
+                    {/* Content Section */}
+                    <div className="p-3">
+                      <h3 className="text-xs font-semibold line-clamp-2 mb-1">
                         {publication.title}
                       </h3>
+                      <span className="text-[#98989A] capitalize text-xs mb-2 block">
+                        {publication.category}
+                      </span>
 
-                      {/* Description */}
-                      <p className="text-black text-sm leading-relaxed mb-4">
-                        {publication.excerpt}
-                      </p>
-                    </div>
-
-                    {/* Author Information */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        {publication.author?.image ? (
-                          <div className="w-10 h-10 rounded-full overflow-hidden">
-                            <Image
-                              src={getSanityImage(publication.author.image)}
-                              alt={publication.author.image.alt || publication.author.name}
-                              width={40}
-                              height={40}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <span className="text-blue-600 font-semibold text-sm">
-                              {publication.author?.name?.charAt(0).toUpperCase() || 'A'}
-                            </span>
-                          </div>
-                        )}
-                        <div>
-                          <h4 className="font-bold text-sm text-black">
-                            {publication.author?.name || 'Anonymous'}
-                          </h4>
-                          {publication.author?.title && (
-                            <p className="text-xs text-gray-500">
-                              {publication.author.title}
-                            </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          {publication.author?.image ? (
+                            <div className="w-5 h-5 rounded-full overflow-hidden">
+                              <Image
+                                src={getSanityImage(publication.author.image)}
+                                alt={publication.author.image.alt || publication.author.name}
+                                width={20}
+                                height={20}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                              <span className="text-blue-600 font-semibold text-xs">
+                                {publication.author?.name?.charAt(0).toUpperCase() || 'A'}
+                              </span>
+                            </div>
                           )}
+                          <span className="text-xs text-gray-600 truncate">
+                            {publication.author?.name || 'Anonymous'}
+                          </span>
                         </div>
-                      </div>
-
-                      {/* Three dots menu */}
-                      <div className="flex items-center">
                         <button
-                          className="p-1 hover:bg-gray-200 rounded-full"
+                          className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
                           onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
-                            // Add menu functionality here if needed
+                            handlePublicationClick(e)
                           }}
                         >
-                          <Icon icon="mdi:dots-vertical" className="w-5 h-5 text-gray-600" />
+                          Read More
+                          <Icon icon="mdi:arrow-right" className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
             </div>
           )}
         </div>

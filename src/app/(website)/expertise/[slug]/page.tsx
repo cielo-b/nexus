@@ -149,6 +149,7 @@ export default function ExpertisePage() {
           fill 
           className="object-cover absolute inset-0 w-full h-full opacity-20" 
         />
+        <div className="absolute inset-0 bg-black/20 w-full h-full"></div>
         <div className="relative w-full px-[8vw] h-full flex flex-col justify-between pb-[3vh] pt-[9vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/expertise" className='text-white/50'>

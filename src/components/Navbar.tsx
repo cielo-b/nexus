@@ -64,17 +64,17 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 px-[8vw] transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 w-full z-50 px-[5vw] transition-all  duration-300 ${
         isDropdownOpen
           ? 'bg-[#014DFE] text-white'
           : shouldUseWhiteBg 
-            ? 'bg-white text-black ' 
-            : 'bg-transparent text-white'
+            ? ' bg-white/20 backdrop-blur-sm text-black ' 
+            : 'bg-white/20 backdrop-blur-sm text-white'
       }`}>
-      <div className={`border-b transition-colors duration-300 ${
+      <div className={` transition-colors duration-300 ${
         isDropdownOpen
-          ? 'border-white/20'
-          : shouldUseWhiteBg ? 'border-gray-200' : 'border-danger'
+          && 'border-white/20'
+        
       }`}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -251,7 +251,7 @@ export default function Navbar() {
           <div className="hidden md:block">
             <button
               onClick={() => setIsContactModalOpen(true)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-sm font-medium transition-all duration-300 ${
                 shouldUseWhiteBg
                     ? 'bg-black text-white '
                     : 'bg-white  text-black'

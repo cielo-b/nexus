@@ -14,31 +14,31 @@ const categories = ['All', 'Economics', 'Agriculture', 'Technology', 'Politics',
 // Skeleton loading components
 const BlogSkeleton = () => (
   <div className="overflow-hidden animate-pulse">
-    <div className="w-full h-60 bg-gray-300 rounded-2xl"></div>
-    <div className="p-6">
-      <div className="h-6 bg-gray-300 rounded mb-2"></div>
-      <div className="h-4 bg-gray-300 rounded w-20 mb-4"></div>
+    <div className="w-full h-48 bg-gray-300"></div>
+    <div className="p-3">
+      <div className="h-3 bg-gray-300 rounded mb-1"></div>
+      <div className="h-3 bg-gray-300 rounded w-16 mb-2"></div>
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
-            <div className="w-4 h-4 bg-gray-300 rounded"></div>
-            <div className="h-4 bg-gray-300 rounded w-8"></div>
+      <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-full border border-gray-300 text-xs">
+            <div className="w-3 h-3 bg-gray-300 rounded"></div>
+            <div className="h-3 bg-gray-300 rounded w-6"></div>
           </div>
-          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
-            <div className="w-4 h-4 bg-gray-300 rounded"></div>
-            <div className="h-4 bg-gray-300 rounded w-8"></div>
+          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-full border border-gray-300 text-xs">
+            <div className="w-3 h-3 bg-gray-300 rounded"></div>
+            <div className="h-3 bg-gray-300 rounded w-6"></div>
           </div>
         </div>
-        <div className="bg-gray-300 px-6 py-2 rounded-lg w-24"></div>
+        <div className="bg-gray-300 px-3 py-1 rounded-lg w-12"></div>
       </div>
     </div>
   </div>
 )
 
 const BlogSkeletonGrid = () => (
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {Array.from({ length: 6 }).map((_, index) => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+    {Array.from({ length: 10 }).map((_, index) => (
       <BlogSkeleton key={index} />
     ))}
   </div>
@@ -142,14 +142,14 @@ export default function BlogsPage() {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex flex-col items-center justify-center text-white ">
-        <div className="absolute inset-0 bg-primary  w-full h-full"></div>
+      <section className="relative h-[40vh] flex flex-col items-center justify-center text-white ">
+        <div className="absolute inset-0 bg-black/80  w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 
-        <div className="relative px-[8vw]">
-          <div className="text-center">
-            <h1 className="text-7xl font-semibold mb-6">Our Blog</h1>
-            <p className="max-w-3xl mx-auto leading-relaxed">
+        <div className="relative w-full px-[8vw]">
+          <div className="">
+            <h1 className="text-6xl font-semibold mb-6">Our Blog</h1>
+            <p className="max-w-3xl  leading-relaxed">
               We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations achieve impactful
             </p>
           </div>
@@ -157,21 +157,21 @@ export default function BlogsPage() {
       </section>
 
       {/* Main Content */}
-      <div className="px-[8vw] py-12">
-        <div className="mb-8 relative text-center py-[4vh]">
+      <div className="px-[8vw] space-y-[3vh] py-[3vh]">
+        {/* <div className="mb-8 relative  ">
           <h2 className="text-5xl font-semibold  mb-4">Our <span className='text-primary' >Articles</span></h2>
-          <p className="max-w-3xl mx-auto">
+          <p className="max-w-3xl ">
             We offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation.
           </p>
-        </div>
+        </div> */}
 
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-start items-center gap-4">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => handleCategoryFilter(category)}
-              className={`px-8 py-4 rounded-lg font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
+              className={`px-8 py-4 rounded font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
                   ? 'bg-primary text-white shadow-lg'
                   : 'text-gray-700 border border-[#262626]/30'
                 }`}
@@ -237,42 +237,44 @@ export default function BlogsPage() {
         )}
 
         {/* Articles Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {filteredBlogs
             .filter(blog => !blog.featured || selectedCategory !== 'All')
             .map((blog) => (
-              <div key={blog._id} className="overflow-hidden">
+              <div key={blog._id} className="overflow-hidden bg-white hover:bg-gray-50 transition-colors duration-300">
                 {blog.coverImage && (
-                  <Image
-                    src={getSanityImage(blog.coverImage)}
-                    alt={blog.coverImage.alt || blog.title}
-                    width={400}
-                    height={250}
-                    className="w-full h-60 object-cover rounded-2xl"
-                  />
+                  <div className="overflow-hidden">
+                    <Image
+                      src={getSanityImage(blog.coverImage)}
+                      alt={blog.coverImage.alt || blog.title}
+                      width={400}
+                      height={200}
+                      className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
                 )}
-                <div className="p-6">
-                  <h3 className="font-semibold line-clamp-2 mb-2">
+                <div className="p-3">
+                  <h3 className="text-xs font-semibold line-clamp-2 mb-1">
                     {blog.title}
                   </h3>
-                  <span className="text-[#98989A] capitalize text-xs">
+                  <span className="text-[#98989A] capitalize text-xs mb-2 block">
                     {blog.category}
                   </span>
 
-                  <div className="flex items-center justify-between mt-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border-[#AAAAAA] border text-sm">
-                        <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1 rounded-full border-[#AAAAAA] border text-xs">
+                        <Icon icon="mdi:heart-outline" className="w-3 h-3 text-[#474747]" />
                         {formatNumber(blog.likes)}
                       </div>
-                      <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border-[#AAAAAA] border text-sm">
-                        <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
+                      <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1 rounded-full border-[#AAAAAA] border text-xs">
+                        <Icon icon="mdi:eye-outline" className="w-3 h-3 text-[#474747]" />
                         {formatNumber(blog.views)}
                       </span>
                     </div>
                     <Link
                       href={`/blogs/${blog.slug.current}`}
-                      className="bg-primary text-white px-10 py-4 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
+                      className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
                     >
                       Read More
                       <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -284,8 +286,27 @@ export default function BlogsPage() {
         </div>
 
         {filteredBlogs.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No articles found for the selected category.</p>
+          <div className="text-center py-20">
+            <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-50 to-emerald-100 rounded-full flex items-center justify-center shadow-lg">
+              <Icon icon="mdi:newspaper-variant-outline" className="w-16 h-16 text-green-500" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              {selectedCategory === 'All' ? 'No Articles Available' : `No ${selectedCategory} Articles`}
+            </h3>
+            <p className="text-gray-600 text-lg max-w-md mx-auto leading-relaxed mb-8">
+              {selectedCategory === 'All'
+                ? 'We\'re working on adding new articles. Check back soon for insightful content!'
+                : `We don't have any articles in the ${selectedCategory} category yet. Try selecting a different category.`
+              }
+            </p>
+            {selectedCategory !== 'All' && (
+              <button
+                onClick={() => setSelectedCategory('All')}
+                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                View All Articles
+              </button>
+            )}
           </div>
         )}
       </div>

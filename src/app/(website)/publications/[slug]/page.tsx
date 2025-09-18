@@ -208,9 +208,11 @@ export default function PublicationPage({ params }: PageProps) {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
+      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white bg-transparent ">
+
+        <Image src={getSanityImage(publication.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full " />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
-        <Image src={getSanityImage(publication.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
+        {/* <div className="absolute inset-0 bg-black/20 w-full h-full"></div> */}
         <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/publications" className='text-white/50   '>

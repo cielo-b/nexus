@@ -322,7 +322,9 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     required
                   />
                 </div>
-                              {/* Email */}
+              </div>
+
+              {/* Email - Full Width */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email
@@ -339,12 +341,12 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 />
               </div>
 
-              {/* Phone Number */}
+              {/* Phone Number - Full Width */}
               <div>
                 <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
                 </label>
-                <div className=" w-full flex gap-2">
+                <div className="w-full flex gap-2">
                   {/* Country Selector */}
                   <div className="relative">
                     <select
@@ -379,7 +381,6 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     required
                   />
                 </div>
-              </div>
               </div>
 
 

@@ -62,14 +62,14 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex flex-col items-center justify-center text-white">
-        <div className="absolute inset-0 bg-primary w-full h-full"></div>
+      <section className="relative h-[40vh] flex flex-col items-center justify-center text-white">
+        <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 
-        <div className="relative px-[8vw]">
-          <div className="text-center">
-            <h1 className="text-7xl font-semibold mb-6">What We Do</h1>
-            <p className="text-xl max-w-3xl mx-auto leading-relaxed">
+        <div className="relative w-full max-w-7xl mx-auto">
+          <div className="text-left">
+            <h1 className="text-6xl font-semibold mb-6">What We Do</h1>
+            <p className="text-xl max-w-3xl  leading-relaxed">
               We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations achieve impactful
             </p>
           </div>
@@ -77,8 +77,8 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Section - Matching Image Design */}
-      <section className="py-20">
-        <div className="px-[8vw]">
+      <section className="py-10">
+        <div >
           <div className="max-w-7xl mx-auto">
             
             {loading ? (

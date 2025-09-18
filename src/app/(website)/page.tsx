@@ -8,6 +8,7 @@ import { Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Icon } from '@iconify/react'
+import { motion, useInView } from 'framer-motion'
 import { client } from '@/lib/sanity/client'
 import { blogQueries, partnerQueries, testimonialQueries, companyInfoQueries, faqQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
@@ -30,6 +31,59 @@ export default function HomePage() {
   const [animatedIcons, setAnimatedIcons] = useState<Set<number>>(new Set())
   const swiperRef = useRef<any>(null)
   const coreValuesRef = useRef<HTMLDivElement>(null)
+  const getToKnowRef = useRef<HTMLDivElement>(null)
+  const partnersRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
+  const testimonialsRef = useRef<HTMLDivElement>(null)
+  const blogsRef = useRef<HTMLDivElement>(null)
+
+  // Animation variants - reduced for better performance
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  }
+
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -10 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  }
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 10 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  }
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05
+      }
+    }
+  }
+
+  const staggerItem = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -159,12 +213,12 @@ export default function HomePage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative py-12 sm:py-16 md:py-20 lg:py-[16vh]">
+      <section className="relative h-[60vh]">
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full" />
-        <div className="absolute inset-0 bg-black/25 w-full h-full"></div>
-        <div className="relative z-10 flex items-center justify-center h-full">
-          <div className="text-center text-white max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-4 sm:mb-6 leading-tight">
+        <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
+        <div className="relative z-10 flex items-center justify-start w-full h-full px-4 sm:px-6 lg:px-8">
+          <div className="text-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl  font-semibold mb-4 sm:mb-6 leading-tight">
               Empowering Change Through Expert Consultancy
             </h1>
             <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed">
@@ -175,17 +229,34 @@ export default function HomePage() {
       </section>
 
       {/* Get To Know Nexus Section */}
-      <section className="py-12 sm:py-16 lg:py-20">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-16 items-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-4 sm:mb-6 lg:mb-0">Get To Know <br /><span className='text-primary'>Nexus</span> </h2>
-            <div className='w-full lg:w-1/2'>
+      <motion.section 
+        ref={getToKnowRef}
+        initial="hidden"
+        animate={useInView(getToKnowRef) ? "visible" : "hidden"}
+        variants={staggerContainer}
+        className="py-8 sm:py-12 lg:py-16"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            variants={fadeInUp}
+            className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-16 items-center mb-8 sm:mb-12 lg:mb-16"
+          >
+            <motion.h2 
+              variants={fadeInLeft}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-0"
+            >
+              Get To Know <br /><span className='text-primary'>Nexus</span>
+            </motion.h2>
+            <motion.div 
+              variants={fadeInRight}
+              className='w-full lg:w-1/2'
+            >
               <p className='text-lg sm:text-xl lg:text-2xl font-semibold mb-3 sm:mb-4'>What is Insight Nexus</p>
               <p className="text-sm sm:text-base lg:text-lg leading-relaxed">
                 Insight Nexus Ltd is a dynamic consultancy firm committed to empowering organizations through a wide range of tailored services designed to foster growth and operational excellence.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
           <div className="bg-black-bg text-white min-h-[500px] p-3">
             {loading ? (
               <div className="text-center py-12">
@@ -234,9 +305,9 @@ export default function HomePage() {
                             <button
                               key={type}
                               onClick={() => setActiveTab(type)}
-                              className={`px-6 py-3 mx-2 mb-2 rounded-lg font-medium transition-colors ${activeTab === type
+                              className={`px-6 py-3 mx-2 mb-2 rounded-lg font-medium ${activeTab === type
                                 ? 'bg-blue-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                : 'bg-gray-100 text-gray-700'
                                 }`}
                             >
                               {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -259,18 +330,30 @@ export default function HomePage() {
             )}
           </div>
         </div>
-      </section>
+      </motion.section>
 
 
       {/* Core Values Section */}
-      <section className="py-12 sm:py-16 lg:py-20" ref={coreValuesRef}>
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-3 sm:mb-4">Explain Our Core<br /><span className='text-primary'>Values</span> </h2>
+      <motion.section 
+        ref={coreValuesRef}
+        initial="hidden"
+        animate={useInView(coreValuesRef) ? "visible" : "hidden"}
+        variants={staggerContainer}
+        className="py-8 sm:py-12 lg:py-16"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            variants={fadeInUp}
+            className="text-left mb-8 sm:mb-12 lg:mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-3 sm:mb-4">Explain Our Core<br /><span className='text-primary'>Values</span> </h2>
             <p className="text-sm sm:text-base lg:text-lg max-w-3xl mx-auto">"Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <motion.div 
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          >
             {[
               {
                 icon: "mdi:shield-check",
@@ -303,16 +386,10 @@ export default function HomePage() {
                 description: "We strive to ensure that all voices are heard and considered, promoting equal opportunities for a more inclusive society."
               }
             ].map((item, index) => (
-              <div 
+              <motion.div 
                 key={index} 
-                className={`flex flex-col items-start gap-4 sm:gap-5 bg-black/5 rounded-2xl p-4 sm:p-6 lg:p-8 hover:bg-black/10 transition-all duration-500 ${
-                  coreValuesVisible 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-8'
-                }`}
-                style={{
-                  transitionDelay: `${index * 100}ms`
-                }}
+                variants={staggerItem}
+                className="flex flex-col items-start gap-4 sm:gap-5 bg-black/5 rounded-2xl p-4 sm:p-6 lg:p-8"
               >
                 <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
                   <Icon 
@@ -335,18 +412,27 @@ export default function HomePage() {
                     {item.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Partners Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <p className="text-lg sm:text-xl lg:text-2xl">Trusted by leading organizations worldwide</p>
-          </div>
+      <motion.section 
+        ref={partnersRef}
+        initial="hidden"
+        animate={useInView(partnersRef) ? "visible" : "hidden"}
+        variants={fadeInUp}
+        className="py-8 sm:py-12 lg:py-16 bg-white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            variants={fadeInUp}
+            className="text-left mb-8 sm:mb-12 lg:mb-16"
+          >
+            <p className="text-base sm:text-lg lg:text-xl font-semibold">Trusted by leading organizations worldwide</p>
+          </motion.div>
 
           {loading ? (
             <div className="text-center py-12">
@@ -389,14 +475,14 @@ export default function HomePage() {
                           href={partner.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full h-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                          className="w-full h-full flex items-center justify-center"
                         >
                           <Image
                             src={getSanityImage(partner.logo)}
                             alt={partner.logo.alt || partner.name}
                             width={200}
                             height={80}
-                            className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                            className="max-w-full max-h-full object-contain filter grayscale"
                           />
                         </a>
                       ) : (
@@ -406,7 +492,7 @@ export default function HomePage() {
                             alt={partner.logo.alt || partner.name}
                             width={200}
                             height={80}
-                            className="max-w-full max-h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                            className="max-w-full max-h-full object-contain filter grayscale"
                           />
                         </div>
                       )}
@@ -425,24 +511,33 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Call to Action Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-white">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <motion.section 
+        ref={ctaRef}
+        initial="hidden"
+        animate={useInView(ctaRef) ? "visible" : "hidden"}
+        variants={staggerContainer}
+        className="py-8 sm:py-12 lg:py-16 bg-primary text-white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            variants={fadeInUp}
+            className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+          >
             {/* Left Section - Call to Action */}
-            <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6">
+            <motion.div variants={fadeInLeft}>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
                 Let's us <br /> listen to your <br /> problems
               </h2>
               <p className="text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed">
                 Made for your convenience for a more beautiful future for you and your family
               </p>
-            </div>
+            </motion.div>
 
             {/* Right Section - FAQ/Accordion */}
-            <div className="space-y-4">
+            <motion.div variants={fadeInRight} className="space-y-4">
               {loading ? (
                 <div className="text-center py-8">
                   <div className="text-white">Loading FAQs...</div>
@@ -451,7 +546,7 @@ export default function HomePage() {
                 faqs.map((faq) => (
                   <div key={faq._id} className="border-b border-white/20">
                     <div
-                      className="flex items-center justify-between py-4 cursor-pointer hover:bg-white/5 transition-colors rounded-lg px-4"
+                      className="flex items-center justify-between py-4 cursor-pointer rounded-lg px-4"
                       onClick={() => toggleFaq(faq._id)}
                     >
                       <span className="text-white text-lg font-medium">{faq.title}</span>
@@ -478,34 +573,48 @@ export default function HomePage() {
                   <div className="text-white/70">No FAQs available yet</div>
                 </div>
               )}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Client Testimonials Section */}
-      <section className="py-12 sm:py-16 lg:py-20">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div>
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-4 sm:mb-6">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 lg:mb-0 max-w-3xl">The <span className='text-primary'>Clients</span> are the <span className='text-primary'>Heroes</span> of Our Business </h2>
+      <motion.section 
+        ref={testimonialsRef}
+        initial="hidden"
+        animate={useInView(testimonialsRef) ? "visible" : "hidden"}
+        variants={staggerContainer}
+        className="py-8 sm:py-12 lg:py-16"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={fadeInUp}>
+            <motion.div 
+              variants={fadeInUp}
+              className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-4 sm:mb-6"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 lg:mb-0 max-w-3xl">The <span className='text-primary'>Clients</span> are the <span className='text-primary'>Heroes</span> of Our Business </h2>
               <div className="flex justify-center items-center gap-4">
                 <button
                   onClick={goToPrevSlide}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-primary hover:bg-primary/5 transition-all duration-300 group"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-gray-300 flex items-center justify-center"
                 >
-                  <Icon icon="mdi:chevron-left" className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-primary transition-colors" />
+                  <Icon icon="mdi:chevron-left" className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
                 </button>
                 <button
                   onClick={goToNextSlide}
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 group"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary flex items-center justify-center"
                 >
-                  <Icon icon="mdi:chevron-right" className="w-5 h-5 sm:w-6 sm:h-6 text-primary group-hover:text-white transition-colors" />
+                  <Icon icon="mdi:chevron-right" className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </button>
               </div>
-            </div>
-            <p className="mb-8 sm:mb-12 max-w-7xl text-[#65676C] text-xs sm:text-sm leading-relaxed">Clients consistently commend our consultancy agency for its transformative impact on their businesses.Our strategic solutions have streamlined operations, enhanced decision-making, and driven measurable growth, earning the trust and loyalty of organizations across various industries.</p>
-          </div>
+            </motion.div>
+            <motion.p 
+              variants={fadeInUp}
+              className="mb-8 sm:mb-12 max-w-7xl text-[#65676C] text-xs sm:text-sm leading-relaxed"
+            >
+              Clients consistently commend our consultancy agency for its transformative impact on their businesses.Our strategic solutions have streamlined operations, enhanced decision-making, and driven measurable growth, earning the trust and loyalty of organizations across various industries.
+            </motion.p>
+          </motion.div>
 
 
           {loading ? (
@@ -600,16 +709,16 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Recent Blogs Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white text-black">
-        <div className="px-4 sm:px-6 lg:px-[8vw] w-full">
+      <section className="py-8 sm:py-12 lg:py-16 bg-white text-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 sm:mb-12 gap-4">
-            <h2 className="text-xl sm:text-2xl font-bold">Recent Blogs</h2>
+            <h2 className="text-lg sm:text-xl font-bold">Recent Blogs</h2>
             <Link
               href="/blogs"
-              className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 text-sm sm:text-base"
+              className="bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg flex items-center gap-2 text-sm sm:text-base"
             >
               View All Blogs
               <Icon icon="mdi:arrow-right" className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -654,10 +763,10 @@ export default function HomePage() {
                       </div>
                       <Link
                         href={`/blogs/${blog.slug.current}`}
-                        className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
+                        className="bg-primary text-white px-6 py-2 rounded-lg flex items-center gap-2 justify-center"
                       >
                         Read More
-                        <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>
