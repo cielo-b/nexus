@@ -5,16 +5,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
 import { motion, useInView } from 'framer-motion'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay } from 'swiper/modules'
+import 'swiper/css'
 // import Lottie from 'lottie-react'
 import { client } from '@/lib/sanity/client'
-import { teamMemberQueries, companyInfoQueries } from '@/lib/sanity/queries'
+import { teamMemberQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { TeamMember } from '@/types/teamMember'
-import { CompanyInfo } from '@/types/companyInfo'
 
 export default function AboutPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
-  const [companyInfo, setCompanyInfo] = useState<CompanyInfo[]>([])
   const [loading, setLoading] = useState(true)
   
   // Refs for animations
@@ -61,13 +62,8 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [teamData, companyData] = await Promise.all([
-          client.fetch(teamMemberQueries.getAllTeamMembers),
-          client.fetch(companyInfoQueries.getAllCompanyInfo)
-        ])
-
+        const teamData = await client.fetch(teamMemberQueries.getAllTeamMembers)
         setTeamMembers(teamData)
-        setCompanyInfo(companyData)
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -79,9 +75,6 @@ export default function AboutPage() {
   }, [])
 
 
-  const getCompanyInfoByType = (type: string) => {
-    return companyInfo.find(info => info.type === type)
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -151,7 +144,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className='w-full lg:w-[60%] order-1 lg:order-2 relative'
             >
-              <Image src="/images/about1.png" alt="Get To Know Nexus" width={10000} height={100000} className="w-full h-80 sm:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg" />
+              <Image src="/images/about1.png" alt="Get To Know Nexus" width={10000} height={100000} className="w-full h-80 sm:h-96 lg:h-[500px] object-cover  shadow-lg" />
               {/* Lines overlay */}
               <div className="absolute top-4 right-4 w-16 h-16 opacity-20 rotate-12">
                 <Image src="/images/lines.png" alt="Lines" width={64} height={64} className="w-full h-full object-cover" />
@@ -174,7 +167,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               className='w-full lg:w-[60%] order-1 relative'
             >
-              <Image src="/images/about2.png" alt="What We Do" width={10000} height={100000} className="w-full h-80 sm:h-96 lg:h-[500px] object-cover rounded-lg shadow-lg" />
+              <Image src="/images/about2.png" alt="What We Do" width={10000} height={100000} className="w-full h-80 sm:h-96 lg:h-[500px] object-cover  shadow-lg" />
               {/* Lines overlay */}
               <div className="absolute top-6 left-6 w-20 h-20 opacity-25 rotate-45">
                 <Image src="/images/lines.png" alt="Lines" width={80} height={80} className="w-full h-full object-cover" />
@@ -204,7 +197,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Who We Serve Section */}
+      {/* Who We Serve Section - Horizontal Carousel */}
       <motion.section 
         ref={whoWeServeRef}
         initial="hidden"
@@ -236,56 +229,102 @@ export default function AboutPage() {
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">Who we serve</h2>
           </motion.div>
 
-          <motion.div 
-            variants={staggerContainer}
-            className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 max-w-7xl mx-auto"
-          >
-            {[
-              {
-                icon: "solar:buildings-3-linear",
-                title: "Corporations",
-                description: "Forward-thinking companies working to transform their impact and manage social risks."
-              },
-              {
-                icon: "solar:money-bag-outline",
-                title: "Investors & Funders",
-                description: "Funders seeking quality, comparable social performance data across their portfolio."
-              },
-              {
-                icon: "solar:users-group-two-rounded-linear",
-                title: "NGOs & Social Enterprises",
-                description: "Social change organizations needing better data to improve their impact."
-              },
-              {
-                icon: "solar:buildings-3-linear",
-                title: "Individual researchers",
-                description: "Forward-thinking companies working to transform their impact and manage social risks."
-              },
-              {
-                icon: "solar:users-group-two-rounded-linear",
-                title: "Students",
-                description: "Social change organizations needing better data to improve their impact."
-              }
-            ].map((item, index) => (
-              <motion.div 
-                key={index} 
-                variants={staggerItem}
-                transition={{ duration: 0.6 }}
-                className="text-center rounded-xl p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]"
-              >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 bg-white/20">
-                  <Icon icon={item.icon} className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-              </div>
-                <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3">{item.title}</h3>
-                <p className="text-white/90 mb-3 sm:mb-4 text-xs sm:text-sm text-left leading-relaxed">
-                  {item.description}
-                </p>
-                <button className="border-2 border-white text-white px-3 sm:px-4 py-1.5 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-colors text-xs sm:text-sm">
-                Get in touch
-              </button>
-              </motion.div>
-            ))}
-          </motion.div>
+          <div className="relative">
+            <Swiper
+              modules={[Autoplay]}
+              spaceBetween={30}
+              slidesPerView="auto"
+              autoplay={{
+                delay: 0,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }}
+              speed={8000}
+              loop={true}
+              loopAdditionalSlides={2}
+              allowTouchMove={true}
+              centeredSlides={false}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 25,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+              }}
+              className="who-we-serve-swiper"
+            >
+              {[
+                {
+                  icon: "solar:buildings-3-bold",
+                  title: "Corporations",
+                  description: "Forward-thinking companies working to transform their impact and manage social risks."
+                },
+                {
+                  icon: "solar:money-bag-bold",
+                  title: "Investors & Funders",
+                  description: "Funders seeking quality, comparable social performance data across their portfolio."
+                },
+                {
+                  icon: "solar:users-group-two-rounded-bold",
+                  title: "NGOs & Social Enterprises",
+                  description: "Social change organizations needing better data to improve their impact."
+                },
+                {
+                  icon: "solar:user-bold",
+                  title: "Individual Researchers",
+                  description: "Researchers and academics seeking comprehensive data analysis and research support."
+                },
+                {
+                  icon: "solar:graduation-bold",
+                  title: "Students",
+                  description: "Students and educational institutions requiring research assistance and data insights."
+                },
+                {
+                  icon: "solar:buildings-2-bold",
+                  title: "Government Institutions",
+                  description: "Government agencies and public sector organizations seeking policy research and evaluation."
+                },
+                {
+                  icon: "solar:university-bold",
+                  title: "Universities",
+                  description: "Educational institutions requiring research collaboration and academic support services."
+                },
+                {
+                  icon: "solar:handshake-bold",
+                  title: "International NGOs",
+                  description: "International organizations working on global development and humanitarian projects."
+                }
+              ].map((item, index) => (
+                <SwiperSlide key={index} className="!w-auto">
+                  <motion.div 
+                    variants={staggerItem}
+                    transition={{ duration: 0.6 }}
+                    className="text-center p-6 sm:p-8 hover:bg-white/10 transition-all duration-300 w-80 sm:w-96 h-full min-h-[300px] flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-4 sm:mb-6 bg-white/20 rounded-lg">
+                        <Icon icon={item.icon} className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                      </div>
+                      <h3 className="text-base sm:text-lg font-bold text-white mb-2 sm:mb-3">{item.title}</h3>
+                      <p className="text-white/90 mb-3 sm:mb-4 text-xs sm:text-sm text-left leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                    <button className="border-2 border-white text-white px-3 sm:px-4 py-1.5 font-medium hover:bg-white hover:text-blue-600 transition-colors text-xs sm:text-sm w-fit mx-auto">
+                      Get in touch
+                    </button>
+                  </motion.div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         </div>
       </motion.section>
 
@@ -304,7 +343,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               className='w-full lg:w-[30%] order-2 lg:order-1 p-4 sm:p-6 lg:p-8 relative'
             >
-              <Image src="/images/about3.png" alt="What You Access" width={10000} height={100000} className="w-full h-64 sm:h-72 lg:h-80 object-cover rounded-lg shadow-lg" /> 
+              <Image src="/images/about3.png" alt="What You Access" width={10000} height={100000} className="w-full h-64 sm:h-72 lg:h-80 object-cover  shadow-lg" /> 
               {/* Lines overlay */}
               <div className="absolute top-3 right-3 w-12 h-12 opacity-20 rotate-30">
                 <Image src="/images/lines.png" alt="Lines" width={48} height={48} className="w-full h-full object-cover" />
@@ -344,9 +383,9 @@ export default function AboutPage() {
                     key={index} 
                     variants={staggerItem}
                     transition={{ duration: 0.6 }}
-                    className="flex flex-col items-center gap-4 sm:gap-6 border border-gray-200 rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 flex-1"
+                    className="flex flex-col items-center gap-4 sm:gap-6 border border-gray-200  p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 flex-1"
                   >
-                    <div className="bg-blue-50 rounded-full p-3">
+                    <div className="bg-blue-50  p-3">
                       <Icon icon={item.icon} className="w-6 h-6 sm:w-8 sm:h-8 text-[#014DFE]" />
                   </div>
                     <div className="text-center">
@@ -412,9 +451,9 @@ export default function AboutPage() {
                 key={index} 
                 variants={staggerItem}
                 transition={{ duration: 0.6 }}
-                className="flex flex-col items-start gap-6 sm:gap-8 bg-gray-50 rounded-2xl p-6 sm:p-8 lg:p-10 hover:bg-gray-100 transition-colors duration-300"
+                className="flex flex-col items-start gap-6 sm:gap-8 bg-gray-50  p-6 sm:p-8 lg:p-10 hover:bg-gray-100 transition-colors duration-300"
               >
-                <div className="bg-white rounded-xl p-4 shadow-sm">
+                <div className="bg-white  p-4 shadow-sm">
                   <Icon icon={item.icon} className="w-6 h-6 sm:w-8 sm:h-8 text-[#014DFE]" />
             </div>
                 <div>
@@ -483,7 +522,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.6 }}
                   className='space-y-4 sm:space-y-6 text-center'
                 >
-                  <div className="w-full h-64 sm:h-72 lg:h-80 mx-auto mb-6 sm:mb-8 overflow-hidden rounded-2xl shadow-2xl">
+                  <div className="w-full h-64 sm:h-72 lg:h-80 mx-auto mb-6 sm:mb-8 overflow-hidden  shadow-2xl">
                     <Image
                       src={getSanityImage(member.image)}
                       alt={member.image.alt || member.name}
@@ -508,7 +547,7 @@ export default function AboutPage() {
             </motion.div>
           ) : (
             <div className="text-center py-8 sm:py-12">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-4 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto mb-4 bg-blue-500  flex items-center justify-center">
                 <Icon icon="mdi:account-group" className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-white" />
               </div>
               <h3 className="text-base sm:text-lg font-medium mb-2">No team members yet</h3>

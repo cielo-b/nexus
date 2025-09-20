@@ -12,26 +12,26 @@ import { Icon } from '@iconify/react'
 
 // Skeleton component for similar publications
 const SimilarPublicationSkeleton = () => (
-  <div className="bg-[#F3F3F3] rounded-lg overflow-hidden flex h-60 animate-pulse">
+  <div className="bg-[#F3F3F3]  overflow-hidden flex h-60 animate-pulse">
     <div className="w-60 h-full bg-gray-300"></div>
     <div className="flex-1 p-6 flex flex-col justify-between">
       <div>
-        <div className="h-6 bg-gray-300 rounded mb-3"></div>
+        <div className="h-6 bg-gray-300  mb-3"></div>
         <div className="space-y-2">
-          <div className="h-4 bg-gray-300 rounded"></div>
-          <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          <div className="h-4 bg-gray-300 "></div>
+          <div className="h-4 bg-gray-300  w-3/4"></div>
+          <div className="h-4 bg-gray-300  w-1/2"></div>
         </div>
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
+          <div className="w-10 h-10 bg-gray-300 "></div>
           <div>
-            <div className="h-4 bg-gray-300 rounded w-24 mb-1"></div>
-            <div className="h-3 bg-gray-300 rounded w-16"></div>
+            <div className="h-4 bg-gray-300  w-24 mb-1"></div>
+            <div className="h-3 bg-gray-300  w-16"></div>
           </div>
         </div>
-        <div className="w-5 h-5 bg-gray-300 rounded"></div>
+        <div className="w-5 h-5 bg-gray-300 "></div>
       </div>
     </div>
   </div>
@@ -66,6 +66,14 @@ async function getPublication(slug: string): Promise<Publication | null> {
     category,
     tags,
     downloadUrl,
+    downloadFile {
+      asset->{
+        _id,
+        url
+      },
+      filename,
+      size
+    },
     externalUrl,
     featured,
     likes,
@@ -103,6 +111,14 @@ async function getSimilarPublications(category: string, excludeId: string): Prom
     category,
     tags,
     downloadUrl,
+    downloadFile {
+      asset->{
+        _id,
+        url
+      },
+      filename,
+      size
+    },
     externalUrl,
     featured,
     likes,
@@ -233,7 +249,7 @@ export default function PublicationPage({ params }: PageProps) {
         <div className="grid lg:grid-cols-3 ">
           {/* Publication Content */}
           <div className="lg:col-span-2 border-r border-r-[#262626]/11">
-            <div className="bg-white rounded-lg ">
+            <div className="bg-white  ">
               {publication.tableOfContents && publication.tableOfContents.length > 0 ? (
                 <div className="space-y-12">
                   {publication.tableOfContents.map((section, index) => (
@@ -281,7 +297,7 @@ export default function PublicationPage({ params }: PageProps) {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100  flex items-center justify-center">
                     <Icon icon="mdi:file-document-outline" className="w-8 h-8 text-gray-400" />
                   </div>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Content coming soon</h3>
@@ -296,11 +312,11 @@ export default function PublicationPage({ params }: PageProps) {
             <div className="sticky top-8">
               {/* Views Metadata */}
               <div className="flex items-center gap-4 mb-4 border-b border-b-[#262626]/11 pr-[8vw] pl-[3vw] py-[4vh]">
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
                   <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{publication.likes || 0}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
                   <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{publication.views || 0}</span>
                 </div>
@@ -336,12 +352,12 @@ export default function PublicationPage({ params }: PageProps) {
                 {publication.tableOfContents && publication.tableOfContents.length > 0 && (
                 <div >
                   <h3 className="font-bold text-gray-900 mb-4">Table of Contents</h3>
-                  <ul className="space-y-2 text-sm bg-[#E8E8E8] rounded-lg p-6">
+                  <ul className="space-y-2 text-sm bg-[#E8E8E8]  p-6">
                     {publication.tableOfContents.map((section) => (
                       <li key={section.id.current}>
                         <button
                           onClick={() => scrollToSection(section.id.current)}
-                          className={`text-left w-full py-1 px-2 rounded transition-colors ${activeSection === section.id.current
+                          className={`text-left w-full py-1 px-2  transition-colors ${activeSection === section.id.current
                             ? 'text-primary bg-blue-50  font-medium'
                             : 'text-gray-600 hover:text-primary hover:'
                             }`}
@@ -354,6 +370,40 @@ export default function PublicationPage({ params }: PageProps) {
                 </div>
               )}
               </div>
+
+              {/* Download Button */}
+              {publication.downloadFile && (
+                <div className="pr-[8vw] pl-[3vw] py-[4vh] border-b border-b-[#262626]/11">
+                  <div className="bg-blue-50  p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-blue-100  flex items-center justify-center">
+                          <Icon icon="mdi:file-download" className="w-6 h-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 mb-1">Download Publication</h3>
+                          <p className="text-sm text-gray-600">
+                            {publication.downloadFile.filename || 'Download file'}
+                            {publication.downloadFile.size && (
+                              <span className="ml-2 text-gray-500">
+                                ({(publication.downloadFile.size / 1024 / 1024).toFixed(1)} MB)
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      <a
+                        href={publication.downloadFile.asset.url}
+                        download={publication.downloadFile.filename}
+                        className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium  hover:bg-blue-700 transition-colors"
+                      >
+                        <Icon icon="mdi:download" className="w-5 h-5 mr-2" />
+                        Download
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Table of Contents */}
 
@@ -369,7 +419,7 @@ export default function PublicationPage({ params }: PageProps) {
               {publication.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="inline-block bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full"
+                  className="inline-block bg-gray-100 text-gray-700 text-sm px-3 py-1 "
                 >
                   {tag}
                 </span>
@@ -385,7 +435,7 @@ export default function PublicationPage({ params }: PageProps) {
               href={publication.downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium  hover:bg-blue-700 transition-colors"
             >
               <Icon icon="mdi:download" className="w-5 h-5 mr-2" />
               Download PDF
@@ -397,7 +447,7 @@ export default function PublicationPage({ params }: PageProps) {
               href={publication.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-medium  hover:bg-gray-700 transition-colors"
             >
               <Icon icon="mdi:open-in-new" className="w-5 h-5 mr-2" />
               View External
@@ -434,7 +484,7 @@ export default function PublicationPage({ params }: PageProps) {
                   <div
                     key={similarPub._id}
                     onClick={handleSimilarClick}
-                    className="bg-[#F3F3F3] rounded-lg overflow-hidden flex h-60 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                    className="bg-[#F3F3F3]  overflow-hidden flex h-60 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                   >
                     {/* Image Section - Left Side */}
                     {similarPub.coverImage && (
@@ -467,7 +517,7 @@ export default function PublicationPage({ params }: PageProps) {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           {similarPub.author?.image ? (
-                            <div className="w-10 h-10 rounded-full overflow-hidden">
+                            <div className="w-10 h-10  overflow-hidden">
                               <Image
                                 src={getSanityImage(similarPub.author.image)}
                                 alt={similarPub.author.image.alt || similarPub.author.name}
@@ -477,7 +527,7 @@ export default function PublicationPage({ params }: PageProps) {
                               />
                             </div>
                           ) : (
-                            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <div className="w-10 h-10  bg-blue-100 flex items-center justify-center">
                               <span className="text-blue-600 font-semibold text-sm">
                                 {similarPub.author?.name?.charAt(0).toUpperCase() || 'A'}
                               </span>
@@ -498,7 +548,7 @@ export default function PublicationPage({ params }: PageProps) {
                         {/* Three dots menu */}
                         <div className="flex items-center">
                           <button
-                            className="p-1 hover:bg-gray-200 rounded-full"
+                            className="p-1 hover:bg-gray-200 "
                             onClick={(e) => {
                               e.preventDefault()
                               e.stopPropagation()

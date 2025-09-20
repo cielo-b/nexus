@@ -274,7 +274,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto z-50">
+        <Dialog.Content className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto z-50">
           <div className="p-6 sm:p-8">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
@@ -282,7 +282,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 Contact Us
               </Dialog.Title>
               <Dialog.Close asChild>
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <button className="p-2 hover:bg-gray-100  transition-colors">
                   <X className="w-5 h-5 text-gray-500" />
                 </button>
               </Dialog.Close>
@@ -303,7 +303,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     value={formData.firstName}
                     onChange={handleInputChange}
                     placeholder="Enter First Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     required
                   />
                 </div>
@@ -318,7 +318,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     value={formData.lastName}
                     onChange={handleInputChange}
                     placeholder="Enter Last Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     required
                   />
                 </div>
@@ -336,7 +336,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter your Email"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   required
                 />
               </div>
@@ -355,7 +355,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         const country = countries.find(c => c.code === e.target.value)
                         if (country) handleCountryChange(country)
                       }}
-                      className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-8 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors min-w-[120px]"
+                      className="appearance-none bg-white border border-gray-300  px-4 py-3 pr-8 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors min-w-[120px]"
                     >
                       {countries.map((country) => (
                         <option key={country.code} value={country.code}>
@@ -377,7 +377,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
                     placeholder="Enter Phone Number"
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    className="flex-1 px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     required
                   />
                 </div>
@@ -397,7 +397,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   onChange={handleInputChange}
                   placeholder="Enter your Message"
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
+                  className="w-full px-4 py-3 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
                   required
                 />
               </div>
@@ -410,7 +410,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   name="agreeToTerms"
                   checked={formData.agreeToTerms}
                   onChange={handleInputChange}
-                  className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  className="mt-1 w-4 h-4 text-blue-600 border-gray-300  focus:ring-blue-500"
                   required
                 />
                 <label htmlFor="agreeToTerms" className="text-sm text-gray-600">
@@ -423,7 +423,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="px-8 py-3 bg-blue-600 text-white font-medium  hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {isSubmitting ? 'Sending...' : 'Send'}
                 </button>

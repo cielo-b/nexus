@@ -24,9 +24,9 @@ export default function TrainingPage() {
           {/* Training Features Cards */}
           <div className="grid md:grid-cols-3 gap-8">
             {/* Card 1 - Expert-led training */}
-            <div className="border border-[#EAE8E8] rounded-xl p-8 text-center ">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-12 h-12 bg-primary  rounded-full flex items-center justify-center">
+            <div className="border border-[#EAE8E8]  p-8 text-center ">
+              <div className="w-20 h-20 bg-gray-100  flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary   flex items-center justify-center">
                   <Icon icon="mdi:play" className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -36,9 +36,9 @@ export default function TrainingPage() {
             </div>
 
             {/* Card 2 - Team empowerment */}
-            <div className="border border-[#EAE8E8] rounded-xl p-8 text-center ">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-12 h-12 bg-primary  rounded-full flex items-center justify-center">
+            <div className="border border-[#EAE8E8]  p-8 text-center ">
+              <div className="w-20 h-20 bg-gray-100  flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary   flex items-center justify-center">
                   <Icon icon="mdi:account-group" className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -48,9 +48,9 @@ export default function TrainingPage() {
             </div>
 
             {/* Card 3 - Long-term success */}
-            <div className="border border-[#EAE8E8] rounded-xl p-8 text-center ">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="w-12 h-12 bg-primary  rounded-full flex items-center justify-center">
+            <div className="border border-[#EAE8E8]  p-8 text-center ">
+              <div className="w-20 h-20 bg-gray-100  flex items-center justify-center mx-auto mb-6">
+                <div className="w-12 h-12 bg-primary   flex items-center justify-center">
                   <Icon icon="mdi:feather" className="w-6 h-6 text-white" />
                 </div>
               </div>

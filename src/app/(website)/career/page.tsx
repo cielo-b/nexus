@@ -37,7 +37,7 @@ export default function CareerPage() {
   const renderIcon = (item: CareerOffer | CareerTeam) => {
     if (item.iconType === 'emoji') {
       return (
-        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+        <div className="w-16 h-16 bg-blue-100  flex items-center justify-center mx-auto mb-4 text-2xl">
           {item.icon}
         </div>
       )
@@ -45,7 +45,7 @@ export default function CareerPage() {
 
     // For heroicons or custom SVG, you can expand this later
     return (
-      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="w-16 h-16 bg-blue-100  flex items-center justify-center mx-auto mb-4">
         <span className="text-2xl">{item.icon}</span>
       </div>
     )
@@ -89,9 +89,9 @@ export default function CareerPage() {
             </div>
             
             <div className="relative">
-              <div className="w-full h-96 bg-gray-200 rounded-lg shadow-lg flex items-center justify-center">
+              <div className="w-full h-96 bg-gray-200  shadow-lg flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <div className="w-20 h-20 bg-white  flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <svg className="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z"/>
                     </svg>
@@ -143,7 +143,7 @@ export default function CareerPage() {
             </p>
             <div className="grid md:grid-cols-2 gap-8">
             {/* Card 1 - Expert-led training */}
-            <div className="border border-[#EAE8E8] rounded-xl p-8 text-center flex flex-col items-center space-y-4 ">
+            <div className="border border-[#EAE8E8]  p-8 text-center flex flex-col items-center space-y-4 ">
             <Icon icon="mdi:microscope" className="w-12 h-12 text-blue-600" />
               <p >
               Research & Innovation Team
@@ -155,7 +155,7 @@ export default function CareerPage() {
 
 
             {/* Card 3 - Long-term success */}
-            <div className="border border-[#EAE8E8] rounded-xl p-8 text-center flex flex-col items-center space-y-4 ">
+            <div className="border border-[#EAE8E8]  p-8 text-center flex flex-col items-center space-y-4 ">
             <Icon icon="mdi:chart-line" className="w-12 h-12 text-blue-600" />
               <p >
                 Achieving long-term success through impactful, evidence-based strategies

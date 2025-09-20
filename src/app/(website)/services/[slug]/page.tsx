@@ -76,7 +76,7 @@ export default function ServiceDetailPage() {
           <p className="text-gray-600 mb-8">The service you're looking for doesn't exist.</p>
           <Link
             href="/services"
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="bg-blue-600 text-white px-6 py-3  font-semibold hover:bg-blue-700 transition-colors"
           >
             View All Services
           </Link>
@@ -128,7 +128,7 @@ export default function ServiceDetailPage() {
       )}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {relatedPublications.map((publication) => (
-                <div key={publication._id} className="bg-[#F6F6F6] rounded-lg">
+                <div key={publication._id} className="bg-[#F6F6F6] ">
                   <Link href={`/publications/${publication.slug.current}`} className="block">
                     {publication.coverImage && (
                       <div className="relative h-64 w-full">
@@ -136,7 +136,7 @@ export default function ServiceDetailPage() {
                           src={getSanityImage(publication.coverImage)}
                           alt={publication.coverImage.alt || publication.title}
                           fill
-                          className="object-cover rounded-t-lg"
+                          className="object-cover "
                         />
                       </div>
                     )}

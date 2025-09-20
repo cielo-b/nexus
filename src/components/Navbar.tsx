@@ -25,6 +25,9 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Check if navbar should be hidden (only on home page when at top)
+  const shouldHideNavbar = pathname === '/' && !isScrolled
+
   // Check if current page should always have white background
   const alwaysWhitePages = ['/about', '/career', '/training',"/products"]
   const scrollEffectPages = ['/', '/publications', '/blogs',"/services"]
@@ -64,7 +67,11 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 px-[5vw] transition-all  duration-300 ${
+      <nav className={`fixed top-0 left-0 w-full z-50 px-[5vw] transition-all duration-300 ${
+        shouldHideNavbar 
+          ? 'transform -translate-y-full opacity-0' 
+          : 'transform translate-y-0 opacity-100'
+      } ${
         isDropdownOpen
           ? 'bg-[#014DFE] text-white'
           : shouldUseWhiteBg 
@@ -76,10 +83,10 @@ export default function Navbar() {
           && 'border-white/20'
         
       }`}>
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <Image src="/logos/logo.png" alt="Logo" width={1000} height={1000} className='w-[200px]' />
+            <Image src="/logos/logo.png" alt="Logo" width={1000} height={1000} className='w-[300px]' />
           </Link>
 
           {/* Navigation Links */}
@@ -251,7 +258,7 @@ export default function Navbar() {
           <div className="hidden md:block">
             <button
               onClick={() => setIsContactModalOpen(true)}
-              className={`px-6 py-3 rounded-sm font-medium transition-all duration-300 ${
+              className={`px-6 py-3  font-medium transition-all duration-300 ${
                 shouldUseWhiteBg
                     ? 'bg-black text-white '
                     : 'bg-white  text-black'
@@ -426,7 +433,7 @@ export default function Navbar() {
                     setIsContactModalOpen(true)
                     closeMobileMenu()
                   }}
-                  className="block w-full text-center bg-primary-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-600 transition-colors duration-300"
+                  className="block w-full text-center bg-primary-500 text-white px-6 py-3  font-medium hover:bg-primary-600 transition-colors duration-300"
                 >
                   Contact Us
                 </button>

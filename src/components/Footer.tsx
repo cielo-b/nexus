@@ -1,11 +1,38 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import { useState, useEffect } from 'react'
+import { client } from '@/lib/sanity'
+import { expertiseQueries } from '@/lib/sanity/queries'
+import { Expertise } from '@/types/expertise'
 
 export default function Footer() {
+  const [expertise, setExpertise] = useState<Expertise[]>([])
+  const [showAll, setShowAll] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchExpertise = async () => {
+      try {
+        const data = await client.fetch(expertiseQueries.getAllExpertise)
+        setExpertise(data)
+      } catch (error) {
+        console.error('Error fetching expertise:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchExpertise()
+  }, [])
+
+  const displayedExpertise = showAll ? expertise : expertise.slice(0, 5)
+  const hasMore = expertise.length > 5
   return (
     <footer className="bg-dark-bg text-white">
-      <div className="px-[8vw] py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
           {/* Company Info */}
           <div className="space-y-6">
@@ -30,48 +57,61 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
+              <a href="#" className="w-10 h-10 bg-gray-800  flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
                 <Icon icon="mdi:twitter" className="w-5 h-5 group-hover:text-white" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
+              <a href="#" className="w-10 h-10 bg-gray-800  flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
                 <Icon icon="mdi:instagram" className="w-5 h-5 group-hover:text-white" />
               </a>
-              <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
+              <a href="#" className="w-10 h-10 bg-gray-800  flex items-center justify-center hover:bg-primary-500 hover:scale-110 transition-all duration-300 group">
                 <Icon icon="mdi:facebook" className="w-5 h-5 group-hover:text-white" />
               </a>
             </div>
           </div>
 
-          {/* Services */}
+          {/* Expertise */}
           <div className="space-y-6">
-            <h3 className="text-white font-semibold text-xl mb-6">Services</h3>
-            <ul className="space-y-4">
-              <li>
-                <Link href="/services/mel" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  Monitoring, Evaluation, and Learning (MEL)
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/data-collection" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  Data collection
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/it-assistance" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  IT Assistance
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/analytics" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  Analytics
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/research" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  Research
-                </Link>
-              </li>
-            </ul>
+            <h3 className="text-white font-semibold text-xl mb-6">Expertise</h3>
+            {loading ? (
+              <div className="space-y-3">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <div key={index} className="h-4 bg-gray-700  animate-pulse"></div>
+                ))}
+              </div>
+            ) : (
+              <ul className="space-y-4">
+                {displayedExpertise.map((item) => (
+                  <li key={item._id}>
+                    <Link 
+                      href={`/expertise/${item.slug.current}`} 
+                      className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+                {hasMore && (
+                  <li>
+                    <button
+                      onClick={() => setShowAll(!showAll)}
+                      className="text-sm text-primary-400 hover:text-primary-300 transition-colors duration-300 flex items-center gap-1"
+                    >
+                      {showAll ? (
+                        <>
+                          <Icon icon="mdi:chevron-up" className="w-4 h-4" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <Icon icon="mdi:chevron-down" className="w-4 h-4" />
+                          View More ({expertise.length - 5})
+                        </>
+                      )}
+                    </button>
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
 
           {/* Quick Links */}

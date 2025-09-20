@@ -41,6 +41,15 @@ export interface Publication {
     title?: string
   }
   downloadUrl?: string
+  downloadFile?: {
+    asset: {
+      _ref: string
+      _type: string
+      url: string
+    }
+    filename?: string
+    size?: number
+  }
   externalUrl?: string
   featured: boolean
   likes: number

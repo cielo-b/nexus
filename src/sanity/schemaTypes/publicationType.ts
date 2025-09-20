@@ -141,6 +141,15 @@ export const publicationType = defineType({
       description: 'Link to download the full publication (PDF, etc.)',
     }),
     defineField({
+      name: 'downloadFile',
+      title: 'Download File',
+      type: 'file',
+      description: 'Upload a file (PDF, DOC, etc.) for users to download',
+      options: {
+        accept: '.pdf,.doc,.docx,.txt,.rtf'
+      }
+    }),
+    defineField({
       name: 'externalUrl',
       title: 'External URL',
       type: 'url',

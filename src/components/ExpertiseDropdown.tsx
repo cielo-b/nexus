@@ -71,7 +71,7 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+              <div className="animate-spin  h-8 w-8 border-b-2 border-white"></div>
               <span className="ml-3 text-white text-lg">
                 Loading expertise areas...
               </span>
@@ -86,7 +86,7 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
                       key={item._id}
                       href={`/expertise/${item.slug.current}`}
                       onClick={onClose}
-                      className="group flex items-center p-4 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                      className="group flex items-center p-4  bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
                     >
                       <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
                         {item.title}
@@ -103,7 +103,7 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
                     key={item._id}
                     href={`/expertise/${item.slug.current}`}
                     onClick={onClose}
-                    className="group flex flex-col items-center p-6 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                    className="group flex flex-col items-center p-6  bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
                   >
                     <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
                       {item.title}

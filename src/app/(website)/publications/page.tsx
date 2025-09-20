@@ -17,15 +17,15 @@ const PublicationSkeleton = () => (
   <div className="overflow-hidden animate-pulse">
     <div className="w-full h-48 bg-gray-300"></div>
     <div className="p-3">
-      <div className="h-3 bg-gray-300 rounded mb-1"></div>
-      <div className="h-3 bg-gray-300 rounded w-16 mb-2"></div>
+      <div className="h-3 bg-gray-300  mb-1"></div>
+      <div className="h-3 bg-gray-300  w-16 mb-2"></div>
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-1">
-          <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
-          <div className="h-3 bg-gray-300 rounded w-12"></div>
+          <div className="w-5 h-5 bg-gray-300 "></div>
+          <div className="h-3 bg-gray-300  w-12"></div>
         </div>
-        <div className="bg-gray-300 px-3 py-1 rounded-lg w-12"></div>
+        <div className="bg-gray-300 px-3 py-1  w-12"></div>
       </div>
     </div>
   </div>
@@ -75,7 +75,7 @@ export default function PublicationsPage() {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative h-[40vh] flex flex-col items-center justify-center text-white ">
+      <section className="relative lg:h-[40vh]  flex flex-col items-center justify-center text-white ">
         <div className="absolute inset-0 bg-black/80  w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 
@@ -97,7 +97,7 @@ export default function PublicationsPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-8 py-4 rounded font-medium transition-all  text-sm text-[#565656] duration-300 ${selectedCategory === category
+                className={`px-8 py-4  font-medium transition-all  text-sm text-[#565656] duration-300 ${selectedCategory === category
                     ? 'bg-primary text-white shadow-lg'
                     : ' text-gray-700 border border-[#262626]/30'
                   }`}
@@ -114,7 +114,7 @@ export default function PublicationsPage() {
             <SkeletonGrid />
           ) : filteredPublications.length === 0 ? (
             <div className="text-center py-20">
-              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-blue-50 to-indigo-100  flex items-center justify-center shadow-lg">
                 <Icon icon="mdi:file-document-outline" className="w-16 h-16 text-blue-500" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -129,7 +129,7 @@ export default function PublicationsPage() {
               {selectedCategory !== 'All' && (
                 <button
                   onClick={() => setSelectedCategory('All')}
-                  className="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   View All Publications
                 </button>
@@ -184,7 +184,7 @@ export default function PublicationsPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                           {publication.author?.image ? (
-                            <div className="w-5 h-5 rounded-full overflow-hidden">
+                            <div className="w-5 h-5  overflow-hidden">
                               <Image
                                 src={getSanityImage(publication.author.image)}
                                 alt={publication.author.image.alt || publication.author.name}
@@ -194,7 +194,7 @@ export default function PublicationsPage() {
                               />
                             </div>
                           ) : (
-                            <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center">
+                            <div className="w-5 h-5  bg-blue-100 flex items-center justify-center">
                               <span className="text-blue-600 font-semibold text-xs">
                                 {publication.author?.name?.charAt(0).toUpperCase() || 'A'}
                               </span>

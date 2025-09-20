@@ -202,38 +202,6 @@ export const testimonialQueries = {
   `,
 }
 
-export const companyInfoQueries = {
-  // Get all active company information
-  getAllCompanyInfo: groq`
-    *[_type == "companyInfo" && active == true] | order(type asc, order asc) {
-      _id,
-      type,
-      title,
-      content,
-      image,
-      order,
-      active
-    }
-  `,
-
-  // Get company info by type
-  getCompanyInfoByType: groq`
-    *[_type == "companyInfo" && type == $type && active == true] | order(order asc) {
-      _id,
-      type,
-      title,
-      content,
-      image,
-      order,
-      active
-    }
-  `,
-
-  // Get all types available
-  getAvailableTypes: groq`
-    array::unique(*[_type == "companyInfo" && active == true].type)
-  `,
-}
 
 
 export const teamMemberQueries = {
@@ -389,6 +357,14 @@ export const publicationQueries = {
       category,
       tags,
       downloadUrl,
+      downloadFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       externalUrl,
       featured,
       likes,
@@ -426,6 +402,14 @@ export const publicationQueries = {
       category,
       tags,
       downloadUrl,
+      downloadFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       externalUrl,
       featured,
       likes,

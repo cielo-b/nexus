@@ -103,7 +103,7 @@ export default function ExpertisePage() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin  h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading expertise area...</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function ExpertisePage() {
           <p className="text-gray-600 mb-6">The expertise area you're looking for doesn't exist.</p>
           <Link 
             href="/" 
-            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             <Icon icon="lucide:arrow-left" className="w-4 h-4 mr-2" />
             Back to Home
@@ -242,14 +242,14 @@ export default function ExpertisePage() {
                 {/* Navigation Buttons */}
                 <button
                   onClick={scrollLeft}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12  border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
                 >
                   <Icon icon="lucide:chevron-left" className="w-6 h-6 text-white group-hover:text-blue-400 transition-colors" />
                 </button>
                 
                 <button
                   onClick={scrollRight}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12  border border-white/20 bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
                 >
                   <Icon icon="lucide:chevron-right" className="w-6 h-6 text-white group-hover:text-blue-400 transition-colors" />
                 </button>

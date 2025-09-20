@@ -16,21 +16,21 @@ const BlogSkeleton = () => (
   <div className="overflow-hidden animate-pulse">
     <div className="w-full h-48 bg-gray-300"></div>
     <div className="p-3">
-      <div className="h-3 bg-gray-300 rounded mb-1"></div>
-      <div className="h-3 bg-gray-300 rounded w-16 mb-2"></div>
+      <div className="h-3 bg-gray-300  mb-1"></div>
+      <div className="h-3 bg-gray-300  w-16 mb-2"></div>
 
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-full border border-gray-300 text-xs">
-            <div className="w-3 h-3 bg-gray-300 rounded"></div>
-            <div className="h-3 bg-gray-300 rounded w-6"></div>
+          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1  border border-gray-300 text-xs">
+            <div className="w-3 h-3 bg-gray-300 "></div>
+            <div className="h-3 bg-gray-300  w-6"></div>
           </div>
-          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1 rounded-full border border-gray-300 text-xs">
-            <div className="w-3 h-3 bg-gray-300 rounded"></div>
-            <div className="h-3 bg-gray-300 rounded w-6"></div>
+          <div className="flex items-center gap-1 bg-gray-200 px-2 py-1  border border-gray-300 text-xs">
+            <div className="w-3 h-3 bg-gray-300 "></div>
+            <div className="h-3 bg-gray-300  w-6"></div>
           </div>
         </div>
-        <div className="bg-gray-300 px-3 py-1 rounded-lg w-12"></div>
+        <div className="bg-gray-300 px-3 py-1  w-12"></div>
       </div>
     </div>
   </div>
@@ -127,7 +127,7 @@ export default function BlogsPage() {
           {/* Category Filters Skeleton */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="h-12 w-20 bg-gray-300 rounded-lg animate-pulse"></div>
+              <div key={index} className="h-12 w-20 bg-gray-300  animate-pulse"></div>
             ))}
           </div>
 
@@ -171,7 +171,7 @@ export default function BlogsPage() {
             <button
               key={category}
               onClick={() => handleCategoryFilter(category)}
-              className={`px-8 py-4 rounded font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
+              className={`px-8 py-4  font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
                   ? 'bg-primary text-white shadow-lg'
                   : 'text-gray-700 border border-[#262626]/30'
                 }`}
@@ -184,7 +184,7 @@ export default function BlogsPage() {
         {/* Featured Article */}
         {featuredBlog && selectedCategory === 'All' && (
           <div className="mb-12">
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-white  shadow-lg overflow-hidden">
               <div className="md:flex">
                 <div className="md:w-1/2">
                   {featuredBlog.coverImage && (
@@ -199,7 +199,7 @@ export default function BlogsPage() {
                 </div>
                 <div className="md:w-1/2 p-8">
                   <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+                    <span className="bg-blue-100 text-blue-800 px-3 py-1 ">
                       {featuredBlog.category}
                     </span>
                     <span>{formatDate(featuredBlog.publishedAt)}</span>
@@ -224,7 +224,7 @@ export default function BlogsPage() {
                     </div>
                     <Link
                       href={`/blogs/${featuredBlog.slug.current}`}
-                      className="bg-blue-600 text-white px-6 py-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                      className="bg-blue-600 text-white px-6 py-4  hover:bg-blue-700 transition-colors flex items-center gap-2"
                     >
                       Read More
                       <span>→</span>
@@ -263,11 +263,11 @@ export default function BlogsPage() {
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1 rounded-full border-[#AAAAAA] border text-xs">
+                      <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
                         <Icon icon="mdi:heart-outline" className="w-3 h-3 text-[#474747]" />
                         {formatNumber(blog.likes)}
                       </div>
-                      <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1 rounded-full border-[#AAAAAA] border text-xs">
+                      <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
                         <Icon icon="mdi:eye-outline" className="w-3 h-3 text-[#474747]" />
                         {formatNumber(blog.views)}
                       </span>
@@ -287,7 +287,7 @@ export default function BlogsPage() {
 
         {filteredBlogs.length === 0 && (
           <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-50 to-emerald-100 rounded-full flex items-center justify-center shadow-lg">
+            <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-50 to-emerald-100  flex items-center justify-center shadow-lg">
               <Icon icon="mdi:newspaper-variant-outline" className="w-16 h-16 text-green-500" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -302,7 +302,7 @@ export default function BlogsPage() {
             {selectedCategory !== 'All' && (
               <button
                 onClick={() => setSelectedCategory('All')}
-                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 View All Articles
               </button>

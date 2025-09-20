@@ -85,12 +85,12 @@ export default function ServicesPage() {
               <div className="space-y-4">
                 {/* Service List Skeleton */}
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="border border-gray-200 rounded-xl p-4 flex items-center justify-between">
+                  <div key={i} className="border border-gray-200  p-4 flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16 bg-gray-200 rounded-lg animate-pulse"></div>
-                      <div className="h-6 w-48 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="w-16 h-16 bg-gray-200  animate-pulse"></div>
+                      <div className="h-6 w-48 bg-gray-200  animate-pulse"></div>
                     </div>
-                    <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-6 h-6 bg-gray-200  animate-pulse"></div>
                   </div>
                 ))}
               </div>
@@ -119,12 +119,12 @@ export default function ServicesPage() {
                               alt={service.coverImage.alt || service.title}
                               width={256}
                               height={index === activeServiceIndex ? 256 : 80}
-                              className={`object-cover rounded-lg w-64 ${
+                              className={`object-cover  w-64 ${
                                 index === activeServiceIndex ? 'h-64' : 'h-10'
                               }`}
                             />
                           ) : (
-                            <div className={`bg-gray-200 rounded-lg flex items-center justify-center w-64 ${
+                            <div className={`bg-gray-200  flex items-center justify-center w-64 ${
                               index === activeServiceIndex ? 'h-64' : 'h-20'
                             }`}>
                               <span className="text-gray-400 text-xs">No Image</span>
@@ -149,7 +149,7 @@ export default function ServicesPage() {
                                 </p>
                                 <Link
                                   href={`/services/${service.slug.current}`}
-                                  className="inline-flex items-center text-white bg-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                                  className="inline-flex items-center text-white bg-blue-600 px-6 py-3  font-semibold hover:bg-blue-700 transition-colors"
                                 >
                                   Read More
                                   <Icon icon="mdi:arrow-up-right" className="w-5 h-5 ml-2" />
@@ -172,7 +172,7 @@ export default function ServicesPage() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="w-24 h-24 mx-auto mb-4 bg-gray-100  flex items-center justify-center">
                   <Icon icon="mdi:briefcase-outline" className="w-12 h-12 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No services available</h3>

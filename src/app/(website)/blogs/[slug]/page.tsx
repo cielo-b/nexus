@@ -14,23 +14,23 @@ import { Icon } from '@iconify/react'
 // Skeleton component for related blogs
 const RelatedBlogSkeleton = () => (
   <div className="overflow-hidden animate-pulse">
-    <div className="w-full h-60 bg-gray-300 rounded-2xl"></div>
+    <div className="w-full h-60 bg-gray-300 "></div>
     <div className="p-6">
-      <div className="h-6 bg-gray-300 rounded mb-2"></div>
-      <div className="h-4 bg-gray-300 rounded w-20 mb-4"></div>
+      <div className="h-6 bg-gray-300  mb-2"></div>
+      <div className="h-4 bg-gray-300  w-20 mb-4"></div>
       
       <div className="flex items-center justify-between mt-4">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
-            <div className="w-4 h-4 bg-gray-300 rounded"></div>
-            <div className="h-4 bg-gray-300 rounded w-8"></div>
+          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2  border border-gray-300 text-sm">
+            <div className="w-4 h-4 bg-gray-300 "></div>
+            <div className="h-4 bg-gray-300  w-8"></div>
           </div>
-          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2 rounded-full border border-gray-300 text-sm">
-            <div className="w-4 h-4 bg-gray-300 rounded"></div>
-            <div className="h-4 bg-gray-300 rounded w-8"></div>
+          <div className="flex items-center gap-1 bg-gray-200 px-4 py-2  border border-gray-300 text-sm">
+            <div className="w-4 h-4 bg-gray-300 "></div>
+            <div className="h-4 bg-gray-300  w-8"></div>
           </div>
         </div>
-        <div className="bg-gray-300 px-6 py-2 rounded-lg w-24"></div>
+        <div className="bg-gray-300 px-6 py-2  w-24"></div>
       </div>
     </div>
   </div>
@@ -177,7 +177,7 @@ export default function BlogPostPage() {
         <div className="grid lg:grid-cols-3 ">
           {/* Blog Content */}
           <div className="lg:col-span-2 border-r border-r-[#262626]/11">
-            <div className="bg-white rounded-lg ">
+            <div className="bg-white  ">
               {blog.tableOfContents && blog.tableOfContents.length > 0 ? (
                 <div className="space-y-12">
                   {blog.tableOfContents.map((section, index) => (
@@ -225,7 +225,7 @@ export default function BlogPostPage() {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100  flex items-center justify-center">
                     <Icon icon="mdi:file-document-outline" className="w-8 h-8 text-gray-400" />
                   </div>
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Content coming soon</h3>
@@ -240,15 +240,15 @@ export default function BlogPostPage() {
             <div className="sticky top-8">
               {/* Views Metadata */}
               <div className="flex items-center gap-4 mb-4 border-b border-b-[#262626]/11 pr-[8vw] pl-[3vw] py-[4vh]">
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
                   <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{blog.likes || 0}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
                   <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{blog.views || 0}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
                   <Icon icon="mdi:share-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{blog.shares || 0}</span>
                 </div>
@@ -280,12 +280,12 @@ export default function BlogPostPage() {
                 {blog.tableOfContents && blog.tableOfContents.length > 0 && (
                 <div >
                   <h3 className="font-bold text-gray-900 mb-4">Table of Contents</h3>
-                  <ul className="space-y-2 text-sm bg-[#E8E8E8] rounded-lg p-6">
+                  <ul className="space-y-2 text-sm bg-[#E8E8E8]  p-6">
                     {blog.tableOfContents.map((section) => (
                       <li key={section.id.current}>
                         <button
                           onClick={() => scrollToSection(section.id.current)}
-                          className={`text-left w-full py-1 px-2 rounded transition-colors ${activeSection === section.id.current
+                          className={`text-left w-full py-1 px-2  transition-colors ${activeSection === section.id.current
                            ? 'text-primary bg-blue-50  font-medium'
                            : 'text-gray-600 hover:text-primary hover:'
                            }`}
@@ -325,7 +325,7 @@ export default function BlogPostPage() {
                       alt={relatedBlog.coverImage.alt || relatedBlog.title}
                       width={400}
                       height={250}
-                      className="w-full h-60 object-cover rounded-2xl"
+                      className="w-full h-60 object-cover "
                     />
                   )}
                   <div className="p-6">
@@ -338,18 +338,18 @@ export default function BlogPostPage() {
 
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border border-[#AAAAAA] text-sm">
                           <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
                           {formatNumber(relatedBlog.likes)}
                         </div>
-                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2 rounded-full border border-[#AAAAAA] text-sm">
+                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border border-[#AAAAAA] text-sm">
                           <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
                           {formatNumber(relatedBlog.views)}
                         </span>
                       </div>
                       <Link
                         href={`/blogs/${relatedBlog.slug.current}`}
-                        className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
+                        className="bg-primary text-white px-6 py-2  hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
                       >
                         Read More
                         <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
