@@ -316,43 +316,45 @@ export default function BlogPostPage() {
               ))}
             </div>
           ) : relatedBlogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {relatedBlogs.map((relatedBlog) => (
-                <div key={relatedBlog._id} className="overflow-hidden">
+                <div key={relatedBlog._id} className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300">
                   {relatedBlog.coverImage && (
-                    <Image
-                      src={getSanityImage(relatedBlog.coverImage)}
-                      alt={relatedBlog.coverImage.alt || relatedBlog.title}
-                      width={400}
-                      height={250}
-                      className="w-full h-60 object-cover "
-                    />
+                    <div className="overflow-hidden">
+                      <Image
+                        src={getSanityImage(relatedBlog.coverImage)}
+                        alt={relatedBlog.coverImage.alt || relatedBlog.title}
+                        width={400}
+                        height={200}
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
                   )}
-                  <div className="p-6">
-                    <h3 className="font-semibold line-clamp-2 mb-2">
+                  <div className="p-3">
+                    <h3 className="text-xs font-semibold line-clamp-2 mb-1">
                       {relatedBlog.title}
                     </h3>
-                    <span className="text-[#98989A] capitalize text-xs">
+                    <span className="text-[#98989A] capitalize text-xs mb-2 block">
                       {relatedBlog.category}
                     </span>
 
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border border-[#AAAAAA] text-sm">
-                          <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
+                          <Icon icon="mdi:heart-outline" className="w-3 h-3 text-[#474747]" />
                           {formatNumber(relatedBlog.likes)}
                         </div>
-                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border border-[#AAAAAA] text-sm">
-                          <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
+                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
+                          <Icon icon="mdi:eye-outline" className="w-3 h-3 text-[#474747]" />
                           {formatNumber(relatedBlog.views)}
                         </span>
                       </div>
                       <Link
                         href={`/blogs/${relatedBlog.slug.current}`}
-                        className="bg-primary text-white px-6 py-2  hover:bg-primary/90 transition-all duration-300 flex items-center gap-2 justify-center group"
+                        className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
                       >
                         Read More
-                        <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>

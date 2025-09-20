@@ -99,44 +99,8 @@ export default function BlogsPage() {
     return num.toString()
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <div className="relative h-96 bg-gradient-to-r from-blue-900 to-blue-700">
-          <div className="absolute inset-0 bg-black/30"></div>
-          <div className="relative z-10 flex items-center justify-center h-full">
-            <div className="text-center text-white">
-              <h1 className="text-5xl font-bold mb-4">Our Blog</h1>
-              <p className="text-xl max-w-3xl mx-auto">
-                We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors.
-              </p>
-            </div>
-          </div>
-        </div>
+          
 
-        {/* Main Content */}
-        <div className="px-[8vw] py-12">
-          <div className="mb-8">
-            <h2 className="text-4xl font-bold text-blue-900 mb-4">Our Articles</h2>
-            <p className="text-gray-600 text-lg">
-              We offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation.
-            </p>
-          </div>
-
-          {/* Category Filters Skeleton */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="h-12 w-20 bg-gray-300  animate-pulse"></div>
-            ))}
-          </div>
-
-          {/* Blog Skeleton Grid */}
-          <BlogSkeletonGrid />
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -165,24 +129,28 @@ export default function BlogsPage() {
           </p>
         </div> */}
 
+        {loading && <BlogSkeletonGrid />}
+
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-start items-center gap-4">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => handleCategoryFilter(category)}
-              className={`px-8 py-4  font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
-                  ? 'bg-primary text-white shadow-lg'
-                  : 'text-gray-700 border border-[#262626]/30'
-                }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        {!loading && (
+          <div className="flex flex-wrap justify-start items-center gap-4">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => handleCategoryFilter(category)}
+                className={`px-8 py-4  font-medium transition-all text-sm text-[#565656] duration-300 ${selectedCategory === category
+                    ? 'bg-primary text-white shadow-lg'
+                    : 'text-gray-700 border border-[#262626]/30'
+                  }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Featured Article */}
-        {featuredBlog && selectedCategory === 'All' && (
+        {!loading && featuredBlog && selectedCategory === 'All' && (
           <div className="mb-12">
             <div className="bg-white  shadow-lg overflow-hidden">
               <div className="md:flex">
@@ -237,10 +205,11 @@ export default function BlogsPage() {
         )}
 
         {/* Articles Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {filteredBlogs
-            .filter(blog => !blog.featured || selectedCategory !== 'All')
-            .map((blog) => (
+        {!loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {filteredBlogs
+              .filter(blog => !blog.featured || selectedCategory !== 'All')
+              .map((blog) => (
               <div key={blog._id} className="overflow-hidden bg-white hover:bg-gray-50 transition-colors duration-300">
                 {blog.coverImage && (
                   <div className="overflow-hidden">
@@ -283,9 +252,10 @@ export default function BlogsPage() {
                 </div>
               </div>
             ))}
-        </div>
+          </div>
+        )}
 
-        {filteredBlogs.length === 0 && (
+        {!loading && filteredBlogs.length === 0 && (
           <div className="text-center py-20">
             <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-50 to-emerald-100  flex items-center justify-center shadow-lg">
               <Icon icon="mdi:newspaper-variant-outline" className="w-16 h-16 text-green-500" />

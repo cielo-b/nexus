@@ -1,31 +1,53 @@
 export interface Training {
   _id: string
+  _type: 'training'
   title: string
+  slug: {
+    current: string
+  }
   description: string
-  icon: string
-  iconType: 'emoji' | 'heroicon' | 'svg'
-  sector: 'education' | 'agriculture' | 'public-health' | 'general'
-  duration?: string
-  level: 'beginner' | 'intermediate' | 'advanced' | 'all-levels'
-  format: 'online' | 'in-person' | 'hybrid'
-  price?: string
-  instructor?: string
-  objectives?: string[]
+  content?: any[] // Block content
+  coverImage?: {
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+    alt?: string
+  }
+  category: string
+  duration: string
+  level: 'beginner' | 'intermediate' | 'advanced' | 'expert'
+  format: 'in-person' | 'online' | 'hybrid' | 'self-paced'
+  price?: {
+    amount?: number
+    currency?: 'USD' | 'RWF' | 'EUR'
+    type?: 'fixed' | 'per-person' | 'per-group' | 'free'
+  }
+  instructor?: {
+    _ref: string
+    _type: 'reference'
+  }
+  instructors?: Array<{
+    _ref: string
+    _type: 'reference'
+  }>
   prerequisites?: string[]
-  certificate: boolean
-  order: number
-  featured: boolean
-  active: boolean
-}
-
-export interface TrainingFeature {
-  _id: string
-  title: string
-  description: string
-  icon: string
-  iconType: 'emoji' | 'heroicon' | 'svg'
-  section: 'our-trainings' | 'why-choose-us'
-  order: number
-  featured: boolean
-  active: boolean
+  learningObjectives?: string[]
+  certificate?: boolean
+  maxParticipants?: number
+  minParticipants?: number
+  startDate?: string
+  endDate?: string
+  registrationDeadline?: string
+  location?: {
+    name?: string
+    address?: string
+    city?: string
+    country?: string
+    onlineLink?: string
+  }
+  tags?: string[]
+  featured?: boolean
+  publishedAt: string
+  status: 'draft' | 'published' | 'archived' | 'cancelled'
 }

@@ -61,10 +61,10 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
   return (
     <div 
       data-expertise-dropdown
-      className={`fixed top-16 left-0 w-full bg-[#014DFE] z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed bottom-0 left-0 w-full bg-black/20 backdrop-blur-2xl text-white z-50 transition-all duration-300 ease-in-out ${
         isOpen 
           ? 'opacity-100 translate-y-0 pointer-events-auto' 
-          : 'opacity-0 -translate-y-full pointer-events-none'
+          : 'opacity-0 translate-y-full pointer-events-none'
       }`}
     >
       <div className="px-[8vw] py-8">

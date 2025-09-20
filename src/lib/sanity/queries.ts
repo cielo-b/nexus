@@ -505,3 +505,348 @@ export const expertiseQueries = {
     }
   `,
 }
+
+export const trainingQueries = {
+  // Get all published trainings
+  getAllTrainings: groq`
+    *[_type == "training" && status == "published"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      description,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      duration,
+      level,
+      format,
+      price,
+      instructor->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      instructors[]->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      prerequisites,
+      learningObjectives,
+      certificate,
+      maxParticipants,
+      minParticipants,
+      startDate,
+      endDate,
+      registrationDeadline,
+      location,
+      tags,
+      featured,
+      publishedAt,
+      status
+    }
+  `,
+
+  // Get featured trainings
+  getFeaturedTrainings: groq`
+    *[_type == "training" && featured == true && status == "published"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      description,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      duration,
+      level,
+      format,
+      price,
+      instructor->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      instructors[]->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      prerequisites,
+      learningObjectives,
+      certificate,
+      maxParticipants,
+      minParticipants,
+      startDate,
+      endDate,
+      registrationDeadline,
+      location,
+      tags,
+      featured,
+      publishedAt,
+      status
+    }
+  `,
+
+  // Get training by slug
+  getTrainingBySlug: groq`
+    *[_type == "training" && slug.current == $slug && status == "published"][0] {
+      _id,
+      title,
+      slug,
+      description,
+      content,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      duration,
+      level,
+      format,
+      price,
+      instructor->{
+        _id,
+        name,
+        title,
+        bio,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        },
+        email,
+        linkedin,
+        twitter
+      },
+      instructors[]->{
+        _id,
+        name,
+        title,
+        bio,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        },
+        email,
+        linkedin,
+        twitter
+      },
+      prerequisites,
+      learningObjectives,
+      certificate,
+      maxParticipants,
+      minParticipants,
+      startDate,
+      endDate,
+      registrationDeadline,
+      location,
+      tags,
+      featured,
+      publishedAt,
+      status
+    }
+  `,
+
+  // Get trainings by category
+  getTrainingsByCategory: groq`
+    *[_type == "training" && category == $category && status == "published"] | order(publishedAt desc) {
+      _id,
+      title,
+      slug,
+      description,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      duration,
+      level,
+      format,
+      price,
+      instructor->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      instructors[]->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      prerequisites,
+      learningObjectives,
+      certificate,
+      maxParticipants,
+      minParticipants,
+      startDate,
+      endDate,
+      registrationDeadline,
+      location,
+      tags,
+      featured,
+      publishedAt,
+      status
+    }
+  `,
+
+  // Get all unique training categories
+  getTrainingCategories: groq`
+    array::unique(*[_type == "training" && status == "published"].category)
+  `,
+
+  // Get upcoming trainings
+  getUpcomingTrainings: groq`
+    *[_type == "training" && status == "published" && startDate > now()] | order(startDate asc) {
+      _id,
+      title,
+      slug,
+      description,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      duration,
+      level,
+      format,
+      price,
+      instructor->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      instructors[]->{
+        _id,
+        name,
+        title,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      },
+      prerequisites,
+      learningObjectives,
+      certificate,
+      maxParticipants,
+      minParticipants,
+      startDate,
+      endDate,
+      registrationDeadline,
+      location,
+      tags,
+      featured,
+      publishedAt,
+      status
+    }
+  `,
+}
+
+export const videoQueries = {
+  // Get all videos ordered by creation date
+  getAllVideos: groq`
+    *[_type == "video"] | order(_createdAt desc) {
+      _id,
+      title,
+      videoFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      }
+    }
+  `,
+
+  // Get video by ID
+  getVideoById: groq`
+    *[_type == "video" && _id == $id][0] {
+      _id,
+      title,
+      videoFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      }
+    }
+  `,
+}

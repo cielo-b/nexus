@@ -141,16 +141,16 @@ export default function ExpertisePage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white">
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)] w-full h-full"></div>
+      <section className="relative h-[50vh]  flex flex-col items-center justify-end text-white">
+        {/* <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)] w-full h-full"></div> */}
         <Image 
           src={getSanityImage(expertise.coverImage)} 
           alt="Hero Background" 
           fill 
-          className="object-cover absolute inset-0 w-full h-full opacity-20" 
+          className="object-cover absolute inset-0 w-full h-full" 
         />
-        <div className="absolute inset-0 bg-black/20 w-full h-full"></div>
-        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between pb-[3vh] pt-[9vh]">
+        <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
+        <div className="relative w-full px-[8vw] max-w-[1700px] h-full flex flex-col justify-end pb-[3vh] pt-[9vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/expertise" className='text-white/50'>
               Expertise
@@ -170,19 +170,17 @@ export default function ExpertisePage() {
       </section>
 
       {/* Services Section */}
-      <section className="py-16 bg-white">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
+      <section className="py-8 bg-white">
+        <div className="px-[8vw] max-w-[1700px] mx-auto">
+          <div className="">
+          <div className=" mb-4">
+              <h2 className="text-4xl  font-semibold  mb-4">
                 Our <span className="text-blue-500">Solutions</span>
               </h2>
               <p className="text-lg ">
-              , we offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation. 
+              We offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation. 
               </p>
             </div>
-
-
             {services.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {services.map((service) => (
@@ -225,15 +223,15 @@ export default function ExpertisePage() {
       </section>
 
       {/* Publications Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="px-4 sm:px-6 lg:px-[8vw]">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl font-bold  mb-4">
+      <section className="py-8 bg-gray-50">
+        <div className="px-[8vw] max-w-[1700px] mx-auto">
+          <div className="">
+            <div className=" mb-4">
+              <h2 className="text-4xl  font-semibold  mb-4">
                 Latest <span className="text-blue-500">Insights</span>
               </h2>
               <p className="text-lg ">
-                Research and insights in {expertise.title.toLowerCase()}
+                Research and insights in {expertise.title.toLowerCase()}.
               </p>
             </div>
 
