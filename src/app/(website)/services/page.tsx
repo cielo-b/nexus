@@ -13,15 +13,12 @@ import { Service } from '@/types/service'
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeServiceIndex, setActiveServiceIndex] = useState(0)
-  const [isAutoRotating, setIsAutoRotating] = useState(true)
+  const [hoveredService, setHoveredService] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching services...')
         const servicesData = await client.fetch(serviceQueries.getAllServices)
-        console.log('Services fetched:', servicesData)
         setServices(servicesData)
       } catch (error) {
         console.error('Error fetching services:', error)
@@ -32,32 +29,6 @@ export default function ServicesPage() {
 
     fetchData()
   }, [])
-
-  // Auto-rotation effect
-  useEffect(() => {
-    if (!isAutoRotating || services.length === 0) return
-
-    const interval = setInterval(() => {
-      setActiveServiceIndex((prev) => (prev + 1) % services.length)
-    }, 4000) // Change every 4 seconds
-
-    return () => clearInterval(interval)
-  }, [isAutoRotating, services.length])
-
-  const handleServiceClick = (index: number) => {
-    setIsAutoRotating(false)
-    // If clicking on the same service that's already active, close it
-    if (index === activeServiceIndex) {
-      setActiveServiceIndex(-1) // -1 means no service is active
-    } else {
-      setActiveServiceIndex(index)
-    }
-  }
-
-  const handleServiceHover = (index: number) => {
-    setIsAutoRotating(false)
-    setActiveServiceIndex(index)
-  }
 
   return (
     <div className="min-h-screen">
@@ -100,14 +71,11 @@ export default function ServicesPage() {
                 {services.map((service, index) => (
                   <motion.div
                     key={service._id}
-                    className={`cursor-pointer transition-all duration-300 border-b border-gray-200  overflow-hidden ${
-                      index === activeServiceIndex 
-                        ? 'shadow-lg' 
-                        : 'hover:shadow-md'
-                    }`}
-                    onClick={() => handleServiceClick(index)}
+                    className="cursor-pointer transition-all duration-300 border-b border-gray-200  overflow-hidden hover:shadow-md group"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
+                    onMouseEnter={() => setHoveredService(index)}
+                    onMouseLeave={() => setHoveredService(null)}
                   >
                     {/* Service Header */}
                     <div className="p-4 flex items-start justify-between">
@@ -118,15 +86,11 @@ export default function ServicesPage() {
                               src={getSanityImage(service.coverImage)}
                               alt={service.coverImage.alt || service.title}
                               width={256}
-                              height={index === activeServiceIndex ? 256 : 80}
-                              className={`object-cover  w-64 ${
-                                index === activeServiceIndex ? 'h-64' : 'h-10'
-                              }`}
+                              height={80}
+                              className="object-cover  w-64 h-20"
                             />
                           ) : (
-                            <div className={`bg-gray-200  flex items-center justify-center w-64 ${
-                              index === activeServiceIndex ? 'h-64' : 'h-20'
-                            }`}>
+                            <div className="bg-gray-200  flex items-center justify-center w-64 h-20">
                               <span className="text-gray-400 text-xs">No Image</span>
                             </div>
                           )}
@@ -135,38 +99,54 @@ export default function ServicesPage() {
                           <h3 className="text-lg font-semibold text-gray-900 mb-2">
                             {service.title}
                           </h3>
-                          <AnimatePresence>
-                            {index === activeServiceIndex && ( 
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                className="overflow-hidden"
-                              >
-                                <p className="text-sm text-gray-600 mb-4">
-                                  {service.shortDescription}
-                                </p>
-                                <Link
-                                  href={`/services/${service.slug.current}`}
-                                  className="inline-flex items-center text-white bg-blue-600 px-6 py-3  font-semibold hover:bg-blue-700 transition-colors"
-                                >
-                                  Read More
-                                  <Icon icon="mdi:arrow-up-right" className="w-5 h-5 ml-2" />
-                                </Link>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          <p className="text-sm text-gray-600 mb-4">
+                            {service.shortDescription}
+                          </p>
+                          <Link
+                            href={`/services/${service.slug.current}`}
+                            className="inline-flex items-center text-white bg-blue-600 px-6 py-3  font-semibold hover:bg-blue-700 transition-colors"
+                          >
+                            Read More
+                            <Icon icon="mdi:arrow-up-right" className="w-5 h-5 ml-2" />
+                          </Link>
                         </div>
                       </div>
                       <Icon 
                         icon="mdi:chevron-down" 
-                        className={`w-6 h-6 text-gray-500 transition-transform duration-300 flex-shrink-0 ml-4 ${
-                          index === activeServiceIndex ? 'rotate-180' : ''
-                        }`}
+                        className="w-6 h-6 text-gray-500 transition-transform duration-300 flex-shrink-0 ml-4"
                       />
                     </div>
 
+                    {/* Hover Details Panel - Testimonials Style */}
+                    <AnimatePresence>
+                      {hoveredService === index && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="bg-[#014DFE] text-white p-6">
+                            <h4 className="text-xl font-bold mb-4">Service Details</h4>
+                            <div className="space-y-3">
+                              <p className="text-white/90 text-sm leading-relaxed">
+                                {service.shortDescription}
+                              </p>
+                            </div>
+                            <div className="mt-6 pt-4 border-t border-white/20">
+                              <Link
+                                href={`/services/${service.slug.current}`}
+                                className="inline-flex items-center bg-white text-[#014DFE] px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                              >
+                                Learn More
+                                <Icon icon="mdi:arrow-right" className="w-5 h-5 ml-2" />
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
                 ))}
               </div>
