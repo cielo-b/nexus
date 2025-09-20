@@ -10,7 +10,6 @@ import 'swiper/css/navigation'
 import Marquee from 'react-fast-marquee'
 import { Icon } from '@iconify/react'
 import { motion, useInView } from 'framer-motion'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { client } from '@/lib/sanity/client'
 import { blogQueries, partnerQueries, testimonialQueries, faqQueries, videoQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
@@ -82,8 +81,6 @@ export default function HomePage() {
   const [videos, setVideos] = useState<Video[]>([])
   const [openFaqId, setOpenFaqId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-  const [coreValuesVisible, setCoreValuesVisible] = useState(false)
-  const [animatedIcons, setAnimatedIcons] = useState<Set<number>>(new Set())
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [mutedVideos, setMutedVideos] = useState<Set<number>>(new Set())
@@ -186,41 +183,6 @@ export default function HomePage() {
     fetchData()
   }, [])
 
-  // Scroll observer for core values animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setCoreValuesVisible(true)
-
-            // Trigger icon animations with staggered delay
-            const coreValues = [
-              { icon: "mdi:shield-check", title: "Excellence" },
-              { icon: "mdi:handshake", title: "Integrity" },
-              { icon: "mdi:lightbulb-outline", title: "Innovation" },
-              { icon: "mdi:megaphone", title: "Collaboration" },
-              { icon: "mdi:code-tags", title: "Sustainability" },
-              { icon: "mdi:chip", title: "Inclusivity" }
-            ]
-
-            coreValues.forEach((_, index) => {
-              setTimeout(() => {
-                setAnimatedIcons(prev => new Set([...prev, index]))
-              }, index * 200) // 200ms delay between each icon
-            })
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-
-    if (coreValuesRef.current) {
-      observer.observe(coreValuesRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
 
   const formatNumber = (num: number) => {
     if (num >= 1000) {
@@ -436,20 +398,22 @@ export default function HomePage() {
         initial="hidden"
         animate={isCoreValuesInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="py-10 bg-gray-100"
+        className="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-white"
       >
-        <div className="px-[8vw] max-w-[1700px] mx-auto ">
+        <div className="px-[8vw] max-w-[1700px] mx-auto">
           <motion.div
             variants={fadeInUp}
-            className="text-left mb-8 sm:mb-12 lg:mb-16"
+            className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Explain Our Core<br /><span className='text-primary'>Values</span> </h2>
-            <p className="text-base text-gray-600 max-w-3xl">Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+              Explain Our Core <span className="text-blue-600">Values</span>
+            </h2>
+            <p className="text-base text-gray-600 max-w-3xl mx-auto">Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
           </motion.div>
 
           <motion.div
             variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           >
             {[
               {
@@ -482,66 +446,52 @@ export default function HomePage() {
                 title: "Inclusivity",
                 description: "We strive to ensure that all voices are heard and considered, promoting equal opportunities for a more inclusive society."
               }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                variants={staggerItem}
-                className="flex flex-col items-center gap-4 sm:gap-5   p-4 sm:p-6 lg:p-8"
-              >
-                   {item.title === "Excellence" ? (
-                     <div className="w-32 h-32 sm:w-40 sm:h-40">
-                       <DotLottieReact
-                         src="/icons/excellense.lottie"
-                         loop
-                         autoplay
-                       />
-                     </div>
-                   ) : item.title === "Innovation" ? (
-                     <div className="w-32 h-32 sm:w-40 sm:h-40">
-                       <DotLottieReact
-                         src="/icons/innovation.lottie"
-                         loop
-                         autoplay
-                       />
-                     </div>
-                   ) : item.title === "Collaboration" ? (
-                     <div className="w-32 h-32 sm:w-40 sm:h-40">
-                       <DotLottieReact
-                         src="/icons/collaboration.lottie"
-                         loop
-                         autoplay
-                       />
-                     </div>
-                   ) : item.title === "Sustainability" ? (
-                     <div className="w-32 h-32 sm:w-40 sm:h-40">
-                       <DotLottieReact
-                         src="/icons/sustainability.lottie"
-                         loop
-                         autoplay
-                       />
-                     </div>
-                   ) : (
-                     <Icon
-                       icon={item.icon}
-                       className={`w-8 h-8 sm:w-10 sm:h-10 text-[#014DFE] transition-all duration-700 ${animatedIcons.has(index)
-                           ? 'animate-spin'
-                            : ''
-                         }`}
-                       style={{
-                         animation: animatedIcons.has(index)
-                           ? 'iconRotate 1.4s ease-in-out'
-                            : 'none'
-                       }}
-                     />
-                   )}
-                <div>
-                  <h3 className="text-lg sm:text-xl font-medium mb-2">{item.title}</h3>
-                  <p className="text-sm sm:text-base text-[#555555]">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            ].map((item, index) => {
+              // Map core values to their corresponding PNG files
+              const getImageSrc = (title: string) => {
+                switch (title) {
+                  case "Excellence":
+                    return "/icons/excellense.png"
+                  case "Integrity":
+                    return "/icons/integrity.png"
+                  case "Innovation":
+                    return "/icons/innovation.png"
+                  case "Collaboration":
+                    return "/icons/collaboration.png"
+                  case "Sustainability":
+                    return "/icons/sustainability.png"
+                  case "Inclusivity":
+                    return "/icons/inclusion.png"
+                  default:
+                    return "/icons/excellense.png"
+                }
+              }
+
+              return (
+                <motion.div
+                  key={index}
+                  variants={staggerItem}
+                  transition={{ duration: 0.6 }}
+                  className="flex flex-col items-start gap-6 sm:gap-8 bg-gray-50 p-6 sm:p-8 lg:p-10 hover:bg-gray-100 transition-colors duration-300"
+                >
+                  <div className="bg-white p-4 shadow-sm">
+                    <Image
+                      src={getImageSrc(item.title)}
+                      alt={`${item.title} icon`}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 object-contain"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2 sm:mb-3">{item.title}</h3>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </motion.section>

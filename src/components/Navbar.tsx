@@ -247,72 +247,72 @@ export default function Navbar() {
         </div>
 
         {/* Expertise Section - Shows when dropdown is open */}
-        {isDropdownOpen && (
-          <div 
-            data-expertise-dropdown
-            className="fixed bottom-0 left-0 w-full bg-black/20 backdrop-blur-2xl text-white z-50 transition-all duration-300 ease-in-out"
-          >
-            <div className="px-[8vw] py-8">
-              <div className="max-w-7xl mx-auto">
-                {expertiseLoading ? (
-                  <div className="flex items-center justify-center py-12">
-                    <div className="animate-spin h-8 w-8 border-b-2 border-white"></div>
-                    <span className="ml-3 text-white text-lg">
-                      Loading expertise areas...
-                    </span>
-                  </div>
-                ) : expertise.length > 0 ? (
-                  <>
-                    {/* Mobile List View */}
-                    <div className="block md:hidden">
-                      <div className="space-y-3">
-                        {expertise.map((item) => (
-                          <Link
-                            key={item._id}
-                            href={`/expertise/${item.slug.current}`}
-                            onClick={() => setIsDropdownOpen(false)}
-                            className="group flex items-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-                          >
-                            <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
-                              {item.title}
-                            </h4>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Desktop Grid View */}
-                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+        <div 
+          data-expertise-dropdown
+          className={`w-full bg-black/20 backdrop-blur-2xl text-white transition-all duration-300 ease-in-out ${
+            isDropdownOpen ? 'block' : 'hidden'
+          }`}
+        >
+          <div className="px-[8vw] py-8">
+            <div className="max-w-7xl mx-auto">
+              {expertiseLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin h-8 w-8 border-b-2 border-white"></div>
+                  <span className="ml-3 text-white text-lg">
+                    Loading expertise areas...
+                  </span>
+                </div>
+              ) : expertise.length > 0 ? (
+                <>
+                  {/* Mobile List View */}
+                  <div className="block md:hidden">
+                    <div className="space-y-3">
                       {expertise.map((item) => (
                         <Link
                           key={item._id}
                           href={`/expertise/${item.slug.current}`}
                           onClick={() => setIsDropdownOpen(false)}
-                          className="group flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                          className="group flex items-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
                         >
-                          <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
+                          <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
                             {item.title}
                           </h4>
                         </Link>
                       ))}
                     </div>
-                  </>
-                ) : (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 mx-auto mb-4 text-white/60 flex items-center justify-center">
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
-                      </svg>
-                    </div>
-                    <p className="text-white/80 text-lg">
-                      No expertise areas available yet
-                    </p>
                   </div>
-                )}
-              </div>
+
+                  {/* Desktop Grid View */}
+                  <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+                    {expertise.map((item) => (
+                      <Link
+                        key={item._id}
+                        href={`/expertise/${item.slug.current}`}
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="group flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                      >
+                        <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
+                          {item.title}
+                        </h4>
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 mx-auto mb-4 text-white/60 flex items-center justify-center">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+                    </svg>
+                  </div>
+                  <p className="text-white/80 text-lg">
+                    No expertise areas available yet
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
 
         {/* Small screens (below 1000px) - Mobile menu */}
         <div className="xl:hidden">

@@ -252,7 +252,7 @@ export default function AboutPage() {
         variants={staggerContainer}
         className="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-white"
       >
-        <div className="px-[8vw] max-w-[1700px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <div className="px-[8vw] max-w-[1700px] mx-auto ">
           <motion.div 
             variants={fadeInUp}
             transition={{ duration: 0.8 }}
@@ -269,37 +269,43 @@ export default function AboutPage() {
           >
             {[
               {
-                icon: "mdi:lightbulb-outline",
                 title: "Innovation & Technology",
-                description: "At Insight Nexus Ltd, we continuously invest in the latest technologies to enhance our research capabilities."
+                description: "At Insight Nexus Ltd, we continuously invest in the latest technologies to enhance our research capabilities.",
+                image: "innovation.png"
               },
               {
-                icon: "mdi:pencil-outline",
                 title: "Rigorous Methodology",
-                description: "Our approach combines rigorous data collection methodologies with in-depth analysis, offering clients an integrated research process."
+                description: "Our approach combines rigorous data collection methodologies with in-depth analysis, offering clients an integrated research process.",
+                image: "methodology.png"
               },
               {
-                icon: "mdi:send",
                 title: "Local Context Understanding",
-                description: "At Insight Nexus Ltd, delivering impactful insights requires a deep understanding of the local context."
+                description: "At Insight Nexus Ltd, delivering impactful insights requires a deep understanding of the local context.",
+                image: "local.png"
               },
               {
-                icon: "mdi:share-variant",
                 title: "Ethical Standards",
-                description: "We strongly emphasize maintaining the safety, dignity, and rights of all participants in our studies with highest ethical standards."
+                description: "We strongly emphasize maintaining the safety, dignity, and rights of all participants in our studies with highest ethical standards.",
+                image: "ethics.png"
               }
             ].map((item, index) => (
               <motion.div 
                 key={index} 
                 variants={staggerItem}
                 transition={{ duration: 0.6 }}
-                className="flex flex-col items-start gap-6 sm:gap-8 bg-gray-50  p-6 sm:p-8 lg:p-10 hover:bg-gray-100 transition-colors duration-300"
+                className="flex flex-col items-start gap-6 sm:gap-8 bg-gray-50 p-6 sm:p-8 lg:p-10 hover:bg-gray-100 transition-colors duration-300"
               >
-                <div className="bg-white  p-4 shadow-sm">
-                  <Icon icon={item.icon} className="w-6 h-6 sm:w-8 sm:h-8 text-[#014DFE]" />
-            </div>
+                <div className="bg-white p-4 shadow-sm">
+                  <Image
+                    src={`/icons/${item.image}`}
+                    alt={`${item.title} icon`}
+                    width={32}
+                    height={32}
+                    className="w-20 h-20 object-contain"
+                  />
+                </div>
                 <div>
-                  <h3 className=" font-bold mb-2 sm:mb-3">{item.title}</h3>
+                  <h3 className="font-bold mb-2 sm:mb-3">{item.title}</h3>
                   <p className="text-xs text-gray-600 leading-relaxed">
                     {item.description}
                   </p>
