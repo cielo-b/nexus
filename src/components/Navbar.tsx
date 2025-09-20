@@ -249,14 +249,14 @@ export default function Navbar() {
         {/* Expertise Section - Shows when dropdown is open */}
         <div 
           data-expertise-dropdown
-          className={`w-full bg-black/20 backdrop-blur-2xl text-white transition-all duration-300 ease-in-out ${
+          className={`w-full  text-white transition-all duration-300 ease-in-out ${
             isDropdownOpen ? 'block' : 'hidden'
           }`}
         >
-          <div className="px-[8vw] py-8">
+          <div className="px-[8vw] pb-4">
             <div className="max-w-7xl mx-auto">
               {expertiseLoading ? (
-                <div className="flex items-center justify-center py-12">
+                <div className="flex items-center justify-center py-4">
                   <div className="animate-spin h-8 w-8 border-b-2 border-white"></div>
                   <span className="ml-3 text-white text-lg">
                     Loading expertise areas...
@@ -272,7 +272,7 @@ export default function Navbar() {
                           key={item._id}
                           href={`/expertise/${item.slug.current}`}
                           onClick={() => setIsDropdownOpen(false)}
-                          className="group flex items-center p-4 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                          className="group flex items-center p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
                         >
                           <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
                             {item.title}
@@ -289,7 +289,7 @@ export default function Navbar() {
                         key={item._id}
                         href={`/expertise/${item.slug.current}`}
                         onClick={() => setIsDropdownOpen(false)}
-                        className="group flex flex-col items-center p-6 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                        className="group flex flex-col items-center p-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
                       >
                         <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
                           {item.title}
