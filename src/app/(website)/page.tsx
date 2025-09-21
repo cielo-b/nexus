@@ -777,7 +777,7 @@ export default function HomePage() {
             </motion.div>
             <motion.p
               variants={fadeInUp}
-              className="mb-8 sm:mb-12 px-[8vw] max-w-[1700px] text-[#65676C] text-xs sm:text-sm leading-relaxed"
+              className="mb-8 sm:mb-12 text-[#65676C] text-xs sm:text-sm leading-relaxed"
             >
               Clients consistently commend our consultancy agency for its transformative impact on their businesses.Our strategic solutions have streamlined operations, enhanced decision-making, and driven measurable growth, earning the trust and loyalty of organizations across various industries.
             </motion.p>
@@ -918,18 +918,18 @@ export default function HomePage() {
 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border-[#AAAAAA] border text-sm">
+                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-sm">
                           <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
                           {formatNumber(blog.likes)}
                         </div>
-                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-4 py-2  border-[#AAAAAA] border text-sm">
+                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-sm">
                           <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
                           {formatNumber(blog.views)}
                         </span>
                       </div>
                       <Link
                         href={`/blogs/${blog.slug.current}`}
-                        className="bg-primary text-white px-6 py-2  flex items-center gap-2 justify-center"
+                        className="bg-primary text-white px-4 py-2  flex items-center gap-2 justify-center text-sm"
                       >
                         Read More
                         <Icon icon="mdi:arrow-right" className="w-4 h-4" />
