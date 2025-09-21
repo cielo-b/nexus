@@ -83,7 +83,7 @@ export default function AboutPage() {
         animate={useInView(heroRef) ? "visible" : "hidden"}
         variants={fadeInUp}
         transition={{ duration: 0.8 }}
-        className="relative min-h-[50vh] pt-[20vh] flex flex-col items-center justify-center border-b border-gray-200 bg-white py-8 sm:py-12 lg:py-16 xl:py-20"
+        className="relative min-h-[50vh] pt-44   max-md:pt-36 max-sm:pt-36  pb-8 sm:pb-12 lg:pb-16 xl:pb-20 flex flex-col items-center justify-center border-b border-gray-200 bg-white"
       >
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 w-full">
           <div className="text-center">
@@ -370,13 +370,13 @@ export default function AboutPage() {
                   transition={{ duration: 0.6 }}
                   className='space-y-4 sm:space-y-6 text-center'
                 >
-                  <div className="w-full h-64 sm:h-72 lg:h-80 mx-auto mb-6 sm:mb-8 overflow-hidden  shadow-2xl">
+                  <div className="w-full h-[600px] mx-auto mb-6 sm:mb-8 overflow-hidden shadow-2xl">
                     <Image
                       src={getSanityImage(member.image)}
                       alt={member.image.alt || member.name}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      width={100000}
+                      height={100000}
+                      className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">
