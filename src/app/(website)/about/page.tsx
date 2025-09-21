@@ -126,9 +126,14 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               className=' max-w-xl order-2 lg:order-1'
             >
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Get To Know <span className="text-blue-600">Nexus</span>
-              </h2>
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                <div className="bg-blue-100 p-3 rounded-lg">
+                  <Icon icon="solar:buildings-2-bold" className="w-6 h-6 text-blue-600" />
+                </div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
+                  Get To Know <span className="text-blue-600">Nexus</span>
+                </h2>
+              </div>
               <p className=" text-gray-600 leading-relaxed mb-3 sm:mb-4">
                 Insight Nexus is a dynamic consultancy firm committed to empowering organizations through a wide range of
                 tailored services designed to foster growth and operational excellence, by leveraging a deep understanding
@@ -166,9 +171,14 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className=' max-w-xl order-2'
             >
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                What We <span className="text-blue-600">Do?</span>
-              </h2>
+              <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                <div className="bg-blue-100 p-3 rounded-lg">
+                  <Icon icon="solar:settings-minimalistic-bold" className="w-6 h-6 text-blue-600" />
+                </div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
+                  What We <span className="text-blue-600">Do?</span>
+                </h2>
+              </div>
               <p className=" text-gray-600 leading-relaxed mb-3 sm:mb-4">
                 Insight Nexus Ltd is a forward-thinking consultancy firm dedicated to providing holistic, results-driven
                 solutions that help organizations achieve their goals. We offer a broad spectrum of services, including
@@ -197,7 +207,12 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">Who we serve</h2>
+            <div className="flex items-center justify-center gap-3 mb-3 sm:mb-4">
+              <div className="bg-white/20 p-3 rounded-lg">
+                <Icon icon="solar:users-group-rounded-bold" className="w-6 h-6 text-white" />
+              </div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">Who we serve</h2>
+            </div>
           </motion.div>
 
           <div className="relative overflow-hidden">
@@ -258,9 +273,14 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Why Choose <span className="text-blue-600">Us</span>
-            </h2>
+            <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
+              <div className="bg-blue-100 p-3 rounded-lg">
+                <Icon icon="solar:star-bold" className="w-6 h-6 text-blue-600" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                Why Choose <span className="text-blue-600">Us</span>
+              </h2>
+            </div>
           </motion.div>
 
           <motion.div 
@@ -344,14 +364,19 @@ export default function AboutPage() {
           <Image src="/images/lines.png" alt="Lines" width={80} height={80} className="w-full h-full object-cover" />
         </div>
         
-        <div className="px-[8vw] max-w-[1700px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
+        <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 max-w-[1700px] mx-auto relative z-10">
           <motion.div 
             variants={fadeInUp}
             transition={{ duration: 0.8 }}
             className="text-center mb-8 sm:mb-12 lg:mb-16"
           >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold mb-2 sm:mb-3">Meet Our Team</h2>
-            <p className=" lg:text-lg">Meet the team behind the work</p>
+            <div className="flex items-center justify-center gap-3 mb-2 sm:mb-3">
+              <div className="bg-blue-100 p-3 rounded-lg">
+                <Icon icon="solar:users-group-two-rounded-bold" className="w-6 h-6 text-blue-600" />
+              </div>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold">Meet Our Team</h2>
+            </div>
+            <p className="lg:text-lg">Meet the team behind the work</p>
           </motion.div>
 
           {loading ? (

@@ -68,7 +68,7 @@ export default function ServicesPage() {
     },
     {
       title: "Capacity Building & Technical Training",
-      icon: "solar:graduation-cap-bold",
+      icon: "solar:book-2-bold",
       items: [
         "Providing technical training on research, M&E, and data systems",
         "Organizational capacity development for CSOs, NGOs, and institutions",
@@ -142,31 +142,41 @@ export default function ServicesPage() {
         className="py-16 sm:py-20 lg:py-24 bg-white"
       >
         <div className="max-w-[1700px] px-[8vw] mx-auto">
+          <motion.div
+            variants={fadeInUp}
+            className="text-center mb-8 sm:mb-12 lg:mb-16"
+          >
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+              Our <span className="text-blue-600">Services</span>
+            </h2>
+            <p className="text-base text-gray-600 max-w-3xl mx-auto">
+              We provide comprehensive research, monitoring, evaluation, and capacity building services to drive meaningful transformation across various sectors.
+            </p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {services.map((service, index) => (
               <motion.div
                 key={index}
                 variants={staggerItem}
-                className="flex flex-col h-auto bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+                className="flex flex-col h-auto bg-gray-50 p-6 sm:p-8 lg:p-10 rounded-lg shadow-sm hover:bg-gray-100 transition-all duration-300 hover:shadow-lg"
               >
-                <div className="flex items-center mb-4">
-                  <Icon icon={service.icon} className="w-8 h-8 text-blue-600 mr-3" />
-                  <h2 className="text-md font-bold text-gray-800">{service.title}</h2>
+                <div className="flex items-center mb-6">
+                  <div className="bg-blue-100 p-3 rounded-lg mr-4 flex-shrink-0">
+                    <Icon icon={service.icon} className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h2 className="text-lg font-bold text-gray-800 leading-tight">{service.title}</h2>
                 </div>
                 <div className="space-y-2">
                   {service.isSpecial ? (
                     <div className="space-y-4">
                       {service.items.map((item, itemIndex) => (
                         <div key={itemIndex}>
-                          <div className="flex items-center mb-2">
-                            <Icon icon="solar:arrow-right-bold" className="w-6 h-6 text-blue-600 mr-2" />
-                            <h3 className="font-semibold text-gray-800">{item.split(':')[0]}:</h3>
-                          </div>
-                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-8">
+                          <h3 className="font-semibold text-gray-800 mb-3">{item.split(':')[0]}:</h3>
+                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-4">
                             {item.split(':')[1]?.split(',').map((tool, toolIndex) => (
-                              <li key={toolIndex} className="text-gray-800 flex items-center">
-                                <span className="text-gray-600 text-md">• {tool.trim()}</span>
+                              <li key={toolIndex} className="text-gray-800">
+                                <span className="text-gray-600 text-sm">• {tool.trim()}</span>
                               </li>
                             ))}
                           </ul>
@@ -175,7 +185,7 @@ export default function ServicesPage() {
                     </div>
                   ) : (
                     service.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                      <div key={itemIndex} className="px-3 py-1 rounded-full text-sm font-medium">
                         <span className="text-gray-600">• {item}</span>
                       </div>
                     ))

@@ -84,6 +84,7 @@ export default function HomePage() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [mutedVideos, setMutedVideos] = useState<Set<number>>(new Set())
+  const [currentHeroVideo, setCurrentHeroVideo] = useState(0)
   const swiperRef = useRef<any>(null)
   const coreValuesRef = useRef<HTMLDivElement>(null)
   const getToKnowRef = useRef<HTMLDivElement>(null)
@@ -92,6 +93,10 @@ export default function HomePage() {
   const ctaRef = useRef<HTMLDivElement>(null)
   const testimonialsRef = useRef<HTMLDivElement>(null)
   const blogsRef = useRef<HTMLDivElement>(null)
+  const heroVideoRef = useRef<HTMLVideoElement>(null)
+
+  // Hero video array for looping
+  const heroVideos = ['/videos/hero.mp4', '/videos/hero2.mp4']
 
   // All useInView calls at the top level to prevent hook order issues
   const isGetToKnowInView = useInView(getToKnowRef)
@@ -183,6 +188,27 @@ export default function HomePage() {
     fetchData()
   }, [])
 
+  // Hero video switching logic
+  useEffect(() => {
+    const handleVideoEnd = () => {
+      setCurrentHeroVideo((prev) => (prev + 1) % heroVideos.length)
+    }
+
+    const videoElement = heroVideoRef.current
+    if (videoElement) {
+      videoElement.addEventListener('ended', handleVideoEnd)
+      
+      // Preload the next video for seamless switching
+      const nextVideoIndex = (currentHeroVideo + 1) % heroVideos.length
+      const nextVideo = document.createElement('video')
+      nextVideo.src = heroVideos[nextVideoIndex]
+      nextVideo.preload = 'auto'
+      
+      return () => {
+        videoElement.removeEventListener('ended', handleVideoEnd)
+      }
+    }
+  }, [currentHeroVideo, heroVideos.length])
 
   const formatNumber = (num: number) => {
     if (num >= 1000) {
@@ -285,13 +311,20 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative h-screen">
         <video
+          ref={heroVideoRef}
+          key={currentHeroVideo}
           autoPlay
           muted
-          loop
           playsInline
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
+          onLoadedData={() => {
+            if (heroVideoRef.current) {
+              heroVideoRef.current.play().catch(console.error)
+            }
+          }}
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src={heroVideos[currentHeroVideo]} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/60 w-full h-full"></div>
         <div className="relative z-10 flex items-center justify-start w-full h-full px-4 sm:px-6 lg:px-8">
