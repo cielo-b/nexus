@@ -539,47 +539,6 @@ export default function HomePage() {
         </div>
       </motion.section>
 
-      {/* How We Do It Section */}
-      <section 
-        ref={howWeDoRef}
-        className="py-8 sm:py-12 lg:py-16 bg-gray-50"
-        style={{ opacity: 1, visibility: 'visible', minHeight: '400px' }}
-      >
-        <div className="px-[8vw] max-w-[1700px] mx-auto">
-          {/* Test visibility div */}
-          <div className="bg-red-500 text-white p-4 mb-4 text-center font-bold">
-            TEST: How We Do It Section is Visible!
-          </div>
-          
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-              How We <span className="text-blue-600">Do It</span>
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              Our proven methodology and approach to delivering exceptional consultancy services
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12">
-              {loading ? (
-                <div className="text-center py-8">
-                  <div className="text-gray-600">Loading How We Do content...</div>
-                </div>
-              ) : howWeDo && howWeDo.content ? (
-                <BlockContentRenderer content={howWeDo.content} />
-              ) : (
-                <div className="text-center py-8">
-                  <div className="text-gray-600 mb-4">No "How We Do" content available yet.</div>
-                  <div className="text-sm text-gray-500">
-                    Please add content in the Sanity CMS under "How We Do" section.
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Partners Section - Only show if there are partners */}
       {partners.length > 0 && (
