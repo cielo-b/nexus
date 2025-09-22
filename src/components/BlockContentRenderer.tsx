@@ -1,5 +1,4 @@
-import { PortableText } from '@portabletext/react'
-import { PortableTextBlock } from '@sanity/types'
+import { PortableText, PortableTextBlock } from '@portabletext/react'
 import Image from 'next/image'
 import { getSanityImage } from '@/lib/getSanityImage'
 

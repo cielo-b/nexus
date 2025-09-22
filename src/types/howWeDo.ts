@@ -1,4 +1,4 @@
-import { PortableTextBlock } from '@sanity/types'
+import { PortableTextBlock } from '@portabletext/react'
 
 export interface HowWeDo {
   _id: string
