@@ -850,3 +850,13 @@ export const videoQueries = {
     }
   `,
 }
+
+export const howWeDoQueries = {
+  // Get the How We Do content
+  getHowWeDo: groq`
+    *[_type == "howWeDo"][0] {
+      _id,
+      content
+    }
+  `,
+}

@@ -11,13 +11,15 @@ import Marquee from 'react-fast-marquee'
 import { Icon } from '@iconify/react'
 import { motion, useInView } from 'framer-motion'
 import { client } from '@/lib/sanity/client'
-import { blogQueries, partnerQueries, testimonialQueries, faqQueries, videoQueries } from '@/lib/sanity/queries'
+import { blogQueries, partnerQueries, testimonialQueries, faqQueries, videoQueries, howWeDoQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { BlogPost } from '@/types/blog'
 import { Partner } from '@/types/partner'
 import { Testimonial } from '@/types/testimonial'
 import { FAQ } from '@/types/faq'
 import { Video } from '@/types/video'
+import { HowWeDo } from '@/types/howWeDo'
+import BlockContentRenderer from '@/components/BlockContentRenderer'
 
 // Static company data
 const companyData = [
@@ -79,6 +81,7 @@ export default function HomePage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([])
   const [faqs, setFaqs] = useState<FAQ[]>([])
   const [videos, setVideos] = useState<Video[]>([])
+  const [howWeDo, setHowWeDo] = useState<HowWeDo | null>(null)
   const [openFaqId, setOpenFaqId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
@@ -88,6 +91,7 @@ export default function HomePage() {
   const swiperRef = useRef<any>(null)
   const coreValuesRef = useRef<HTMLDivElement>(null)
   const getToKnowRef = useRef<HTMLDivElement>(null)
+  const howWeDoRef = useRef<HTMLDivElement>(null)
   const partnersRef = useRef<HTMLDivElement>(null)
   const videosRef = useRef<HTMLDivElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
@@ -165,12 +169,13 @@ export default function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [blogs, partnersData, testimonialsData, faqsData, videosData] = await Promise.all([
+        const [blogs, partnersData, testimonialsData, faqsData, videosData, howWeDoData] = await Promise.all([
           client.fetch(blogQueries.getAllBlogs),
           client.fetch(partnerQueries.getAllPartners),
           client.fetch(testimonialQueries.getAllTestimonials),
           client.fetch(faqQueries.getAllFAQs),
-          client.fetch(videoQueries.getAllVideos)
+          client.fetch(videoQueries.getAllVideos),
+          client.fetch(howWeDoQueries.getHowWeDo)
         ])
 
         setRecentBlogs(blogs.slice(0, 3)) // Get only 3 recent blogs
@@ -178,6 +183,11 @@ export default function HomePage() {
         setTestimonials(testimonialsData)
         setFaqs(faqsData)
         setVideos(videosData)
+        setHowWeDo(howWeDoData)
+        
+        // Debug logging
+        console.log('How We Do Data:', howWeDoData)
+        console.log('How We Do section should be visible now')
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
@@ -431,12 +441,12 @@ export default function HomePage() {
         initial="hidden"
         animate={isCoreValuesInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-white"
+        className="py-8 bg-white"
       >
         <div className="px-[8vw] max-w-[1700px] mx-auto">
           <motion.div
             variants={fadeInUp}
-            className="text-center mb-8 sm:mb-12 lg:mb-16"
+            className="text-center mb-8"
           >
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
               Explain Our Core <span className="text-blue-600">Values</span>
@@ -528,6 +538,48 @@ export default function HomePage() {
           </motion.div>
         </div>
       </motion.section>
+
+      {/* How We Do It Section */}
+      <section 
+        ref={howWeDoRef}
+        className="py-8 sm:py-12 lg:py-16 bg-gray-50"
+        style={{ opacity: 1, visibility: 'visible', minHeight: '400px' }}
+      >
+        <div className="px-[8vw] max-w-[1700px] mx-auto">
+          {/* Test visibility div */}
+          <div className="bg-red-500 text-white p-4 mb-4 text-center font-bold">
+            TEST: How We Do It Section is Visible!
+          </div>
+          
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+              How We <span className="text-blue-600">Do It</span>
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              Our proven methodology and approach to delivering exceptional consultancy services
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12">
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="text-gray-600">Loading How We Do content...</div>
+                </div>
+              ) : howWeDo && howWeDo.content ? (
+                <BlockContentRenderer content={howWeDo.content} />
+              ) : (
+                <div className="text-center py-8">
+                  <div className="text-gray-600 mb-4">No "How We Do" content available yet.</div>
+                  <div className="text-sm text-gray-500">
+                    Please add content in the Sanity CMS under "How We Do" section.
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Partners Section - Only show if there are partners */}
       {partners.length > 0 && (

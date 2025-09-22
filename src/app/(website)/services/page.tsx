@@ -1,18 +1,28 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
 import { motion, useInView } from 'framer-motion'
+import { client } from '@/lib/sanity/client'
+import { howWeDoQueries } from '@/lib/sanity/queries'
+import { HowWeDo } from '@/types/howWeDo'
+import BlockContentRenderer from '@/components/BlockContentRenderer'
 
 
 export default function ServicesPage() {
+  // State for How We Do content
+  const [howWeDoContent, setHowWeDoContent] = useState<HowWeDo | null>(null)
+  const [loading, setLoading] = useState(true)
+  
   // Refs for animations
   const heroRef = useRef(null)
   const servicesRef = useRef(null)
+  const howWeDoRef = useRef(null)
   
   // All useInView calls at the top level to prevent hook order issues
   const isServicesInView = useInView(servicesRef)
+  const isHowWeDoInView = useInView(howWeDoRef)
   
   // Animation variants
   const fadeInUp = {
@@ -34,6 +44,22 @@ export default function ServicesPage() {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 }
   }
+
+  // Fetch How We Do content
+  useEffect(() => {
+    const fetchHowWeDoContent = async () => {
+      try {
+        const content = await client.fetch(howWeDoQueries.getHowWeDo)
+        setHowWeDoContent(content)
+      } catch (error) {
+        console.error('Error fetching How We Do content:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchHowWeDoContent()
+  }, [])
 
   // Services data
   const services = [
@@ -142,17 +168,6 @@ export default function ServicesPage() {
         className="py-16 sm:py-20 lg:py-24 bg-white"
       >
         <div className="max-w-[1700px] px-[8vw] mx-auto">
-          <motion.div
-            variants={fadeInUp}
-            className="text-center mb-8 sm:mb-12 lg:mb-16"
-          >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Our <span className="text-blue-600">Services</span>
-            </h2>
-            <p className="text-base text-gray-600 max-w-3xl mx-auto">
-              We provide comprehensive research, monitoring, evaluation, and capacity building services to drive meaningful transformation across various sectors.
-            </p>
-          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {services.map((service, index) => (
@@ -196,6 +211,26 @@ export default function ServicesPage() {
           </div>
         </div>
       </motion.section>
+
+      {/* How We Do Section */}
+      {!loading && howWeDoContent && (
+                  <div className="max-w-[1700px] px-[8vw] mx-auto">
+                  <motion.div
+                    variants={fadeInUp}
+                    className="text-center mb-4 " 
+                  >
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8">
+                      How We <span className="text-blue-600">Do It</span>
+                    </h2>
+                  </motion.div>
+      
+                  <motion.div
+                    variants={fadeInUp}
+                  >
+                    <BlockContentRenderer content={howWeDoContent.content} />
+                  </motion.div>
+                </div>
+      )}
     </div>
   )
 }
