@@ -461,7 +461,7 @@ export default function HomePage() {
             className="text-center mb-8"
           >
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Explain Our Core <span className="text-blue-600">Values</span>
+              Our Core <span className="text-blue-600">Values</span>
             </h2>
             <p className="text-base text-gray-600 max-w-3xl mx-auto">Satisfaction is the key to our success. We strive to ensure every customer leaves happy with our quality service priority.</p>
           </motion.div>
@@ -556,14 +556,14 @@ export default function HomePage() {
       {partners.length > 0 && (
         <section className="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-white">
         <div className="px-[8vw] max-w-[1700px] mx-auto">
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 ">
               Trusted by leading organizations <span className="text-blue-600">worldwide</span>
             </h2>
           </div>
 
           {loading ? (
-            <div className="text-center py-12">
+            <div className="text-center py-3">
               <div className="text-xl">Loading partners...</div>
             </div>
           ) : (
@@ -576,7 +576,7 @@ export default function HomePage() {
               >
                 {partners.map((partner, index) => (
                   <div key={`${partner._id}-${index}`} className="mx-4 flex-shrink-0">
-                    <div className="flex items-center justify-center p-8 h-48 w-72 bg-white hover:scale-110 transition-transform duration-300 overflow-hidden">
+                    <div className="flex items-center justify-center  h-32 w-72 bg-white hover:scale-110 transition-transform duration-300 overflow-hidden">
                       {partner.url ? (
                         <a
                           href={partner.url}
@@ -615,7 +615,7 @@ export default function HomePage() {
 
         {/* Featured Videos Section - Only show if there are videos */}
         {videos.length > 0 && (
-          <section className="py-16 bg-blue-50">
+          <section className="py-8 bg-blue-50">
         <div className="max-w-[1700px] mx-auto px-[8vw]">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Featured Videos</h2>
@@ -690,7 +690,7 @@ export default function HomePage() {
                               }
                             }}
                             src={video.videoFile.asset.url || ''}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain"
                             preload="metadata"
                             playsInline
                             muted={mutedVideos.has(index)}

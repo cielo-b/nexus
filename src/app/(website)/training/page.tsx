@@ -12,7 +12,7 @@ export default function TrainingPage() {
           <div className="flex flex-col lg:gap-12 md:gap-6 max-sm:gap-4 sm:gap-4 items-center justify-center relative w-full">
             <h1 className="text-black font-bold text-5xl w-full text-center">
               <span className="text-[#2563eb] inline-block relative items-center justify-center">
-                <span className="z-40 relative">Our</span>
+                <span className="z-20 relative">Our</span>
               </span> Trainings
             </h1>
             <div className="flex flex-col items-center gap-8 max-w-4xl">
@@ -27,38 +27,38 @@ export default function TrainingPage() {
       <section className="py-20 px-[8vw] max-w-[1700px] mx-auto">
         <div className="mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-6 w-full">
-            <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+            <div className="group flex flex-col items-center text-center p-3 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="w-20 h-20 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
                 <Image
                   src="/icons/methodology.png"
                   alt="Expert-led training icon"
                   width={100000}
                   height={10000}
-                  className="w-40 h-40 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <p className="text-sm md:text-base text-gray-600">Expert-led training across education, agriculture, and public health sectors</p>
             </div>
-            <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+            <div className="group flex flex-col items-center text-center p-3 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="w-20 h-20 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
                 <Image
                   src="/icons/strategies.png"
                   alt="Growth and performance icon"
                   width={100000}
                   height={10000}
-                  className="w-40 h-40 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <p className="text-sm md:text-base text-gray-600">Equipping teams with tools for sustainable growth and enhanced performance</p>
             </div>
-            <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+            <div className="group flex flex-col items-center text-center p-3 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="w-20 h-20 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
                 <Image
                   src="/icons/comprehensive.png"
                   alt="Evidence-based strategies icon"
                   width={100000}
                   height={10000}
-                  className="w-40 h-40 object-contain"
+                  className="w-20 h-20 object-contain"
                 />
               </div>
               <p className="text-sm md:text-base text-gray-600">Achieving long-term success through impactful, evidence-based strategies</p>
@@ -82,7 +82,7 @@ export default function TrainingPage() {
                     alt="Expert-led training icon"
                     width={100}
                     height={100}
-                    className="w-40 h-40"
+                    className="w-20 h-20"
  object-contain                  />
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function TrainingPage() {
                     alt="Tailored courses icon"
                     width={100}
                     height={100}
-                    className="w-40 h-40"
+                    className="w-20 h-20"
  object-contain                  />
                 </div>
               </div>
@@ -112,7 +112,7 @@ export default function TrainingPage() {
                     alt="Comprehensive solutions icon"
                     width={100}
                     height={100}
-                    className="w-40 h-40"
+                    className="w-20 h-20"
  object-contain                  />
                 </div>
               </div>

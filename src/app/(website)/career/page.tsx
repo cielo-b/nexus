@@ -120,7 +120,7 @@ export default function CareerPage() {
                       alt={`${offer.title} icon`}
                       width={100}
                       height={100}
-                      className="w-40 h-40 object-contain"
+                      className="w-20 h-20 object-contain"
                     />
                   </div>
                   <div className="space-y-3">
@@ -142,13 +142,13 @@ export default function CareerPage() {
             {teamsData.map((team, index) => (
               <div key={index} className="group p-6 md:p-8 rounded-xl bg-card hover:bg-accent/50 transition-colors duration-300 border border-gray-300">
                 <div className="flex  items-start gap-4">
-                  <div className=" p-4 w-400 ">
+                  <div className=" p-4 w-100 ">
                     <Image
                       src={team.icon}
                       alt={`${team.title} icon`}
                       width={100000}
                       height={100000}
-                      className="w-40 h-40"
+                      className="w-20 h-16"
                     />
                   </div>
                   <div className="space-y-4">
