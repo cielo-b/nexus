@@ -285,7 +285,7 @@ export default function AboutPage() {
 
           <motion.div 
             variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2  gap-6 sm:gap-8"
           >
             {[
               {
@@ -325,8 +325,8 @@ export default function AboutPage() {
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold mb-2 sm:mb-3">{item.title}</h3>
-                  <p className="text-xs text-gray-600 leading-relaxed">
+                  <h3 className="font-bold mb-2 sm:mb-3 text-xl">{item.title}</h3>
+                  <p className=" text-gray-600 leading-relaxed">
                     {item.description}
                   </p>
                 </div>

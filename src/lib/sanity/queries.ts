@@ -823,6 +823,7 @@ export const videoQueries = {
     *[_type == "video"] | order(_createdAt desc) {
       _id,
       title,
+      description,
       videoFile {
         asset->{
           _id,
@@ -839,6 +840,7 @@ export const videoQueries = {
     *[_type == "video" && _id == $id][0] {
       _id,
       title,
+      description,
       videoFile {
         asset->{
           _id,

@@ -259,11 +259,12 @@ export default function HomePage() {
   }
 
   const goToNextVideo = () => {
-    setCurrentVideoIndex((prev) => (prev + 1) % videos.length)
+    const maxIndex = Math.max(0, videos.length - 3)
+    setCurrentVideoIndex((prev) => Math.min(prev + 1, maxIndex))
   }
 
   const goToPrevVideo = () => {
-    setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length)
+    setCurrentVideoIndex((prev) => Math.max(prev - 1, 0))
   }
 
   const goToVideo = (index: number) => {
@@ -317,6 +318,15 @@ export default function HomePage() {
             transform: rotate(0deg);
           }
         }
+        
+        .video-container {
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        
+        .video-container::-webkit-scrollbar {
+          display: none; /* WebKit */
+        }
       `}</style>
       {/* Hero Section */}
       <section className="relative h-screen">
@@ -357,7 +367,7 @@ export default function HomePage() {
         initial="hidden"
         animate={isGetToKnowInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="py-8"
+        className=" "
       >
         <div className="px-[8vw] max-w-[1700px] mx-auto">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
@@ -434,6 +444,8 @@ export default function HomePage() {
         </div>
       </motion.section>
 
+      <div className="mx-auto max-w-2xl bg-primary h-2 rounded-full mb-8 "></div>
+
 
       {/* Core Values Section */}
       <motion.section
@@ -441,7 +453,7 @@ export default function HomePage() {
         initial="hidden"
         animate={isCoreValuesInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className="py-8 bg-white"
+        className="  bg-white"
       >
         <div className="px-[8vw] max-w-[1700px] mx-auto">
           <motion.div
@@ -527,8 +539,8 @@ export default function HomePage() {
                     />
                   </div>
                   <div>
-                    <h3 className="font-bold mb-2 sm:mb-3">{item.title}</h3>
-                    <p className="text-xs text-gray-600 leading-relaxed">
+                    <h3 className="font-bold mb-2 sm:mb-3 text-xl">{item.title}</h3>
+                    <p className=" text-gray-600 leading-relaxed ">
                       {item.description}
                     </p>
                   </div>
@@ -605,8 +617,44 @@ export default function HomePage() {
         {videos.length > 0 && (
           <section className="py-16 bg-blue-50">
         <div className="max-w-[1700px] mx-auto px-[8vw]">
-          <div className="flex items-center gap-3 mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Videos</h2>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Some of our works</h2>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={goToPrevVideo}
+                disabled={currentVideoIndex === 0}
+                className={`w-10 h-10 sm:w-12 sm:h-12 border-2 flex items-center justify-center transition-all duration-300 ${
+                  currentVideoIndex === 0 
+                    ? 'border-gray-200 cursor-not-allowed' 
+                    : 'border-gray-300 hover:border-primary hover:bg-primary hover:text-white'
+                }`}
+              >
+                <Icon 
+                  icon="mdi:chevron-left" 
+                  className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                    currentVideoIndex === 0 ? 'text-gray-300' : 'text-gray-400'
+                  }`} 
+                />
+              </button>
+              <button
+                onClick={goToNextVideo}
+                disabled={currentVideoIndex >= Math.max(0, videos.length - 3)}
+                className={`w-10 h-10 sm:w-12 sm:h-12 border-2 flex items-center justify-center transition-all duration-300 ${
+                  currentVideoIndex >= Math.max(0, videos.length - 3)
+                    ? 'border-gray-200 cursor-not-allowed' 
+                    : 'border-primary hover:bg-primary hover:text-white'
+                }`}
+              >
+                <Icon 
+                  icon="mdi:chevron-right" 
+                  className={`w-5 h-5 sm:w-6 sm:h-6 ${
+                    currentVideoIndex >= Math.max(0, videos.length - 3) 
+                      ? 'text-gray-300' 
+                      : 'text-primary'
+                  }`} 
+                />
+              </button>
+            </div>
           </div>
 
             {loading ? (
@@ -614,77 +662,94 @@ export default function HomePage() {
                 <div className="text-xl">Loading videos...</div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {videos.map((video, index) => (
-                  <div
-                    key={video._id}
-                    className="flex-shrink-0"
-                  >
-                    <div className="bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer">
-                      <div className="relative aspect-video bg-gray-900 group/video">
-                        <video
-                          ref={(el) => {
-                            if (el) {
-                              el.muted = mutedVideos.has(index)
-                              if (playingVideos.has(index)) {
-                                el.play().catch(console.error)
-                              } else {
-                                el.pause()
+              <div className="relative overflow-hidden video-container">
+                <div 
+                  className="flex gap-6 transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${currentVideoIndex * (100 / Math.min(3, videos.length))}%)`,
+                    width: `${(videos.length / Math.min(4, videos.length)) * 100}%`
+                  }}
+                >
+                  {videos.map((video, index) => (
+                    <div
+                      key={video._id}
+                      className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3"
+                      style={{ minWidth: '300px' }}
+                    >
+                      <div className="bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer h-full">
+                        <div className="relative aspect-video bg-gray-900 group/video">
+                          <video
+                            ref={(el) => {
+                              if (el) {
+                                el.muted = mutedVideos.has(index)
+                                if (playingVideos.has(index)) {
+                                  el.play().catch(console.error)
+                                } else {
+                                  el.pause()
+                                }
                               }
-                            }
-                          }}
-                          src={video.videoFile.asset.url || ''}
-                          className="w-full h-full object-cover"
-                          preload="metadata"
-                          playsInline
-                          muted={mutedVideos.has(index)}
-                          onClick={() => toggleVideoPlay(index)}
-                          onEnded={() => {
-                            setPlayingVideos(prev => {
-                              const newSet = new Set(prev)
-                              newSet.delete(index)
-                              return newSet
-                            })
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 opacity-80" />
-                        
-                        {/* Video Control Buttons - Only visible on hover */}
-                        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 z-10 opacity-0 group-hover/video:opacity-100">
-                          <div className="flex items-center gap-6">
-                            {/* Play/Pause Button */}
-                            <button 
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                toggleVideoPlay(index)
-                              }}
-                              className="p-2 cursor-pointer bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/50 transition-all duration-200 hover:scale-110 border-2 border-white/30 shadow-lg"
-                            >
-                              <Icon 
-                                icon={playingVideos.has(index) ? "mdi:pause" : "mdi:play"} 
-                                className="w-10 h-10 text-white ml-1" 
-                              />
-                            </button>
+                            }}
+                            src={video.videoFile.asset.url || ''}
+                            className="w-full h-full object-cover"
+                            preload="metadata"
+                            playsInline
+                            muted={mutedVideos.has(index)}
+                            onClick={() => toggleVideoPlay(index)}
+                            onEnded={() => {
+                              setPlayingVideos(prev => {
+                                const newSet = new Set(prev)
+                                newSet.delete(index)
+                                return newSet
+                              })
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 opacity-80" />
+                          
+                          {/* Video Control Buttons - Only visible on hover */}
+                          <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 z-10 opacity-0 group-hover/video:opacity-100">
+                            <div className="flex items-center gap-6">
+                              {/* Play/Pause Button */}
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  toggleVideoPlay(index)
+                                }}
+                                className="p-2 cursor-pointer bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/50 transition-all duration-200 hover:scale-110 border-2 border-white/30 shadow-lg"
+                              >
+                                <Icon 
+                                  icon={playingVideos.has(index) ? "mdi:pause" : "mdi:play"} 
+                                  className="w-10 h-10 text-white ml-1" 
+                                />
+                              </button>
 
-                            {/* Mute/Unmute Button */}
-                            <button 
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                toggleVideoMute(index)
-                              }}
-                              className="p-2 cursor-pointer bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/50 transition-all duration-200 hover:scale-110 border-2 border-white/30 shadow-lg"
-                            >
-                              <Icon 
-                                icon={mutedVideos.has(index) ? "mdi:volume-off" : "mdi:volume-high"} 
-                                className="w-10 h-10 text-white" 
-                              />
-                            </button>
+                              {/* Mute/Unmute Button */}
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  toggleVideoMute(index)
+                                }}
+                                className="p-2 cursor-pointer bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/50 transition-all duration-200 hover:scale-110 border-2 border-white/30 shadow-lg"
+                              >
+                                <Icon 
+                                  icon={mutedVideos.has(index) ? "mdi:volume-off" : "mdi:volume-high"} 
+                                  className="w-10 h-10 text-white" 
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
+                        
+                        {/* Video Description */}
+                        {video.description && (
+                          <div className="p-4 flex-1 flex flex-col">
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2">{video.title}</h3>
+                            <p className="text-sm text-gray-600 leading-relaxed flex-1">{video.description}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
         </div>

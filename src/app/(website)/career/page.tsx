@@ -6,29 +6,28 @@ import Image from 'next/image'
 import { client } from '@/lib/sanity/client'
 import { CareerOffer } from '@/types/careerOffer'
 import { CareerTeam } from '@/types/careerTeam'
-import { Icon } from '@iconify/react/dist/iconify.js'
 
 export default function CareerPage() {
 
   // What We Offer data
   const offersData = [
     {
-      icon: "mdi:earth",
+      icon: "/icons/sustainability.png",
       title: "Purposeful Work",
       description: "We engage in research and consulting that create lasting impact—advancing equity, policy reform, and sustainable development. Our projects are rooted in real-world needs, working with governments, NGOs, and international partners to drive change that matters."
     },
     {
-      icon: "mdi:account-group", 
+      icon: "/icons/collaboration.png", 
       title: "Collaborative Expertise",
       description: "Our diverse team brings together experts in economics, gender equality and social inclusion, public health, and data science. We value mutual learning and open collaboration—when you join Insight Nexus, you join a space where your voice and expertise help shape better futures."
     },
     {
-      icon: "mdi:trending-up",
+      icon: "/icons/strategies.png",
       title: "Growth & Learning", 
       description: "We invest in our people. From training workshops to mentorship, we support each team member's personal and professional journey—whether you're sharpening your analytical skills or preparing for graduate study."
     },
     {
-      icon: "mdi:lightbulb",
+      icon: "/icons/innovation.png",
       title: "Innovation-Driven Culture", 
       description: "We believe big ideas emerge from bold thinking. We embrace cutting-edge tools—like geospatial mapping, machine learning, and real-time data collection—to deliver smarter insights and transform how research is done."
     }
@@ -37,42 +36,42 @@ export default function CareerPage() {
   // Our Teams data
   const teamsData = [
     {
-      emoji: "📊",
+      icon: "/icons/methodology.png",
       title: "Research & Innovation Team",
       description: "The Research & Innovation Team leads the development of high-impact studies from design to insight. They transform complex policy and development challenges into evidence that guides real-world decisions. Combining interdisciplinary expertise with curiosity and rigor, they ensure each project delivers practical, ethical, and meaningful outcomes that advance social progress and inform smarter strategies."
     },
     {
-      emoji: "🧪",
+      icon: "/icons/data-quality.png",
       title: "Data Quality & Systems Team",
       description: "This team safeguards the accuracy, integrity, and efficiency of our research operations. They develop quality assurance systems, implement automated monitoring tools, and troubleshoot data issues in real time. With strong technical and analytical skills, they ensure Insight Nexus consistently delivers data that is reliable, valid, and ready to drive confident decision-making."
     },
     {
-      emoji: "🧠",
+      icon: "/icons/comprehensive.png",
       title: "Analytics & Technical Support Team",
       description: "Experts in statistical modeling, impact evaluation, and econometrics, this team supports technical excellence across projects. They advise on methodology, build analytical tools, and turn raw data into evidence-rich narratives. Their innovations strengthen how we measure change, unpack outcomes, and ensure that research findings are both precise and policy-relevant."
     },
     {
-      emoji: "🔍",
+      icon: "/icons/research-operations.png",
       title: "Research Operations Team",
       description: "Our Research Operations Team ensures seamless fieldwork execution, managing logistics, workflows, and research protocols. They coordinate teams, train staff, and maintain ethical standards on the ground. Their understanding of local dynamics and data collection realities bridges research design with field delivery—ensuring all studies are conducted smoothly, professionally, and with community respect."
     },
     {
-      emoji: "📋",
+      icon: "/icons/program-management.png",
       title: "Program Management Team",
       description: "The Program Management Team oversees the full life cycle of research projects, ensuring all activities meet deadlines, standards, and objectives. They coordinate internal teams, partners, and client expectations, while proactively managing risks. Their leadership keeps Insight Nexus agile, responsive, and always focused on delivering impactful, on-time, and ethically sound work."
     },
     {
-      emoji: "🧭",
+      icon: "/icons/field-engangment.png",
       title: "Field Engagement Team",
       description: "This team forms the human connection between Insight Nexus and the communities we serve. Made up of highly trained enumerators, supervisors, moderators, and translators, they collect high-quality data in diverse environments. Their professionalism, cultural sensitivity, and deep local knowledge ensure ethical, respectful engagement and accurate, trustworthy information gathering across all contexts."
     },
     {
-      emoji: "📢",
+      icon: "/icons/partnerships-communication.png",
       title: "Partnerships & Communications Team",
       description: "From building donor relationships to shaping strategic proposals, this team grows our reach and influence. They communicate our research clearly and persuasively to diverse stakeholders. Their expertise in partnership-building, messaging, and storytelling ensures our work resonates with policymakers, funders, and the public, turning results into actionable insights and lasting collaborations."
     },
     {
-      emoji: "💼",
+      icon: "/icons/finance.png",
       title: "Finance & People Team",
       description: "This team manages Insight Nexus's financial health and organizational growth. They oversee audits, budgeting, procurement, and regulatory compliance, while also leading recruitment and talent development. Their dual focus ensures operational excellence and employee wellbeing, creating a work culture where teams thrive, careers grow, and the organization stays transparent, resilient, and people-centered."
     }
@@ -109,14 +108,20 @@ export default function CareerPage() {
 
       {/* What We Offer Section */}
       <section className="py-16 px-4 bg-blue-50">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1700px] px-[8vw] mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">What <span className="text-[#2563eb]">We</span> Offer</h2>
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {offersData.map((offer, index) => (
-              <div key={index} className="group relative p-6 md:p-8 rounded-xl bg-card hover:bg-accent transition-colors duration-300 border border-gray-200">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 text-primary  transition-colors duration-300">
-                    <Icon icon={offer.icon} className="w-6 h-6" />
+              <div key={index} className="group bg-white relative p-6 md:p-8 rounded-xl bg-card hover:bg-accent transition-colors duration-300 border border-gray-200">
+                <div className="flex flex-col items-start gap-4">
+                  <div className="bg-white p-4 ">
+                    <Image
+                      src={offer.icon}
+                      alt={`${offer.title} icon`}
+                      width={100}
+                      height={100}
+                      className="w-40 h-40 object-contain"
+                    />
                   </div>
                   <div className="space-y-3">
                     <h3 className="text-xl font-semibold tracking-tight">{offer.title}</h3>
@@ -131,16 +136,27 @@ export default function CareerPage() {
 
       {/* Our Teams Section */}
       <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1700px] px-[8vw] mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Our teams</h2>
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {teamsData.map((team, index) => (
               <div key={index} className="group p-6 md:p-8 rounded-xl bg-card hover:bg-accent/50 transition-colors duration-300 border border-gray-300">
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors duration-300">
-                    {team.emoji} {team.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">{team.description}</p>
+                <div className="flex  items-start gap-4">
+                  <div className=" p-4 w-400 ">
+                    <Image
+                      src={team.icon}
+                      alt={`${team.title} icon`}
+                      width={100000}
+                      height={100000}
+                      className="w-40 h-40"
+                    />
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors duration-300">
+                      {team.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">{team.description}</p>
+                  </div>
                 </div>
               </div>
             ))}

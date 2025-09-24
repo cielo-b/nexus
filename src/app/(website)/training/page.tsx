@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Icon } from '@iconify/react'
+import Image from 'next/image'
 
 export default function TrainingPage() {
   return (
@@ -28,20 +28,38 @@ export default function TrainingPage() {
         <div className="mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-6 w-full">
             <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
-                <Icon icon="mdi:book-open" className="w-7 h-7 text-[#2563eb]" />
+              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+                <Image
+                  src="/icons/methodology.png"
+                  alt="Expert-led training icon"
+                  width={100000}
+                  height={10000}
+                  className="w-40 h-40 object-contain"
+                />
               </div>
               <p className="text-sm md:text-base text-gray-600">Expert-led training across education, agriculture, and public health sectors</p>
             </div>
             <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
-                <Icon icon="mdi:trending-up" className="w-7 h-7 text-[#2563eb]" />
+              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+                <Image
+                  src="/icons/strategies.png"
+                  alt="Growth and performance icon"
+                  width={100000}
+                  height={10000}
+                  className="w-40 h-40 object-contain"
+                />
               </div>
               <p className="text-sm md:text-base text-gray-600">Equipping teams with tools for sustainable growth and enhanced performance</p>
             </div>
             <div className="group flex flex-col items-center text-center p-6 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="w-14 h-14 mb-4 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300">
-                <Icon icon="mdi:target" className="w-7 h-7 text-[#2563eb]" />
+              <div className="w-40 h-40 mb-4 rounded-xl bg-white p-4  flex items-center justify-center">
+                <Image
+                  src="/icons/comprehensive.png"
+                  alt="Evidence-based strategies icon"
+                  width={100000}
+                  height={10000}
+                  className="w-40 h-40 object-contain"
+                />
               </div>
               <p className="text-sm md:text-base text-gray-600">Achieving long-term success through impactful, evidence-based strategies</p>
             </div>
@@ -51,28 +69,52 @@ export default function TrainingPage() {
 
       {/* Why Choose Us Section */}
       <section className="py-20 bg-gradient-to-br bg-[#f2f4fa]">
-        <div className="max-w-[1700px] px-[8vw] mx-auto px-4">
+        <div className="max-w-[1700px] px-[8vw] mx-auto">
           <h2 className="text-2xl font-bold text-center mb-16 ">
             Why Choose Insight Nexus Ltd For Your Training Needs?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
-                <Icon icon="mdi:lightbulb" className="w-12 h-12 text-blue-600" />
+                <div className="bg-white p-4 shadow-sm">
+                  <Image
+                    src="/icons/innovation.png"
+                    alt="Expert-led training icon"
+                    width={100}
+                    height={100}
+                    className="w-40 h-40"
+ object-contain                  />
+                </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-800">Expert-Led Training</h3>
               <p className="text-gray-600">Our programs are led by experienced professionals who combine practical knowledge with academic excellence.</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
-                <Icon icon="mdi:account-group" className="w-12 h-12 text-blue-600" />
+                <div className="bg-white p-4 shadow-sm">
+                  <Image
+                    src="/icons/collaboration.png"
+                    alt="Tailored courses icon"
+                    width={100}
+                    height={100}
+                    className="w-40 h-40"
+ object-contain                  />
+                </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-800">Tailored Courses</h3>
               <p className="text-gray-600">We customize our courses to meet each client's specific needs, ensuring relevant skill development.</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
-                <Icon icon="mdi:target" className="w-12 h-12 text-blue-600" />
+                <div className="bg-white p-4 shadow-sm">
+                  <Image
+                    src="/icons/comprehensive.png"
+                    alt="Comprehensive solutions icon"
+                    width={100}
+                    height={100}
+                    className="w-40 h-40"
+ object-contain                  />
+                </div>
               </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-800">Comprehensive Solutions</h3>
               <p className="text-gray-600">Whether you're an individual or an organization, we have the training solutions you need.</p>

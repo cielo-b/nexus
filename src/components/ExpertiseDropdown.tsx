@@ -12,9 +12,10 @@ import { Expertise } from '@/types/expertise'
 interface ExpertiseDropdownProps {
   isOpen: boolean
   onClose: () => void
+  isOverDarkBackground?: boolean
 }
 
-export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdownProps) {
+export default function ExpertiseDropdown({ isOpen, onClose, isOverDarkBackground = false }: ExpertiseDropdownProps) {
   const [expertise, setExpertise] = useState<Expertise[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -58,10 +59,44 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
     }
   }, [isOpen, onClose])
 
+  // Helper function to get dropdown styles based on background
+  const getDropdownStyles = () => {
+    if (isOverDarkBackground) {
+      return 'bg-black/20 backdrop-blur-2xl text-white'
+    } else {
+      return 'bg-white/95 backdrop-blur-2xl text-black shadow-lg'
+    }
+  }
+
+  // Helper function to get item styles
+  const getItemStyles = () => {
+    if (isOverDarkBackground) {
+      return {
+        container: 'bg-white/10 backdrop-blur-sm hover:bg-white/20',
+        text: 'text-white group-hover:text-blue-100',
+        loadingText: 'text-white',
+        loadingSpinner: 'border-white',
+        emptyIcon: 'text-white/60',
+        emptyText: 'text-white/80'
+      }
+    } else {
+      return {
+        container: 'bg-gray-100 hover:bg-gray-200',
+        text: 'text-black group-hover:text-blue-600',
+        loadingText: 'text-black',
+        loadingSpinner: 'border-black',
+        emptyIcon: 'text-gray-400',
+        emptyText: 'text-gray-600'
+      }
+    }
+  }
+
+  const itemStyles = getItemStyles()
+
   return (
     <div 
       data-expertise-dropdown
-      className={`fixed bottom-0 left-0 w-full bg-black/20 backdrop-blur-2xl text-white z-50 transition-all duration-300 ease-in-out ${
+      className={`fixed bottom-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${getDropdownStyles()} ${
         isOpen 
           ? 'opacity-100 translate-y-0 pointer-events-auto' 
           : 'opacity-0 translate-y-full pointer-events-none'
@@ -71,8 +106,8 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin  h-8 w-8 border-b-2 border-white"></div>
-              <span className="ml-3 text-white text-lg">
+              <div className={`animate-spin h-8 w-8 border-b-2 ${itemStyles.loadingSpinner}`}></div>
+              <span className={`ml-3 text-lg ${itemStyles.loadingText}`}>
                 Loading expertise areas...
               </span>
             </div>
@@ -86,9 +121,9 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
                       key={item._id}
                       href={`/expertise/${item.slug.current}`}
                       onClick={onClose}
-                      className="group flex items-center p-4  bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+                      className={`group flex items-center p-4 transition-all duration-300 ${itemStyles.container}`}
                     >
-                      <h4 className="text-white font-semibold group-hover:text-blue-100 transition-colors duration-300">
+                      <h4 className={`font-semibold transition-colors duration-300 ${itemStyles.text}`}>
                         {item.title}
                       </h4>
                     </Link>
@@ -103,9 +138,9 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
                     key={item._id}
                     href={`/expertise/${item.slug.current}`}
                     onClick={onClose}
-                    className="group flex flex-col items-center p-6  bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-105"
+                    className={`group flex flex-col items-center p-6 transition-all duration-300 hover:scale-105 ${itemStyles.container}`}
                   >
-                    <h4 className="text-white font-semibold text-center group-hover:text-blue-100 transition-colors duration-300">
+                    <h4 className={`font-semibold text-center transition-colors duration-300 ${itemStyles.text}`}>
                       {item.title}
                     </h4>
                   </Link>
@@ -116,9 +151,9 @@ export default function ExpertiseDropdown({ isOpen, onClose }: ExpertiseDropdown
             <div className="text-center py-12">
               <Icon 
                 icon="lucide:briefcase" 
-                className="w-16 h-16 mx-auto mb-4 text-white/60" 
+                className={`w-16 h-16 mx-auto mb-4 ${itemStyles.emptyIcon}`} 
               />
-              <p className="text-white/80 text-lg">
+              <p className={`text-lg ${itemStyles.emptyText}`}>
                 No expertise areas available yet
               </p>
             </div>

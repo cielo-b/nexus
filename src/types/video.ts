@@ -11,4 +11,5 @@ export interface Video {
     filename?: string
     size?: number
   }
+  description?: string
 }

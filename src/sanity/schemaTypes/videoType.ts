@@ -6,12 +6,6 @@ export const videoType = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'videoFile',
       title: 'Video File',
       type: 'file',
@@ -19,6 +13,13 @@ export const videoType = defineType({
         accept: 'video/*',
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.max(200).warning('Description should be under 200 characters'),
     }),
   ],
   preview: {
