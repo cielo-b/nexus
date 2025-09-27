@@ -375,10 +375,6 @@ export default function PublicationPage({ params }: PageProps) {
                     </div>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-600">Authors:</span>
-                    <div className="text-gray-900">
-                      {publication.authors?.map(author => author.name).join(', ')}
-                    </div>
                   </div>
                 </div>
                 {publication.tableOfContents && publication.tableOfContents.length > 0 && (

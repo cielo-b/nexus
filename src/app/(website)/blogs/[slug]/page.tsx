@@ -323,10 +323,6 @@ export default function BlogPostPage() {
                       {blog.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
                   </div>
-                  <div>
-                    <span className="font-medium text-gray-600">Author:</span>
-                    <div className="text-gray-900">{blog.author.name}</div>
-                  </div>
                 </div>
                 {blog.tableOfContents && blog.tableOfContents.length > 0 && (
                 <div >
