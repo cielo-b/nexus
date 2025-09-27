@@ -16,8 +16,9 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('dataTransparency').title('Data Transparency Agreement'),
       S.documentTypeListItem('termsOfUse').title('Terms of Use'),
       S.documentTypeListItem('howWeDo').title('How We Do'),
+      S.documentTypeListItem('accordionItem').title('How We Work Items'),
       S.divider(),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() && !['blog', 'publication', 'service', 'teamMember', 'partner', 'testimonial', 'privacyPolicy', 'dataTransparency', 'termsOfUse', 'howWeDo'].includes(item.getId()!),
+        (item) => item.getId() && !['blog', 'publication', 'service', 'teamMember', 'partner', 'testimonial', 'privacyPolicy', 'dataTransparency', 'termsOfUse', 'howWeDo', 'accordionItem'].includes(item.getId()!),
       ),
     ])

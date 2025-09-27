@@ -1059,6 +1059,27 @@ export const termsOfUseQueries = {
   `,
 }
 
+export const accordionItemQueries = {
+  // Get all accordion items ordered by display order
+  getAllAccordionItems: groq`
+    *[_type == "accordionItem"] | order(order asc) {
+      _id,
+      title,
+      description,
+      video,
+      image {
+        _id,
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      order
+    }
+  `,
+}
+
 export const jobQueries = {
   // Get all active jobs ordered by published date
   getAllJobs: groq`
