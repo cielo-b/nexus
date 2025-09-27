@@ -164,7 +164,6 @@ export default function AboutPage() {
               className=' max-w-xl order-1 relative'
             >
               <Image src="/images/about2.png" alt="What We Do" width={10000} height={100000} className="w-[500px] h-80 object-cover  shadow-lg" />
-
             </motion.div>
             <motion.div 
               variants={fadeInRight}
