@@ -110,15 +110,6 @@ export default function PrivacyPolicyPage() {
             >
               Privacy <span className="text-blue-600">Policy</span>
             </motion.h1>
-            <motion.div 
-              variants={fadeInUp}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="max-w-3xl mx-auto"
-            >
-              <p className="text-gray-600 leading-relaxed px-2">
-                {privacyPolicy.introduction}
-              </p>
-            </motion.div>
           </div>
         </div>
       </motion.section>
