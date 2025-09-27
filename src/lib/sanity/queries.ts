@@ -1029,6 +1029,36 @@ export const howWeDoQueries = {
   `,
 }
 
+export const privacyPolicyQueries = {
+  // Get the Privacy Policy content
+  getPrivacyPolicy: groq`
+    *[_type == "privacyPolicy"][0] {
+      _id,
+      content
+    }
+  `,
+}
+
+export const dataTransparencyQueries = {
+  // Get the Data Transparency Agreement content
+  getDataTransparency: groq`
+    *[_type == "dataTransparency"][0] {
+      _id,
+      content
+    }
+  `,
+}
+
+export const termsOfUseQueries = {
+  // Get the Terms of Use content
+  getTermsOfUse: groq`
+    *[_type == "termsOfUse"][0] {
+      _id,
+      content
+    }
+  `,
+}
+
 export const jobQueries = {
   // Get all active jobs ordered by published date
   getAllJobs: groq`

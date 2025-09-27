@@ -171,8 +171,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/data-transparency" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
+                  Data Transparency Agreement
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="text-sm text-gray-300 hover:text-primary-400 transition-colors duration-300 block">
-                  Terms and Conditions
+                  Terms of Use
                 </Link>
               </li>
             </ul>

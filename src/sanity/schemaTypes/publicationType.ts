@@ -191,12 +191,12 @@ export const publicationType = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Pure Reviewed', value: 'pure-reviewed' },
-          { title: 'Not Pure Reviewed', value: 'not-pure-reviewed' },
+          { title: 'Peer Reviewed', value: 'peer-reviewed' },
+          { title: 'Not Peer Reviewed', value: 'not-peer-reviewed' },
         ],
       },
       validation: (Rule) => Rule.required(),
-      initialValue: 'not-pure-reviewed',
+      initialValue: 'not-peer-reviewed',
     }),
   ],
   preview: {

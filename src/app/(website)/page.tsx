@@ -630,7 +630,7 @@ export default function HomePage() {
           <section className="py-8 bg-blue-50">
         <div className="max-w-[1700px] mx-auto px-[8vw]">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Featured Videos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Beyond the paved road, the reality of our Fieldwork</h2>
             <div className="flex items-center gap-4">
               <button
                 onClick={goToPrevVideo}

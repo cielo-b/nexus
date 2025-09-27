@@ -1,0 +1,29 @@
+import { defineType } from 'sanity'
+
+export const dataTransparencyType = defineType({
+  name: 'dataTransparency',
+  title: 'Data Transparency Agreement',
+  type: 'document',
+  fields: [
+    {
+      name: 'content',
+      title: 'Content',
+      type: 'blockContent',
+      description: 'The main content for the Data Transparency Agreement page'
+    }
+  ],
+  preview: {
+    select: {
+      title: 'content',
+      subtitle: 'content'
+    },
+    prepare(selection) {
+      const { title } = selection
+      const block = (title || []).find((item: any) => item._type === 'block')
+      return {
+        title: 'Data Transparency Agreement',
+        subtitle: block ? block.children?.find((child: any) => child._type === 'span')?.text : 'No content'
+      }
+    }
+  }
+})
