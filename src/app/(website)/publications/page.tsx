@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { client } from '@/lib/sanity/client'
 import { groq } from 'next-sanity'
@@ -45,7 +45,7 @@ const SkeletonGrid = () => (
   </div>
 )
 
-export default function PublicationsPage() {
+function PublicationsContent() {
   const searchParams = useSearchParams()
   const [publications, setPublications] = useState<Publication[]>([])
   const [filteredPublications, setFilteredPublications] = useState<Publication[]>([])
@@ -265,5 +265,13 @@ export default function PublicationsPage() {
         </div>
       </section>
     </div>
+  )
+}
+
+export default function PublicationsPage() {
+  return (
+    <Suspense fallback={<SkeletonGrid />}>
+      <PublicationsContent />
+    </Suspense>
   )
 }

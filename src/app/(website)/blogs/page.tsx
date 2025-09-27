@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -45,7 +45,7 @@ const BlogSkeletonGrid = () => (
   </div>
 )
 
-export default function BlogsPage() {
+function BlogsContent() {
   const searchParams = useSearchParams()
   const [blogs, setBlogs] = useState<BlogPost[]>([])
   const [featuredBlog, setFeaturedBlog] = useState<BlogPost | null>(null)
@@ -330,5 +330,13 @@ export default function BlogsPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function BlogsPage() {
+  return (
+    <Suspense fallback={<BlogSkeletonGrid />}>
+      <BlogsContent />
+    </Suspense>
   )
 }
