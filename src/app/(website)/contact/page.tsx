@@ -3,15 +3,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Icon } from '@iconify/react'
+import { contactFormSchema, validateContactForm, type ContactFormData } from '@/lib/validation/contactForm'
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     firstName: '',
     lastName: '',
     email: '',
     company: '',
     message: '',
-    relatesTo: '',
+    relatesTo: 'jobs' as const,
     hearAbout: '',
     privacyConsent: false,
     newsletterConsent: false
@@ -19,6 +20,8 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
+  const [serverError, setServerError] = useState('')
   
   const heroRef = useRef(null)
   const formRef = useRef(null)
@@ -67,22 +70,90 @@ export default function ContactPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
+    const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [name]: newValue
     }))
+
+    // Clear validation error for this field when user starts typing
+    if (validationErrors[name]) {
+      setValidationErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+
+    // Clear server error when user makes changes
+    if (serverError) {
+      setServerError('')
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
+    setValidationErrors({})
+    setServerError('')
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      setSubmitStatus('success')
+      // Client-side validation
+      const validation = validateContactForm(formData)
+      
+      if (!validation.success) {
+        const errors: Record<string, string> = {}
+        validation.errors.forEach(error => {
+          errors[error.field] = error.message
+        })
+        setValidationErrors(errors)
+        setIsSubmitting(false)
+        return
+      }
+
+      // Submit to API
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus('success')
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          company: '',
+          message: '',
+          relatesTo: 'jobs' as const,
+          hearAbout: '',
+          privacyConsent: false,
+          newsletterConsent: false
+        })
+      } else {
+        setSubmitStatus('error')
+        if (result.errors && Array.isArray(result.errors)) {
+          const errors: Record<string, string> = {}
+          result.errors.forEach((error: any) => {
+            errors[error.field] = error.message
+          })
+          setValidationErrors(errors)
+        } else {
+          setServerError(result.message || 'An error occurred while submitting the form')
+        }
+      }
     } catch (error) {
+      console.error('Form submission error:', error)
       setSubmitStatus('error')
+      setServerError('Network error. Please check your connection and try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -159,7 +230,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name
+                      First Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -167,13 +238,18 @@ export default function ContactPage() {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                        validationErrors.firstName ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Enter your first name"
                     />
+                    {validationErrors.firstName && (
+                      <p className="mt-1 text-sm text-red-600">{validationErrors.firstName}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name
+                      Last Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -181,9 +257,14 @@ export default function ContactPage() {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                        validationErrors.lastName ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      placeholder="Enter your last name"
                     />
+                    {validationErrors.lastName && (
+                      <p className="mt-1 text-sm text-red-600">{validationErrors.lastName}</p>
+                    )}
                   </div>
                 </div>
 
@@ -199,9 +280,13 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="name@companyemail.com"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                      validationErrors.email ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   />
+                  {validationErrors.email && (
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.email}</p>
+                  )}
                 </div>
 
                 {/* Company Field */}
@@ -215,8 +300,14 @@ export default function ContactPage() {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="Your company name (optional)"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                      validationErrors.company ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   />
+                  {validationErrors.company && (
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.company}</p>
+                  )}
                 </div>
 
                 {/* Message Field */}
@@ -231,9 +322,13 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     rows={6}
                     placeholder="Please include any details to help us connect you with the right person on the team."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-                    required
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none ${
+                      validationErrors.message ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   />
+                  {validationErrors.message && (
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.message}</p>
+                  )}
                 </div>
 
                 {/* Dropdown Fields */}
@@ -247,14 +342,18 @@ export default function ContactPage() {
                       name="relatesTo"
                       value={formData.relatesTo}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                      required
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                        validationErrors.relatesTo ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     >
                       <option value="">Select an option</option>
                       <option value="jobs">Jobs at Insight Nexus</option>
                       <option value="project">Scoping a potential project</option>
                       <option value="press">Press/Other</option>
                     </select>
+                    {validationErrors.relatesTo && (
+                      <p className="mt-1 text-sm text-red-600">{validationErrors.relatesTo}</p>
+                    )}
                   </div>
                   <div>
                     <label htmlFor="hearAbout" className="block text-sm font-medium text-gray-700 mb-2">
@@ -265,7 +364,9 @@ export default function ContactPage() {
                       name="hearAbout"
                       value={formData.hearAbout}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                        validationErrors.hearAbout ? 'border-red-500' : 'border-gray-300'
+                      }`}
                     >
                       <option value="">Select an option</option>
                       <option value="online">Online</option>
@@ -275,6 +376,9 @@ export default function ContactPage() {
                       <option value="email">Email</option>
                       <option value="other">Other (please share in your message)</option>
                     </select>
+                    {validationErrors.hearAbout && (
+                      <p className="mt-1 text-sm text-red-600">{validationErrors.hearAbout}</p>
+                    )}
                   </div>
                 </div>
 
@@ -287,8 +391,7 @@ export default function ContactPage() {
                       name="privacyConsent"
                       checked={formData.privacyConsent}
                       onChange={handleInputChange}
-                      className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      required
+                      className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded`}
                     />
                     <label htmlFor="privacyConsent" className="text-sm text-gray-700">
                       I consent to my data being collected and stored in line with the guidelines set out in the Insight Nexus{' '}
@@ -298,6 +401,9 @@ export default function ContactPage() {
                       . <span className="text-red-500">*</span>
                     </label>
                   </div>
+                  {validationErrors.privacyConsent && (
+                    <p className="text-sm text-red-600">{validationErrors.privacyConsent}</p>
+                  )}
 
                   <div className="flex items-start space-x-3">
                     <input
@@ -354,7 +460,7 @@ export default function ContactPage() {
                     className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800 text-center"
                   >
                     <Icon icon="mdi:alert-circle" className="w-6 h-6 mx-auto mb-2" />
-                    <p>There was an error submitting your message. Please try again.</p>
+                    <p>{serverError || 'There was an error submitting your message. Please try again.'}</p>
                   </motion.div>
                 )}
               </form>

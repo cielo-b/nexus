@@ -18,19 +18,7 @@ export interface Training {
   duration: string
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert'
   format: 'in-person' | 'online' | 'hybrid' | 'self-paced'
-  price?: {
-    amount?: number
-    currency?: 'USD' | 'RWF' | 'EUR'
-    type?: 'fixed' | 'per-person' | 'per-group' | 'free'
-  }
-  instructor?: {
-    _ref: string
-    _type: 'reference'
-  }
-  instructors?: Array<{
-    _ref: string
-    _type: 'reference'
-  }>
+  applyLink?: string
   prerequisites?: string[]
   learningObjectives?: string[]
   certificate?: boolean

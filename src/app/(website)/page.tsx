@@ -88,6 +88,8 @@ export default function HomePage() {
   const [playingVideos, setPlayingVideos] = useState<Set<number>>(new Set())
   const [mutedVideos, setMutedVideos] = useState<Set<number>>(new Set())
   const [currentHeroVideo, setCurrentHeroVideo] = useState(0)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
   const swiperRef = useRef<any>(null)
   const coreValuesRef = useRef<HTMLDivElement>(null)
   const getToKnowRef = useRef<HTMLDivElement>(null)
@@ -298,6 +300,16 @@ export default function HomePage() {
       }
       return newSet
     })
+  }
+
+  const openVideoModal = (video: Video) => {
+    setSelectedVideo(video)
+    setIsVideoModalOpen(true)
+  }
+
+  const closeVideoModal = () => {
+    setIsVideoModalOpen(false)
+    setSelectedVideo(null)
   }
 
 
@@ -690,11 +702,10 @@ export default function HomePage() {
                               }
                             }}
                             src={video.videoFile.asset.url || ''}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-cover"
                             preload="metadata"
                             playsInline
                             muted={mutedVideos.has(index)}
-                            onClick={() => toggleVideoPlay(index)}
                             onEnded={() => {
                               setPlayingVideos(prev => {
                                 const newSet = new Set(prev)
@@ -708,16 +719,16 @@ export default function HomePage() {
                           {/* Video Control Buttons - Only visible on hover */}
                           <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 z-10 opacity-0 group-hover/video:opacity-100">
                             <div className="flex items-center gap-6">
-                              {/* Play/Pause Button */}
+                              {/* Play Button - Opens Modal */}
                               <button 
                                 onClick={(e) => {
                                   e.stopPropagation()
-                                  toggleVideoPlay(index)
+                                  openVideoModal(video)
                                 }}
                                 className="p-2 cursor-pointer bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/50 transition-all duration-200 hover:scale-110 border-2 border-white/30 shadow-lg"
                               >
                                 <Icon 
-                                  icon={playingVideos.has(index) ? "mdi:pause" : "mdi:play"} 
+                                  icon="mdi:play" 
                                   className="w-10 h-10 text-white ml-1" 
                                 />
                               </button>
@@ -1018,6 +1029,49 @@ export default function HomePage() {
           )}
         </div>
       </section>
+
+      {/* Video Modal */}
+      {isVideoModalOpen && selectedVideo && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-0 sm:p-4">
+          <div className="relative w-full h-full sm:w-3/5 sm:h-4/5 max-w-4xl">
+            {/* Close Button */}
+            <button
+              onClick={closeVideoModal}
+              className="absolute -top-12 right-0 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110 hidden sm:block"
+            >
+              <Icon icon="mdi:close" className="w-6 h-6 text-white" />
+            </button>
+            
+            {/* Mobile Close Button */}
+            <button
+              onClick={closeVideoModal}
+              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110 sm:hidden"
+            >
+              <Icon icon="mdi:close" className="w-6 h-6 text-white" />
+            </button>
+            
+            {/* Video Container */}
+            <div className="relative w-full h-full bg-black sm:rounded-lg overflow-hidden">
+              <video
+                src={selectedVideo.videoFile.asset.url || ''}
+                className="w-full h-full object-contain"
+                controls
+                autoPlay
+                playsInline
+                onEnded={closeVideoModal}
+              />
+            </div>
+            
+            {/* Video Info */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:relative sm:bg-transparent sm:mt-4 sm:text-center">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{selectedVideo.title}</h3>
+              {selectedVideo.description && (
+                <p className="text-gray-300 text-sm">{selectedVideo.description}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

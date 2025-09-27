@@ -3,11 +3,32 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Icon } from '@iconify/react'
 import { client } from '@/lib/sanity/client'
+import { jobQueries } from '@/lib/sanity/queries'
 import { CareerOffer } from '@/types/careerOffer'
 import { CareerTeam } from '@/types/careerTeam'
+import { Job } from '@/types/job'
 
 export default function CareerPage() {
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const data = await client.fetch(jobQueries.getAllJobs)
+        setJobs(data)
+      } catch (error) {
+        console.error('Error fetching jobs:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJobs()
+  }, [])
 
   // What We Offer data
   const offersData = [
@@ -161,6 +182,87 @@ export default function CareerPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Job Listings Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-[1700px] px-[8vw] mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Open <span className="text-[#2563eb]">Positions</span></h2>
+          
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="text-xl">Loading job positions...</div>
+            </div>
+          ) : jobs.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {jobs.map((job) => (
+                <div key={job._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                        {job.title}
+                      </h3>
+                    </div>
+                    
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {job.excerpt}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        job.jobLocationType === 'remote' 
+                          ? 'bg-green-100 text-green-800' 
+                          : job.jobLocationType === 'hybrid'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {job.jobLocationType === 'on-site' ? 'On Site' : 
+                         job.jobLocationType === 'hybrid' ? 'Hybrid' : 'Remote'}
+                      </span>
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                        {job.schedule === 'full-time' ? 'Full Time' :
+                         job.schedule === 'part-time' ? 'Part Time' :
+                         job.schedule === 'contract' ? 'Contract' :
+                         job.schedule === 'internship' ? 'Internship' : 'Freelance'}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center text-sm text-gray-500 mb-4">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      {job.location}
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">
+                        {new Date(job.publishedAt).toLocaleDateString()}
+                      </span>
+                      <Link
+                        href={`/career/${job.slug.current}`}
+                        className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
+                      >
+                        Read More
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No open positions at the moment</h3>
+              <p className="text-gray-500">Check back later for new opportunities.</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -157,58 +157,10 @@ export const trainingType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'price',
-      title: 'Price',
-      type: 'object',
-      fields: [
-        {
-          name: 'amount',
-          type: 'number',
-          title: 'Amount',
-        },
-        {
-          name: 'currency',
-          type: 'string',
-          title: 'Currency',
-          options: {
-            list: [
-              { title: 'USD', value: 'USD' },
-              { title: 'RWF', value: 'RWF' },
-              { title: 'EUR', value: 'EUR' },
-            ],
-          },
-        },
-        {
-          name: 'type',
-          type: 'string',
-          title: 'Price Type',
-          options: {
-            list: [
-              { title: 'Fixed', value: 'fixed' },
-              { title: 'Per Person', value: 'per-person' },
-              { title: 'Per Group', value: 'per-group' },
-              { title: 'Free', value: 'free' },
-            ],
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: 'instructor',
-      title: 'Instructor',
-      type: 'reference',
-      to: { type: 'teamMember' },
-    }),
-    defineField({
-      name: 'instructors',
-      title: 'Instructors',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: { type: 'teamMember' },
-        },
-      ],
+      name: 'applyLink',
+      title: 'Apply Link',
+      type: 'url',
+      description: 'Optional link for training application/registration',
     }),
     defineField({
       name: 'prerequisites',

@@ -5,6 +5,7 @@ import {blogType} from './blogType'
 import expertiseType from './expertiseType'
 import {faqType} from './faqType'
 import {howWeDoType} from './howWeDoType'
+import {jobType} from './jobType'
 import {partnerType} from './partnerType'
 import {publicationType} from './publicationType'
 import {serviceType} from './serviceType'
@@ -14,5 +15,5 @@ import {trainingType} from './trainingType'
 import {videoType} from './videoType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, blogType, expertiseType, faqType, howWeDoType, partnerType, publicationType, serviceType, teamMemberType, testimonialType, trainingType, videoType],
+  types: [blockContentType, blogType, expertiseType, faqType, howWeDoType, jobType, partnerType, publicationType, serviceType, teamMemberType, testimonialType, trainingType, videoType],
 }

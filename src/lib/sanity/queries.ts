@@ -525,31 +525,7 @@ export const trainingQueries = {
       duration,
       level,
       format,
-      price,
-      instructor->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
-      instructors[]->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
+      applyLink,
       prerequisites,
       learningObjectives,
       certificate,
@@ -584,31 +560,7 @@ export const trainingQueries = {
       duration,
       level,
       format,
-      price,
-      instructor->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
-      instructors[]->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
+      applyLink,
       prerequisites,
       learningObjectives,
       certificate,
@@ -644,39 +596,7 @@ export const trainingQueries = {
       duration,
       level,
       format,
-      price,
-      instructor->{
-        _id,
-        name,
-        title,
-        bio,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        },
-        email,
-        linkedin,
-        twitter
-      },
-      instructors[]->{
-        _id,
-        name,
-        title,
-        bio,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        },
-        email,
-        linkedin,
-        twitter
-      },
+      applyLink,
       prerequisites,
       learningObjectives,
       certificate,
@@ -711,31 +631,7 @@ export const trainingQueries = {
       duration,
       level,
       format,
-      price,
-      instructor->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
-      instructors[]->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
+      applyLink,
       prerequisites,
       learningObjectives,
       certificate,
@@ -775,31 +671,7 @@ export const trainingQueries = {
       duration,
       level,
       format,
-      price,
-      instructor->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
-      instructors[]->{
-        _id,
-        name,
-        title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
-      },
+      applyLink,
       prerequisites,
       learningObjectives,
       certificate,
@@ -859,6 +731,111 @@ export const howWeDoQueries = {
     *[_type == "howWeDo"][0] {
       _id,
       content
+    }
+  `,
+}
+
+export const jobQueries = {
+  // Get all active jobs ordered by published date
+  getAllJobs: groq`
+    *[_type == "job" && active == true] | order(publishedAt desc) {
+      _id,
+      title,
+      excerpt,
+      slug,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
+    }
+  `,
+
+  // Get featured jobs
+  getFeaturedJobs: groq`
+    *[_type == "job" && featured == true && active == true] | order(publishedAt desc) {
+      _id,
+      title,
+      excerpt,
+      slug,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
+    }
+  `,
+
+  // Get job by slug
+  getJobBySlug: groq`
+    *[_type == "job" && slug.current == $slug && active == true][0] {
+      _id,
+      title,
+      excerpt,
+      slug,
+      content,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
+    }
+  `,
+
+  // Get jobs by location type
+  getJobsByLocationType: groq`
+    *[_type == "job" && jobLocationType == $locationType && active == true] | order(publishedAt desc) {
+      _id,
+      title,
+      excerpt,
+      slug,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
+    }
+  `,
+
+  // Get jobs by schedule
+  getJobsBySchedule: groq`
+    *[_type == "job" && schedule == $schedule && active == true] | order(publishedAt desc) {
+      _id,
+      title,
+      excerpt,
+      slug,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
+    }
+  `,
+
+  // Get recent jobs (last 5)
+  getRecentJobs: groq`
+    *[_type == "job" && active == true] | order(publishedAt desc) [0...5] {
+      _id,
+      title,
+      excerpt,
+      slug,
+      jobLocationType,
+      schedule,
+      location,
+      urlToJob,
+      publishedAt,
+      featured,
+      active
     }
   `,
 }
