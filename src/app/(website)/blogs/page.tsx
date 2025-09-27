@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { client } from '@/lib/sanity/client'
@@ -45,10 +46,12 @@ const BlogSkeletonGrid = () => (
 )
 
 export default function BlogsPage() {
+  const searchParams = useSearchParams()
   const [blogs, setBlogs] = useState<BlogPost[]>([])
   const [featuredBlog, setFeaturedBlog] = useState<BlogPost | null>(null)
   const [filteredBlogs, setFilteredBlogs] = useState<BlogPost[]>([])
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -72,16 +75,40 @@ export default function BlogsPage() {
     fetchBlogs()
   }, [])
 
+  // Handle author query parameter from URL
+  useEffect(() => {
+    const authorParam = searchParams.get('author')
+    if (authorParam) {
+      setSearchQuery(authorParam)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
+    let filtered = blogs
+
+    // Filter by category
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter(blog =>
+        blog.category.toLowerCase() === selectedCategory.toLowerCase()
+      )
+    }
+
+    // Filter by search query (title, excerpt, content, and author names)
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(blog =>
+        blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (blog.authors && blog.authors.some(author =>
+          author.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ))
+      )
+    }
+
+    setFilteredBlogs(filtered)
+  }, [selectedCategory, searchQuery, blogs])
+
   const handleCategoryFilter = (category: string) => {
     setSelectedCategory(category)
-    if (category === 'All') {
-      setFilteredBlogs(blogs)
-    } else {
-      const filtered = blogs.filter(blog =>
-        blog.category.toLowerCase() === category.toLowerCase()
-      )
-      setFilteredBlogs(filtered)
-    }
   }
 
   const formatDate = (dateString: string) => {
@@ -113,6 +140,21 @@ export default function BlogsPage() {
         <div className="relative w-full px-[8vw]">
           <div className="">
             <h1 className="text-6xl font-semibold mb-6">Our Blog</h1>
+            
+            {/* Search Input */}
+            <div className="max-w-2xl mb-6">
+              <div className="relative">
+                <Icon icon="mdi:magnify" className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
+                <input
+                  type="text"
+                  placeholder="Search blogs by title, content, or author name..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 text-lg border border-white/30 rounded-lg bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent focus:outline-none"
+                />
+              </div>
+            </div>
+            
             <p className="max-w-3xl  leading-relaxed">
               We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations achieve impactful
             </p>
@@ -171,7 +213,7 @@ export default function BlogsPage() {
                       {featuredBlog.category}
                     </span>
                     <span>{formatDate(featuredBlog.publishedAt)}</span>
-                    <span>{featuredBlog.author.name}</span>
+                    <span>{featuredBlog.authors?.map(author => author.name).join(', ')}</span>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {featuredBlog.title}
@@ -230,25 +272,13 @@ export default function BlogsPage() {
                     {blog.category}
                   </span>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
-                        <Icon icon="mdi:heart-outline" className="w-3 h-3 text-[#474747]" />
-                        {formatNumber(blog.likes)}
-                      </div>
-                      <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
-                        <Icon icon="mdi:eye-outline" className="w-3 h-3 text-[#474747]" />
-                        {formatNumber(blog.views)}
-                      </span>
-                    </div>
-                    <Link
-                      href={`/blogs/${blog.slug.current}`}
-                      className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
-                    >
-                      Read More
-                      <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/blogs/${blog.slug.current}`}
+                    className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
+                  >
+                    Read More
+                    <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
                 </div>
               </div>
             ))}
@@ -261,21 +291,40 @@ export default function BlogsPage() {
               <Icon icon="mdi:newspaper-variant-outline" className="w-16 h-16 text-green-500" />
             </div>
             <h3 className="text-2xl font-bold text-gray-800 mb-4">
-              {selectedCategory === 'All' ? 'No Articles Available' : `No ${selectedCategory} Articles`}
+              {searchQuery 
+                ? 'No Articles Found' 
+                : selectedCategory === 'All' 
+                  ? 'No Articles Available' 
+                  : `No ${selectedCategory} Articles`
+              }
             </h3>
             <p className="text-gray-600 text-lg max-w-md mx-auto leading-relaxed mb-8">
-              {selectedCategory === 'All'
-                ? 'We\'re working on adding new articles. Check back soon for insightful content!'
-                : `We don't have any articles in the ${selectedCategory} category yet. Try selecting a different category.`
+              {searchQuery
+                ? 'No articles match your search criteria. Try adjusting your search terms or filters.'
+                : selectedCategory === 'All'
+                  ? 'We\'re working on adding new articles. Check back soon for insightful content!'
+                  : `We don't have any articles in the ${selectedCategory} category yet. Try selecting a different category.`
               }
             </p>
-            {selectedCategory !== 'All' && (
-              <button
-                onClick={() => setSelectedCategory('All')}
-                className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-              >
-                View All Articles
-              </button>
+            {(selectedCategory !== 'All' || searchQuery) && (
+              <div className="flex flex-wrap gap-4 justify-center">
+                {selectedCategory !== 'All' && (
+                  <button
+                    onClick={() => setSelectedCategory('All')}
+                    className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  >
+                    View All Articles
+                  </button>
+                )}
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="bg-gray-500 text-white px-8 py-4  font-semibold hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  >
+                    Clear Search
+                  </button>
+                )}
+              </div>
             )}
           </div>
         )}

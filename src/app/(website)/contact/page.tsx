@@ -391,9 +391,11 @@ export default function ContactPage() {
                       name="privacyConsent"
                       checked={formData.privacyConsent}
                       onChange={handleInputChange}
-                      className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded`}
+                      className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded ${
+                        validationErrors.privacyConsent ? 'border-red-500' : ''
+                      }`}
                     />
-                    <label htmlFor="privacyConsent" className="text-sm text-gray-700">
+                    <label htmlFor="privacyConsent" className="text-sm w-[90%] text-gray-700">
                       I consent to my data being collected and stored in line with the guidelines set out in the Insight Nexus{' '}
                       <a href="/privacy-policy" target="_blank" className="text-blue-600 hover:underline">
                         Privacy Policy

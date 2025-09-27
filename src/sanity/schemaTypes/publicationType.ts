@@ -75,6 +75,16 @@ export const publicationType = defineType({
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'coverVideo',
+      title: 'Cover Video',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
+      description: 'Optional video to show in hero section instead of cover image. If provided, coverImage is still required for cards.',
     }),
     defineField({
       name: 'publicationDate',
@@ -83,30 +93,16 @@ export const publicationType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'name',
-          title: 'Name',
-          type: 'string',
-          validation: (Rule) => Rule.required(),
-        }),
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'image',
-          title: 'Image',
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-        }),
+      name: 'authors',
+      title: 'Authors',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'author' }],
+        },
       ],
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'category',
@@ -188,6 +184,19 @@ export const publicationType = defineType({
       title: 'Views Count',
       type: 'number',
       initialValue: 0,
+    }),
+    defineField({
+      name: 'status',
+      title: 'Review Status',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Pure Reviewed', value: 'pure-reviewed' },
+          { title: 'Not Pure Reviewed', value: 'not-pure-reviewed' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+      initialValue: 'not-pure-reviewed',
     }),
   ],
   preview: {

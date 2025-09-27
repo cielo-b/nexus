@@ -43,6 +43,27 @@ export default defineType({
       ],
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'quote',
+      title: 'Quote',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'text',
+          title: 'Quote Text',
+          type: 'text',
+          rows: 4,
+          validation: (Rule) => Rule.required().min(10).max(500),
+        }),
+        defineField({
+          name: 'author',
+          title: 'Quote Author',
+          type: 'string',
+          validation: (Rule) => Rule.required().min(2).max(100),
+        }),
+      ],
+      description: 'Optional quote to highlight the expertise area',
+    }),
   ],
   preview: {
     select: {

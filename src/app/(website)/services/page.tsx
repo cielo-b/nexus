@@ -15,21 +15,49 @@ export default function ServicesPage() {
   const [howWeDoContent, setHowWeDoContent] = useState<HowWeDo | null>(null)
   const [loading, setLoading] = useState(true)
   
+  // State for accordion
+  const [activeAccordionItem, setActiveAccordionItem] = useState<number | null>(0)
+
+  // Handle accordion item click
+  const handleAccordionClick = (index: number) => {
+    setActiveAccordionItem(activeAccordionItem === index ? null : index)
+  }
+
+  // Accordion data
+  const accordionItems = [
+    {
+      title: "Data built by listening.",
+      content: "Who knows your impact best? The people who experience it. That's why we listen to them directly, building measurement tools around what they say matters most to their lives.",
+      video: "https://60decibels.com/wp-content/uploads/2022/10/Data-Built-by-Listening.mp4"
+    },
+    {
+      title: "Speedy and standardized.",
+      content: "Most impact measurement is either too complex to be scalable or too simple to be useful. Ours is a Goldilocks approach: 15-minute, standardized surveys built for repetition and comparability.",
+      video: "https://60decibels.com/wp-content/uploads/2025/07/Website-Homepage-Report.mp4"
+    },
+    {
+      title: "Benchmarked impact performance.",
+      content: "Access our global impact database to benchmark and improve your social performance.",
+      video: null,
+      lottie: "https://60decibels.com/wp-content/uploads/2022/11/Benchmarks.json"
+    }
+  ]
+
   // Refs for animations
   const heroRef = useRef(null)
   const servicesRef = useRef(null)
   const howWeDoRef = useRef(null)
-  
+
   // All useInView calls at the top level to prevent hook order issues
   const isServicesInView = useInView(servicesRef)
   const isHowWeDoInView = useInView(howWeDoRef)
-  
+
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
     visible: { opacity: 1, y: 0 }
   }
-  
+
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -39,7 +67,7 @@ export default function ServicesPage() {
       }
     }
   }
-  
+
   const staggerItem = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 }
@@ -160,7 +188,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid Section */}
-      <motion.section 
+      <motion.section
         ref={servicesRef}
         initial="hidden"
         animate={isServicesInView ? "visible" : "hidden"}
@@ -214,22 +242,143 @@ export default function ServicesPage() {
 
       {/* How We Do Section */}
       {!loading && howWeDoContent && (
-                  <div className="max-w-[1700px] px-[8vw] mx-auto">
-                  <motion.div
-                    variants={fadeInUp}
-                    className="text-center mb-4 " 
-                  >
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8">
-                      How We <span className="text-blue-600">Do It</span>
-                    </h2>
-                  </motion.div>
-      
-                  <motion.div
-                    variants={fadeInUp}
-                  >
-                    <BlockContentRenderer content={howWeDoContent.content} />
-                  </motion.div>
+        <div className="max-w-[1700px] px-[8vw] mx-auto">
+          <motion.div
+            variants={fadeInUp}
+            className="text-center mb-4 "
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
+              How We <span className="text-blue-600">Do It</span>
+            </h2>
+            {/* How We Work Section - Modern Grid Layout */}
+            <section className="py-8" id="how-we-work">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                  {/* Left Column - Expandable Items */}
+                  <div className="space-y-4">
+                    {accordionItems.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300"
+                      >
+                        <button
+                          onClick={() => handleAccordionClick(index)}
+                          className="w-full px-6 py-6 text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                        >
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                              {item.title}
+                            </h3>
+                            <motion.div
+                              animate={{ rotate: activeAccordionItem === index ? 45 : 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="flex-shrink-0"
+                            >
+                              <Icon 
+                                icon="mdi:plus" 
+                                className="w-6 h-6 text-blue-600" 
+                              />
+                            </motion.div>
+                          </div>
+                        </button>
+                        
+                        <motion.div
+                          initial={false}
+                          animate={{
+                            height: activeAccordionItem === index ? "auto" : 0,
+                            opacity: activeAccordionItem === index ? 1 : 0
+                          }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-6">
+                            <p className="text-gray-600 mb-6 leading-relaxed">
+                              {item.content}
+                            </p>
+                            <a 
+                              href="/contact/" 
+                              className="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300 font-medium"
+                            >
+                              <span>Speak to an expert</span>
+                              <Icon icon="mdi:arrow-right" className="ml-2 w-4 h-4" />
+                            </a>
+                          </div>
+                        </motion.div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Right Column - Video Display */}
+                  <div className="lg:sticky lg:top-8">
+                    <motion.div
+                      key={activeAccordionItem}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                      className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl"
+                    >
+                      <div className="aspect-video">
+                        <video 
+                          autoPlay 
+                          muted 
+                          playsInline 
+                          loop
+                          className="w-full h-full object-cover"
+                        >
+                          <source 
+                            src="https://60decibels.com/wp-content/uploads/2022/10/Data-Built-by-Listening.mp4" 
+                            type="video/mp4" 
+                          />
+                        </video>
+                      </div>
+                      
+                      {/* Video Overlay with Item Info */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
+                        <div className="absolute bottom-6 left-6 right-6">
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            <h4 className="text-white text-xl font-semibold mb-2">
+                              {activeAccordionItem !== null ? accordionItems[activeAccordionItem].title : accordionItems[0].title}
+                            </h4>
+                            <p className="text-gray-200 text-sm">
+                              {activeAccordionItem !== null ? accordionItems[activeAccordionItem].content : accordionItems[0].content}
+                            </p>
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      {/* Play Button Overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+                          className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/30"
+                        >
+                          <Icon icon="mdi:play" className="w-8 h-8 text-white ml-1" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
+                  </div>
                 </div>
+              </div>
+            </section>
+          </motion.div>
+
+
+
+          <motion.div
+            variants={fadeInUp}
+          >
+            <BlockContentRenderer content={howWeDoContent.content} />
+          </motion.div>
+        </div>
       )}
     </div>
   )

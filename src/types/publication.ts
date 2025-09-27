@@ -1,13 +1,12 @@
-export interface PublicationAuthor {
-  name: string
-  title?: string
-  image?: {
-    asset: {
-      _ref: string
-      _type: string
-    }
-    alt?: string
+import { Author } from './author'
+
+export interface PublicationVideo {
+  asset: {
+    _id: string
+    url: string
   }
+  filename?: string
+  size?: number
 }
 
 export interface PublicationSection {
@@ -26,14 +25,15 @@ export interface Publication {
   }
   excerpt: string
   tableOfContents?: PublicationSection[]
-  coverImage?: {
+  coverImage: {
     asset: {
       url: string
     }
     alt?: string
   }
+  coverVideo?: PublicationVideo
   publicationDate: string
-  author: PublicationAuthor
+  authors: Author[]
   category: string
   tags?: string[]
   service?: {
@@ -54,4 +54,5 @@ export interface Publication {
   featured: boolean
   likes: number
   views: number
+  status: 'pure-reviewed' | 'not-pure-reviewed'
 }

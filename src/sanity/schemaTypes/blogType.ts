@@ -85,6 +85,15 @@ export const blogType = defineType({
       ],
     }),
     defineField({
+      name: 'coverVideo',
+      title: 'Cover Video',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
+      description: 'Optional video to show in hero section instead of cover image',
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',
@@ -102,30 +111,16 @@ export const blogType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'name',
-          title: 'Name',
-          type: 'string',
-          validation: (Rule) => Rule.required(),
-        }),
-        defineField({
-          name: 'title',
-          title: 'Title',
-          type: 'string',
-        }),
-        defineField({
-          name: 'image',
-          title: 'Image',
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-        }),
+      name: 'authors',
+      title: 'Authors',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'author' }],
+        },
       ],
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'publishedAt',
@@ -144,6 +139,13 @@ export const blogType = defineType({
       title: 'Featured',
       type: 'boolean',
       description: 'Show this blog post as featured on the homepage',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'showOnRecent',
+      title: 'Show on Recent',
+      type: 'boolean',
+      description: 'Show this blog post in the recent blogs section on homepage',
       initialValue: false,
     }),
     defineField({

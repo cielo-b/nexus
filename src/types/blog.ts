@@ -1,14 +1,4 @@
-export interface BlogAuthor {
-  name: string
-  title?: string
-  image?: {
-    asset: {
-      _ref: string
-      _type: string
-    }
-    alt?: string
-  }
-}
+import { Author } from './author'
 
 export interface BlogImage {
   asset: {
@@ -22,6 +12,15 @@ export interface BlogImage {
     height: number
     width: number
   }
+}
+
+export interface BlogVideo {
+  asset: {
+    _id: string
+    url: string
+  }
+  filename?: string
+  size?: number
 }
 
 export interface BlogSection {
@@ -41,11 +40,13 @@ export interface BlogPost {
   excerpt: string
   tableOfContents?: BlogSection[]
   coverImage?: BlogImage
+  coverVideo?: BlogVideo
   category: string
-  author: BlogAuthor
+  authors: Author[]
   publishedAt: string
   readingTime: number
   featured: boolean
+  showOnRecent: boolean
   likes: number
   views: number
   shares: number

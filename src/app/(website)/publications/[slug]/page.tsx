@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from 'react'
 import { client } from '@/lib/sanity'
+import { publicationQueries } from '@/lib/sanity/queries'
 import { Publication } from '@/types/publication'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -9,6 +10,8 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { Icon } from '@iconify/react'
+import AuthorPopover from '@/components/AuthorPopover'
+import ImageModal from '@/components/ImageModal'
 
 // Skeleton component for similar publications
 const SimilarPublicationSkeleton = () => (
@@ -45,86 +48,29 @@ interface PageProps {
 
 async function getPublication(slug: string): Promise<Publication | null> {
   const query = `*[_type == "publication" && slug.current == $slug][0] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    tableOfContents,
-    coverImage,
+    _id, title, slug, excerpt, content, tableOfContents,
+    coverImage { asset->{ _id, url }, alt },
+    coverVideo { asset->{ _id, url }, filename, size },
     publicationDate,
-    author {
-      name,
-      title,
-      image {
-        asset->{
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    category,
-    tags,
-    downloadUrl,
-    downloadFile {
-      asset->{
-        _id,
-        url
-      },
-      filename,
-      size
-    },
-    externalUrl,
-    featured,
-    likes,
-    views
+    authors[]->{ _id, name, title, email, orcidId, affiliations, researchInterests, isCorrespondingAuthor },
+    category, tags, downloadUrl,
+    downloadFile { asset->{ _id, url }, filename, size },
+    externalUrl, featured, likes, views, status, expertise
   }`
-
   return await client.fetch(query, { slug })
 }
 
 async function getSimilarPublications(category: string, excludeId: string): Promise<Publication[]> {
   const query = `*[_type == "publication" && category == $category && _id != $excludeId] | order(publicationDate desc) [0...6] {
-    _id,
-    title,
-    slug,
-    excerpt,
-    coverImage {
-      asset->{
-        _id,
-        url
-      },
-      alt
-    },
+    _id, title, slug, excerpt,
+    coverImage { asset->{ _id, url }, alt },
+    coverVideo { asset->{ _id, url }, filename, size },
     publicationDate,
-    author {
-      name,
-      title,
-      image {
-        asset->{
-          _id,
-          url
-        },
-        alt
-      }
-    },
-    category,
-    tags,
-    downloadUrl,
-    downloadFile {
-      asset->{
-        _id,
-        url
-      },
-      filename,
-      size
-    },
-    externalUrl,
-    featured,
-    likes,
-    views
+    authors[]->{ _id, name, title, email, orcidId, affiliations, researchInterests, isCorrespondingAuthor },
+    category, tags, downloadUrl,
+    downloadFile { asset->{ _id, url }, filename, size },
+    externalUrl, featured, likes, views, status
   }`
-
   return await client.fetch(query, { category, excludeId })
 }
 
@@ -135,11 +81,13 @@ export default function PublicationPage({ params }: PageProps) {
   const [loading, setLoading] = useState(true)
   const [similarLoading, setSimilarLoading] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('')
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
 
   useEffect(() => {
     const fetchPublication = async () => {
       try {
         const data = await getPublication(resolvedParams.slug)
+        console.log(data)
         if (!data) {
           notFound()
         }
@@ -226,7 +174,18 @@ export default function PublicationPage({ params }: PageProps) {
       {/* Hero Section */}
       <section className="relative h-[50vh]  flex flex-col items-center justify-center text-white bg-transparent ">
 
-        <Image src={getSanityImage(publication.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full " />
+        {publication.coverVideo ? (
+          <video
+            src={publication.coverVideo.asset.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="object-cover absolute inset-0 w-full h-full"
+          />
+        ) : (
+          <Image src={getSanityImage(publication.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full " />
+        )}
         {/* <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div> */}
         <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
         <div className="relative w-full px-[8vw] max-w-[1700px] mx-auto h-full flex flex-col justify-end  pb-[3vh] pt-[9vh]">
@@ -240,6 +199,26 @@ export default function PublicationPage({ params }: PageProps) {
             </span>
           </div>
           <h1 className="text-7xl font-semibold mb-6 ">{publication.title}</h1>
+          
+          {/* Authors List */}
+          {publication.authors && publication.authors.length > 0 && (
+            <div className="mb-8">
+              <div className="flex flex-wrap gap-2">
+                {publication.authors.map((author, index) => (
+                  <div key={author._id} className="flex items-center">
+                    <AuthorPopover author={author}>
+                      <span className="text-lg text-white/90 hover:text-white transition-colors cursor-pointer">
+                        {author.name}
+                      </span>
+                    </AuthorPopover>
+                    {index < publication.authors.length - 1 && (
+                      <span className="text-white/70 mx-2">,</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -288,6 +267,23 @@ export default function PublicationPage({ params }: PageProps) {
                                   <em className="italic">{children}</em>
                                 ),
                               },
+                              types: {
+                                image: ({ value }) => (
+                                  <div className="my-6">
+                                    <Image
+                                      src={getSanityImage(value)}
+                                      alt={value.alt || 'Publication image'}
+                                      width={800}
+                                      height={600}
+                                      className="w-full h-auto rounded-lg cursor-pointer hover:opacity-90 transition-opacity duration-200 shadow-lg"
+                                      onClick={() => setModalImage({
+                                        src: getSanityImage(value),
+                                        alt: value.alt || 'Publication image'
+                                      })}
+                                    />
+                                  </div>
+                                ),
+                              },
                             }}
                           />
                         </div>
@@ -322,17 +318,41 @@ export default function PublicationPage({ params }: PageProps) {
                 </div>
               </div>
               {publication.downloadFile && (
-                    <div className="flex items-center pr-[8vw] pl-[3vw]  justify-between">
-                    <a
-                      href={publication.downloadFile.asset.url}
-                      download={publication.downloadFile.filename}
+                    <div className="flex items-center pr-[8vw] pl-[3vw]  justify-between mb-4">
+                    <button
+                      onClick={() => {
+                        if (publication.downloadFile) {
+                          const link = document.createElement('a')
+                          link.href = publication.downloadFile.asset.url
+                          link.download = publication.downloadFile.filename || `${publication.title}.pdf`
+                          link.target = '_blank'
+                          document.body.appendChild(link)
+                          link.click()
+                          document.body.removeChild(link)
+                        }
+                      }}
                       className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium  hover:bg-blue-700 transition-colors"
                     >
                       <Icon icon="mdi:download" className="w-5 h-5 mr-2" />
                       Download
-                    </a>
+                    </button>
                   </div>
               )}
+              
+              {/* Review Status */}
+              <div className="pr-[8vw] pl-[3vw] mb-4">
+                <div className="flex items-center gap-2">
+                  <Icon 
+                    icon={publication.status === 'pure-reviewed' ? "mdi:check-circle" : "mdi:clock-outline"} 
+                    className={`w-5 h-5 ${publication.status === 'pure-reviewed' ? 'text-green-600' : 'text-yellow-600'}`} 
+                  />
+                  <span className={`text-sm font-medium ${
+                    publication.status === 'pure-reviewed' ? 'text-green-700' : 'text-yellow-700'
+                  }`}>
+                    {publication.status === 'pure-reviewed' ? 'Pure Reviewed' : 'Not Pure Reviewed'}
+                  </span>
+                </div>
+              </div>
               {/* Publication Metadata */}
               <div className=" mb-8 pr-[8vw] pl-[3vw] py-[4vh] space-y-4 ">
                 <h3 className="font-bold text-gray-900 mb-4">Publication Details</h3>
@@ -355,9 +375,9 @@ export default function PublicationPage({ params }: PageProps) {
                     </div>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-600">Author:</span>
+                    <span className="font-medium text-gray-600">Authors:</span>
                     <div className="text-gray-900">
-                      {publication.author?.name}
+                      {publication.authors?.map(author => author.name).join(', ')}
                     </div>
                   </div>
                 </div>
@@ -412,15 +432,23 @@ export default function PublicationPage({ params }: PageProps) {
         {/* Actions */}
         <div className="mt-8 flex flex-wrap gap-4">
           {publication.downloadUrl && (
-            <a
-              href={publication.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                if (publication.downloadUrl) {
+                  const link = document.createElement('a')
+                  link.href = publication.downloadUrl
+                  link.download = `${publication.title}.pdf`
+                  link.target = '_blank'
+                  document.body.appendChild(link)
+                  link.click()
+                  document.body.removeChild(link)
+                }
+              }}
               className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium  hover:bg-blue-700 transition-colors"
             >
               <Icon icon="mdi:download" className="w-5 h-5 mr-2" />
               Download PDF
-            </a>
+            </button>
           )}
 
           {publication.externalUrl && (
@@ -505,41 +533,17 @@ export default function PublicationPage({ params }: PageProps) {
                         {similarPub.category}
                       </span>
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          {similarPub.author?.image ? (
-                            <div className="w-5 h-5  overflow-hidden">
-                              <Image
-                                src={getSanityImage(similarPub.author.image)}
-                                alt={similarPub.author.image.alt || similarPub.author.name}
-                                width={20}
-                                height={20}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ) : (
-                            <div className="w-5 h-5  bg-blue-100 flex items-center justify-center">
-                              <span className="text-blue-600 font-semibold text-xs">
-                                {similarPub.author?.name?.charAt(0).toUpperCase() || 'A'}
-                              </span>
-                            </div>
-                          )}
-                          <span className="text-xs text-gray-600 truncate">
-                            {similarPub.author?.name || 'Anonymous'}
-                          </span>
-                        </div>
-                        <button
-                          className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            handleSimilarClick(e)
-                          }}
-                        >
-                          Read More
-                          <Icon icon="mdi:arrow-right" className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <button
+                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleSimilarClick(e)
+                        }}
+                      >
+                        Read More
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
                 )
@@ -552,6 +556,16 @@ export default function PublicationPage({ params }: PageProps) {
           )}
         </div>
       </div>
+
+      {/* Image Modal */}
+      {modalImage && (
+        <ImageModal
+          isOpen={!!modalImage}
+          onClose={() => setModalImage(null)}
+          imageSrc={modalImage.src}
+          imageAlt={modalImage.alt}
+        />
+      )}
     </div>
   )
 }

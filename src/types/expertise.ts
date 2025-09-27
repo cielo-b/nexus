@@ -1,3 +1,8 @@
+export interface ExpertiseQuote {
+  text: string
+  author: string
+}
+
 export interface Expertise {
   _id: string
   _type: 'expertise'
@@ -13,4 +18,5 @@ export interface Expertise {
     }
     alt?: string
   }
+  quote?: ExpertiseQuote
 }

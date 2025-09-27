@@ -172,7 +172,7 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [blogs, partnersData, testimonialsData, faqsData, videosData, howWeDoData] = await Promise.all([
-          client.fetch(blogQueries.getAllBlogs),
+          client.fetch(blogQueries.getRecentBlogs),
           client.fetch(partnerQueries.getAllPartners),
           client.fetch(testimonialQueries.getAllTestimonials),
           client.fetch(faqQueries.getAllFAQs),
@@ -1003,25 +1003,13 @@ export default function HomePage() {
                       {blog.category}
                     </span>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-sm">
-                          <Icon icon="mdi:heart-outline" className="w-4 h-4 text-[#474747]" />
-                          {formatNumber(blog.likes)}
-                        </div>
-                        <span className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-sm">
-                          <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
-                          {formatNumber(blog.views)}
-                        </span>
-                      </div>
-                      <Link
-                        href={`/blogs/${blog.slug.current}`}
-                        className="bg-primary text-white px-4 py-2  flex items-center gap-2 justify-center text-sm"
-                      >
-                        Read More
-                        <Icon icon="mdi:arrow-right" className="w-4 h-4" />
-                      </Link>
-                    </div>
+                    <Link
+                      href={`/blogs/${blog.slug.current}`}
+                      className="w-full bg-primary text-white px-4 py-2  flex items-center gap-2 justify-center text-sm"
+                    >
+                      Read More
+                      <Icon icon="mdi:arrow-right" className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
               ))}

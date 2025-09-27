@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { client } from '@/lib/sanity/client'
 import { groq } from 'next-sanity'
 import { getSanityImage } from '@/lib/getSanityImage'
@@ -11,6 +12,11 @@ import Image from 'next/image'
 import { Icon } from '@iconify/react'
 
 const categories = ['All', 'Economics', 'Agriculture', 'Technology', 'Politics', 'Health', 'Environment', 'Sports']
+
+interface SearchFilters {
+  category: string
+  searchQuery: string
+}
 
 // Skeleton loading components
 const PublicationSkeleton = () => (
@@ -40,9 +46,11 @@ const SkeletonGrid = () => (
 )
 
 export default function PublicationsPage() {
+  const searchParams = useSearchParams()
   const [publications, setPublications] = useState<Publication[]>([])
   const [filteredPublications, setFilteredPublications] = useState<Publication[]>([])
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -61,16 +69,37 @@ export default function PublicationsPage() {
     fetchPublications()
   }, [])
 
+  // Handle author query parameter from URL
   useEffect(() => {
-    if (selectedCategory === 'All') {
-      setFilteredPublications(publications)
-    } else {
-      const filtered = publications.filter(publication =>
+    const authorParam = searchParams.get('author')
+    if (authorParam) {
+      setSearchQuery(authorParam)
+    }
+  }, [searchParams])
+
+  useEffect(() => {
+    let filtered = publications
+
+    // Filter by category
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter(publication =>
         publication.category.toLowerCase() === selectedCategory.toLowerCase()
       )
-      setFilteredPublications(filtered)
     }
-  }, [selectedCategory, publications])
+
+    // Filter by search query (title, excerpt, content, and author names)
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(publication =>
+        publication.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        publication.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (publication.authors && publication.authors.some(author =>
+          author.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ))
+      )
+    }
+
+    setFilteredPublications(filtered)
+  }, [selectedCategory, searchQuery, publications])
 
   return (
     <div className="min-h-screen ">
@@ -82,6 +111,21 @@ export default function PublicationsPage() {
         <div className="relative w-full px-[8vw]">
           <div className="">
             <h1 className="text-6xl font-semibold mb-6">Publications</h1>
+            
+            {/* Search Input */}
+            <div className="max-w-2xl mb-6">
+              <div className="relative">
+                <Icon icon="mdi:magnify" className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6" />
+                <input
+                  type="text"
+                  placeholder="Search publications by title, content, or author name..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 text-lg border border-white/30 rounded-lg bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:ring-2 focus:ring-white/50 focus:border-transparent focus:outline-none"
+                />
+              </div>
+            </div>
+            
             <p className="max-w-3xl  leading-relaxed">
               We provide data-driven insights and expert consultancy services to drive meaningful and sustainable transformation across various sectors. Our work spans education, agriculture, public health, and beyond, helping organizations achieve impactful
             </p>
@@ -89,8 +133,9 @@ export default function PublicationsPage() {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Category Filter Section */}
       <section className='px-[8vw] py-[4vh] space-y-[3vh]'>
+        {/* Category Filter */}
         <div >
           <div className="flex flex-wrap justify-start items-center gap-4">
             {categories.map((category) => (
@@ -118,21 +163,40 @@ export default function PublicationsPage() {
                 <Icon icon="mdi:file-document-outline" className="w-16 h-16 text-blue-500" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                {selectedCategory === 'All' ? 'No Publications Available' : `No ${selectedCategory} Publications`}
+                {searchQuery 
+                  ? 'No Publications Found' 
+                  : selectedCategory === 'All' 
+                    ? 'No Publications Available' 
+                    : `No ${selectedCategory} Publications`
+                }
               </h3>
               <p className="text-gray-600 text-lg max-w-md mx-auto leading-relaxed mb-8">
-                {selectedCategory === 'All'
-                  ? 'We\'re working on adding new publications. Check back soon for insightful content!'
-                  : `We don't have any publications in the ${selectedCategory} category yet. Try selecting a different category.`
+                {searchQuery
+                  ? 'No publications match your search criteria. Try adjusting your search terms or filters.'
+                  : selectedCategory === 'All'
+                    ? 'We\'re working on adding new publications. Check back soon for insightful content!'
+                    : `We don't have any publications in the ${selectedCategory} category yet. Try selecting a different category.`
                 }
               </p>
-              {selectedCategory !== 'All' && (
-                <button
-                  onClick={() => setSelectedCategory('All')}
-                  className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                >
-                  View All Publications
-                </button>
+              {(selectedCategory !== 'All' || searchQuery) && (
+                <div className="flex flex-wrap gap-4 justify-center">
+                  {selectedCategory !== 'All' && (
+                    <button
+                      onClick={() => setSelectedCategory('All')}
+                      className="bg-primary text-white px-8 py-4  font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    >
+                      View All Publications
+                    </button>
+                  )}
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="bg-gray-500 text-white px-8 py-4  font-semibold hover:bg-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    >
+                      Clear Search
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           ) : (
@@ -181,41 +245,17 @@ export default function PublicationsPage() {
                         {publication.category}
                       </span>
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          {publication.author?.image ? (
-                            <div className="w-5 h-5  overflow-hidden">
-                              <Image
-                                src={getSanityImage(publication.author.image)}
-                                alt={publication.author.image.alt || publication.author.name}
-                                width={20}
-                                height={20}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          ) : (
-                            <div className="w-5 h-5  bg-blue-100 flex items-center justify-center">
-                              <span className="text-blue-600 font-semibold text-xs">
-                                {publication.author?.name?.charAt(0).toUpperCase() || 'A'}
-                              </span>
-                            </div>
-                          )}
-                          <span className="text-xs text-gray-600 truncate">
-                            {publication.author?.name || 'Anonymous'}
-                          </span>
-                        </div>
-                        <button
-                          className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            handlePublicationClick(e)
-                          }}
-                        >
-                          Read More
-                          <Icon icon="mdi:arrow-right" className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <button
+                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handlePublicationClick(e)
+                        }}
+                      >
+                        Read More
+                        <Icon icon="mdi:arrow-right" className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
                 )

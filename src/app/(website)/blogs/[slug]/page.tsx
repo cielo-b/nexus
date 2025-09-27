@@ -10,6 +10,8 @@ import { blogQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { BlogPost } from '@/types/blog'
 import { Icon } from '@iconify/react'
+import AuthorPopover from '@/components/AuthorPopover'
+import ImageModal from '@/components/ImageModal'
 
 // Skeleton component for related blogs
 const RelatedBlogSkeleton = () => (
@@ -43,6 +45,7 @@ export default function BlogPostPage() {
   const [loading, setLoading] = useState(true)
   const [relatedLoading, setRelatedLoading] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('')
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null)
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -157,7 +160,18 @@ export default function BlogPostPage() {
       {/* Hero Section */}
       <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
-        <Image src={getSanityImage(blog.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
+        {blog.coverVideo ? (
+          <video
+            src={blog.coverVideo.asset.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="object-cover absolute inset-0 w-full h-full opacity-20"
+          />
+        ) : (
+          <Image src={getSanityImage(blog.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
+        )}
         <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/blogs" className='text-white/50   '>
@@ -169,6 +183,26 @@ export default function BlogPostPage() {
             </span>
           </div>
           <h1 className="text-7xl font-semibold mb-6 text-center">{blog.title}</h1>
+          
+          {/* Authors List */}
+          {blog.authors && blog.authors.length > 0 && (
+            <div className="mb-8 text-center">
+              <div className="flex flex-wrap justify-center gap-2">
+                {blog.authors.map((author, index) => (
+                  <div key={author._id} className="flex items-center">
+                    <AuthorPopover author={author}>
+                      <span className="text-lg text-white/90 hover:text-white transition-colors cursor-pointer">
+                        {author.name}
+                      </span>
+                    </AuthorPopover>
+                    {index < blog.authors.length - 1 && (
+                      <span className="text-white/70 mx-2">,</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -214,6 +248,23 @@ export default function BlogPostPage() {
                                 ),
                                 em: ({ children }) => (
                                   <em className="italic">{children}</em>
+                                ),
+                              },
+                              types: {
+                                image: ({ value }) => (
+                                  <div className="my-6">
+                                    <Image
+                                      src={getSanityImage(value)}
+                                      alt={value.alt || 'Blog image'}
+                                      width={800}
+                                      height={600}
+                                      className="w-full h-auto rounded-lg cursor-pointer hover:opacity-90 transition-opacity duration-200 shadow-lg"
+                                      onClick={() => setModalImage({
+                                        src: getSanityImage(value),
+                                        alt: value.alt || 'Blog image'
+                                      })}
+                                    />
+                                  </div>
                                 ),
                               },
                             }}
@@ -368,6 +419,16 @@ export default function BlogPostPage() {
           )}
         </div>
       </div>
+
+      {/* Image Modal */}
+      {modalImage && (
+        <ImageModal
+          isOpen={!!modalImage}
+          onClose={() => setModalImage(null)}
+          imageSrc={modalImage.src}
+          imageAlt={modalImage.alt}
+        />
+      )}
     </div>
   )
 }

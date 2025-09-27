@@ -222,6 +222,34 @@ export default function ExpertisePage() {
         </div>
       </section>
 
+      {/* Quote Section */}
+      {expertise.quote && (
+        <section className="py-8 bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div className="px-[8vw] max-w-[1700px] mx-auto">
+            <div >
+              <div className="">
+                {/* Quote Icon */}
+                <div className="w-16 h-16  mb-3 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Icon icon="mdi:format-quote-open" className="w-8 h-8 text-blue-600" />
+                </div>
+                
+                {/* Quote Text */}
+                <blockquote className="text-xl md:text-2xl font-medium text-gray-800 leading-relaxed mb-2">
+                  "{expertise.quote.text}"
+                </blockquote>
+                
+                {/* Quote Author */}
+                <div className="border-t border-gray-200 pt-3">
+                  <div className="text-lg font-semibold text-gray-900 mb-1">
+                    {expertise.quote.author}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Publications Section */}
       <section className="py-8 bg-gray-50">
         <div className="px-[8vw] max-w-[1700px] mx-auto">

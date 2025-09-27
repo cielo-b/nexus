@@ -14,11 +14,29 @@ export const blogQueries = {
           url
         }
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       category,
-      author,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
       publishedAt,
       readingTime,
       featured,
+      showOnRecent,
       likes,
       views,
       shares
@@ -38,11 +56,71 @@ export const blogQueries = {
           url
         }
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       category,
-      author,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
       publishedAt,
       readingTime,
       featured,
+      showOnRecent,
+      likes,
+      views,
+      shares
+    }
+  `,
+
+  // Get recent blogs for homepage (3 random blogs with showOnRecent = true)
+  getRecentBlogs: groq`
+    *[_type == "blog" && showOnRecent == true] | order(publishedAt desc) [0...3] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      coverImage {
+        asset->{
+          _id,
+          url
+        }
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
+      category,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
+      publishedAt,
+      readingTime,
+      featured,
+      showOnRecent,
       likes,
       views,
       shares
@@ -63,7 +141,16 @@ export const blogQueries = {
         }
       },
       category,
-      author,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
       publishedAt,
       readingTime,
       featured,
@@ -89,7 +176,16 @@ export const blogQueries = {
         }
       },
       category,
-      author,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
       publishedAt,
       readingTime,
       featured,
@@ -114,7 +210,16 @@ export const blogQueries = {
         }
       },
       category,
-      author,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
       publishedAt,
       readingTime,
       likes,
@@ -288,17 +393,24 @@ export const serviceQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       publicationDate,
-      author {
+      authors[]->{
+        _id,
         name,
         title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
       },
       category,
       tags,
@@ -342,17 +454,24 @@ export const publicationQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       publicationDate,
-      author {
+      authors[]->{
+        _id,
         name,
         title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
       },
       category,
       tags,
@@ -369,6 +488,7 @@ export const publicationQueries = {
       featured,
       likes,
       views,
+      status,
       expertise
     }
   `,
@@ -387,17 +507,24 @@ export const publicationQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       publicationDate,
-      author {
+      authors[]->{
+        _id,
         name,
         title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
       },
       category,
       tags,
@@ -414,6 +541,7 @@ export const publicationQueries = {
       featured,
       likes,
       views,
+      status,
       expertise
     }
   `,
@@ -433,6 +561,12 @@ export const expertiseQueries = {
           url
         },
         alt
+      },
+      quote {
+        text,
+        author,
+        authorTitle,
+        authorCompany
       }
     }
   `,
@@ -450,6 +584,12 @@ export const expertiseQueries = {
           url
         },
         alt
+      },
+      quote {
+        text,
+        author,
+        authorTitle,
+        authorCompany
       }
     }
   `,
@@ -483,17 +623,24 @@ export const expertiseQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       publicationDate,
-      author {
+      authors[]->{
+        _id,
         name,
         title,
-        image {
-          asset->{
-            _id,
-            url
-          },
-          alt
-        }
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
       },
       category,
       tags,
@@ -502,6 +649,113 @@ export const expertiseQueries = {
       featured,
       likes,
       views
+    }
+  `,
+
+  // Get single publication by slug
+  getPublicationBySlug: groq`
+    *[_type == "publication" && slug.current == $slug][0] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      content,
+      tableOfContents,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
+      publicationDate,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
+      category,
+      tags,
+      downloadUrl,
+      downloadFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
+      externalUrl,
+      featured,
+      likes,
+      views,
+      status,
+      expertise
+    }
+  `,
+
+  // Get similar publications (same category, excluding current publication)
+  getSimilarPublications: groq`
+    *[_type == "publication" && category == $category && _id != $excludeId] | order(publicationDate desc) [0...6] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      coverImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
+      publicationDate,
+      authors[]->{
+        _id,
+        name,
+        title,
+        email,
+        orcidId,
+        affiliations,
+        researchInterests,
+        isCorrespondingAuthor
+      },
+      category,
+      tags,
+      downloadUrl,
+      downloadFile {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
+      externalUrl,
+      featured,
+      likes,
+      views,
+      status
     }
   `,
 }
@@ -520,6 +774,14 @@ export const trainingQueries = {
           url
         },
         alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
       },
       category,
       duration,
@@ -555,6 +817,14 @@ export const trainingQueries = {
           url
         },
         alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
       },
       category,
       duration,
@@ -592,6 +862,14 @@ export const trainingQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       category,
       duration,
       level,
@@ -626,6 +904,14 @@ export const trainingQueries = {
           url
         },
         alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
       },
       category,
       duration,
@@ -666,6 +952,14 @@ export const trainingQueries = {
           url
         },
         alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
       },
       category,
       duration,
