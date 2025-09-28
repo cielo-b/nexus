@@ -237,12 +237,9 @@ export default function CareerPage() {
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        {new Date(job.publishedAt).toLocaleDateString()}
-                      </span>
                       <Link
                         href={`/career/${job.slug.current}`}
-                        className="bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
+                        className=" w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
                       >
                         Read More
                         <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

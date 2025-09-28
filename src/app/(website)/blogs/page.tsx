@@ -48,7 +48,6 @@ const BlogSkeletonGrid = () => (
 function BlogsContent() {
   const searchParams = useSearchParams()
   const [blogs, setBlogs] = useState<BlogPost[]>([])
-  const [featuredBlog, setFeaturedBlog] = useState<BlogPost | null>(null)
   const [filteredBlogs, setFilteredBlogs] = useState<BlogPost[]>([])
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
@@ -57,13 +56,11 @@ function BlogsContent() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const [allBlogs, featured] = await Promise.all([
-          client.fetch(blogQueries.getAllBlogs),
-          client.fetch(blogQueries.getFeaturedBlogs)
+        const [allBlogs] = await Promise.all([
+          client.fetch(blogQueries.getAllBlogs)
         ])
 
         setBlogs(allBlogs)
-        setFeaturedBlog(featured[0] || null)
         setFilteredBlogs(allBlogs)
       } catch (error) {
         console.error('Error fetching blogs:', error)
@@ -191,66 +188,11 @@ function BlogsContent() {
           </div>
         )}
 
-        {/* Featured Article */}
-        {!loading && featuredBlog && selectedCategory === 'All' && (
-          <div className="mb-12">
-            <div className="bg-white  shadow-lg overflow-hidden">
-              <div className="md:flex">
-                <div className="md:w-1/2">
-                  {featuredBlog.coverImage && (
-                    <Image
-                      src={getSanityImage(featuredBlog.coverImage)}
-                      alt={featuredBlog.coverImage.alt || featuredBlog.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-64 md:h-full object-cover"
-                    />
-                  )}
-                </div>
-                <div className="md:w-1/2 p-8">
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 ">
-                      {featuredBlog.category}
-                    </span>
-                    <span>{formatDate(featuredBlog.publishedAt)}</span>
-                    <span>{featuredBlog.authors?.map(author => author.name).join(', ')}</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    {featuredBlog.title}
-                  </h3>
-                  <p className="text-gray-600 mb-6">
-                    {featuredBlog.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span className="flex items-center gap-1">
-                        <span>❤️</span>
-                        {formatNumber(featuredBlog.likes)}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <span>👁️</span>
-                        {formatNumber(featuredBlog.views)}
-                      </span>
-                    </div>
-                    <Link
-                      href={`/blogs/${featuredBlog.slug.current}`}
-                      className="bg-blue-600 text-white px-6 py-4  hover:bg-blue-700 transition-colors flex items-center gap-2"
-                    >
-                      Read More
-                      <span>→</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Articles Grid */}
         {!loading && (
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
             {filteredBlogs
-              .filter(blog => !blog.featured || selectedCategory !== 'All')
+              .filter(blog =>  selectedCategory !== 'All')
               .map((blog) => (
               <div key={blog._id} className="overflow-hidden bg-white hover:bg-gray-50 transition-colors duration-300">
                 {blog.coverImage && (
