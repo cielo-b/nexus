@@ -100,7 +100,7 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
   }
 
   return (
-    <>
+    <div className='relative'>
       <div
         ref={triggerRef}
         onClick={handleClick}
@@ -112,11 +112,11 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
       {isOpen && (
         <div
           ref={popoverRef}
-          className="absolute z-20 bg-white border border-gray-200 rounded-xl shadow-2xl w-2xl  overflow-y-auto"
-          style={{
-            top: position.top,
-            left: position.left,
-          }}
+          className="absolute top-[100%] left-[50%] z-20 bg-white border border-gray-200 rounded-xl shadow-2xl w-2xl  overflow-y-auto"
+          // style={{
+          //   top: position.top,
+          //   left: position.left,
+          // }}
         >
           {/* Close Button */}
           <button
@@ -238,6 +238,6 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
