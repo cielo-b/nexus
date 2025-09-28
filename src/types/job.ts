@@ -12,8 +12,6 @@ export interface Job {
   schedule: 'full-time' | 'part-time' | 'contract' | 'internship' | 'freelance'
   location: string
   urlToJob: string
-  publishedAt: string
-  featured: boolean
-  active: boolean
+  status: 'draft' | 'published' | 'archived' | 'cancelled'
 }
 

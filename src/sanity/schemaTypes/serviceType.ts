@@ -71,13 +71,6 @@ export const serviceType = defineType({
       description: 'The expertise area this service belongs to',
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Order in which this service appears (lower number first)',
-      initialValue: 0,
-    }),
   ],
   preview: {
     select: {

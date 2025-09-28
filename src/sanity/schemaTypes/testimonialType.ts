@@ -53,20 +53,6 @@ export const testimonialType = defineType({
       validation: (Rule) => Rule.required().min(1).max(5),
       description: 'Rating out of 5 stars',
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured Testimonial',
-      type: 'boolean',
-      description: 'Show this testimonial prominently',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Lower numbers appear first',
-      initialValue: 0,
-    }),
   ],
   preview: {
     select: {
@@ -74,24 +60,18 @@ export const testimonialType = defineType({
       subtitle: 'company',
       media: 'clientImage',
       rating: 'rating',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, subtitle, media, rating, featured } = selection
+      const { title, subtitle, media, rating } = selection
       const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating)
       return {
-        title: featured ? `${title} (Featured)` : title,
+        title,
         subtitle: `${subtitle} - ${stars}`,
         media,
       }
     },
   },
   orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
     {
       title: 'Rating High to Low',
       name: 'ratingDesc',

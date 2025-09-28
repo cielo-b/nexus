@@ -11,5 +11,4 @@ export interface AccordionItem {
     }
     alt?: string
   }
-  order: number
 }

@@ -40,14 +40,6 @@ export const accordionItemType = defineType({
       ],
       validation: (Rule) => Rule.required()
     },
-    {
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Order in which this item appears (lower numbers appear first)',
-      validation: (Rule) => Rule.required().min(0),
-      initialValue: 0
-    }
   ],
   preview: {
     select: {
@@ -63,13 +55,4 @@ export const accordionItemType = defineType({
       }
     }
   },
-  orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [
-        { field: 'order', direction: 'asc' }
-      ]
-    }
-  ]
 })

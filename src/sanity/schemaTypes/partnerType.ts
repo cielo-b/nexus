@@ -34,41 +34,21 @@ export const partnerType = defineType({
       type: 'url',
       description: 'Optional link to partner website',
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured Partner',
-      type: 'boolean',
-      description: 'Show this partner prominently',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Lower numbers appear first',
-      initialValue: 0,
-    }),
   ],
   preview: {
     select: {
       title: 'name',
       media: 'logo',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, media, featured } = selection
+      const { title, media } = selection
       return {
-        title: featured ? `${title} (Featured)` : title,
+        title,
         media,
       }
     },
   },
   orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
     {
       title: 'Name A-Z',
       name: 'nameAsc',

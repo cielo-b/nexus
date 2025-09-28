@@ -5,6 +5,4 @@ export interface CoreValue {
   icon: string
   iconType: 'emoji' | 'heroicon' | 'svg'
   color: 'blue' | 'green' | 'purple' | 'red' | 'yellow' | 'indigo' | 'pink'
-  order: number
-  featured: boolean
 }

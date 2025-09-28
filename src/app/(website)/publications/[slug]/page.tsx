@@ -343,13 +343,13 @@ export default function PublicationPage({ params }: PageProps) {
               <div className="pr-[8vw] pl-[3vw] mb-4">
                 <div className="flex items-center gap-2">
                   <Icon 
-                    icon={publication.status === 'pure-reviewed' ? "mdi:check-circle" : "mdi:clock-outline"} 
-                    className={`w-5 h-5 ${publication.status === 'pure-reviewed' ? 'text-green-600' : 'text-yellow-600'}`} 
+                    icon={publication.status === 'peer-reviewed' ? "mdi:check-circle" : "mdi:clock-outline"} 
+                    className={`w-5 h-5 ${publication.status === 'peer-reviewed' ? 'text-green-600' : 'text-yellow-600'}`} 
                   />
                   <span className={`text-sm font-medium ${
-                    publication.status === 'pure-reviewed' ? 'text-green-700' : 'text-yellow-700'
+                    publication.status === 'peer-reviewed' ? 'text-green-700' : 'text-yellow-700'
                   }`}>
-                    {publication.status === 'pure-reviewed' ? 'Pure Reviewed' : 'Not Pure Reviewed'}
+                    {publication.status === 'peer-reviewed' ? 'Peer Reviewed' : 'Not Peer Reviewed'}
                   </span>
                 </div>
               </div>

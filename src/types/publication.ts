@@ -54,5 +54,5 @@ export interface Publication {
   featured: boolean
   likes: number
   views: number
-  status: 'pure-reviewed' | 'not-pure-reviewed'
+  status: 'peer-reviewed' | 'not-peer-reviewed'
 }

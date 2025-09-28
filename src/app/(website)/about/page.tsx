@@ -339,16 +339,16 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-12 sm:mt-16 lg:mt-20 text-center"
           >
-            <div className="max-w-2xl mx-auto flex flex-col items-center  gap-10">
+            <div className="max-w-5xl mx-auto flex  bg-primary rounded-tl-4xl rounded-br-4xl p-8 items-center  gap-10">
               <Image
                 src="/images/about4.png"
                 alt="Our commitment to reaching every participant"
                 width={100000}
                 height={600}
-                className="w-auto h-96 rounded-lg shadow-lg mb-6 sm:mb-8 object-cover"
+                className="w-auto h-96 -rotate-20 border-10 border-white transform rounded-lg shadow-lg mb-6 sm:mb-8 object-cover"
               />
-              <div className="text-3xl text-gray-800 leading-relaxed font-medium flex">
-              <span className='text-7xl text-blue-600'>"</span> No matter how challenging the field, we reach every participant. Our shoes get muddy to serve our clients. <span className='text-7xl text-blue-600'>"</span>
+              <div className="text-3xl text-white leading-relaxed font-medium flex">
+              <span className='text-7xl '>"</span> No matter how challenging the field, we reach every participant. Our shoes get muddy to serve our clients. <span className='text-7xl '>"</span>
               </div>
             </div>
           </motion.div>

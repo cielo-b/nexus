@@ -6,7 +6,7 @@ export interface Training {
     current: string
   }
   description: string
-  content?: any[] // Block content
+  content?: any[] 
   coverImage?: {
     asset: {
       _ref: string
@@ -15,27 +15,9 @@ export interface Training {
     alt?: string
   }
   category: string
-  duration: string
-  level: 'beginner' | 'intermediate' | 'advanced' | 'expert'
-  format: 'in-person' | 'online' | 'hybrid' | 'self-paced'
   applyLink?: string
-  prerequisites?: string[]
-  learningObjectives?: string[]
   certificate?: boolean
-  maxParticipants?: number
-  minParticipants?: number
   startDate?: string
   endDate?: string
-  registrationDeadline?: string
-  location?: {
-    name?: string
-    address?: string
-    city?: string
-    country?: string
-    onlineLink?: string
-  }
-  tags?: string[]
-  featured?: boolean
-  publishedAt: string
   status: 'draft' | 'published' | 'archived' | 'cancelled'
 }

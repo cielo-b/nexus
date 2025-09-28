@@ -87,12 +87,6 @@ export const publicationType = defineType({
       description: 'Optional video to show in hero section instead of cover image. If provided, coverImage is still required for cards.',
     }),
     defineField({
-      name: 'publicationDate',
-      title: 'Publication Date',
-      type: 'date',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'authors',
       title: 'Authors',
       type: 'array',
@@ -120,15 +114,6 @@ export const publicationType = defineType({
         ],
       },
       validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        layout: 'tags',
-      },
     }),
     defineField({
       name: 'downloadUrl',

@@ -123,25 +123,6 @@ export const blogType = defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published At',
-      type: 'datetime',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'readingTime',
-      title: 'Reading Time (minutes)',
-      type: 'number',
-      validation: (Rule) => Rule.required().min(1),
-    }),
-    defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      description: 'Show this blog post as featured on the homepage',
-      initialValue: false,
-    }),
-    defineField({
       name: 'showOnRecent',
       title: 'Show on Recent',
       type: 'boolean',
@@ -160,34 +141,18 @@ export const blogType = defineType({
       type: 'number',
       initialValue: 0,
     }),
-    defineField({
-      name: 'shares',
-      title: 'Shares Count',
-      type: 'number',
-      initialValue: 0,
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        layout: 'tags',
-      },
-    }),
   ],
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
       category: 'category',
       media: 'coverImage',
     },
     prepare(selection) {
-      const { author, category } = selection
+      const { category } = selection
       return { 
         ...selection, 
-        subtitle: `${category}${author ? ` • ${author}` : ''}` 
+        subtitle:category 
       }
     },
   },

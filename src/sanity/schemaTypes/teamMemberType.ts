@@ -57,50 +57,23 @@ export const teamMemberType = defineType({
       title: 'Twitter URL',
       type: 'url',
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Lower numbers appear first',
-      initialValue: 0,
-    }),
-    defineField({
-      name: 'featured',
-      title: 'Featured Team Member',
-      type: 'boolean',
-      description: 'Show this team member prominently',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'active',
-      title: 'Active',
-      type: 'boolean',
-      description: 'Show this team member on the website',
-      initialValue: true,
-    }),
   ],
   preview: {
     select: {
       title: 'name',
       subtitle: 'title',
       media: 'image',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, subtitle, media, featured } = selection
+      const { title, subtitle, media } = selection
       return {
-        title: featured ? `${title} (Featured)` : title,
+        title,
         subtitle,
         media,
       }
     },
   },
   orderings: [
-    {
-      title: 'Display Order',
-      name: 'orderAsc',
-      by: [{ field: 'order', direction: 'asc' }],
-    },
     {
       title: 'Name A-Z',
       name: 'nameAsc',

@@ -122,41 +122,6 @@ export const trainingType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'duration',
-      title: 'Duration',
-      type: 'string',
-      description: 'e.g., "2 days", "1 week", "40 hours"',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'level',
-      title: 'Level',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Beginner', value: 'beginner' },
-          { title: 'Intermediate', value: 'intermediate' },
-          { title: 'Advanced', value: 'advanced' },
-          { title: 'Expert', value: 'expert' },
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'format',
-      title: 'Format',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'In-Person', value: 'in-person' },
-          { title: 'Online', value: 'online' },
-          { title: 'Hybrid', value: 'hybrid' },
-          { title: 'Self-Paced', value: 'self-paced' },
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'applyLink',
       title: 'Apply Link',
       type: 'url',
@@ -169,26 +134,10 @@ export const trainingType = defineType({
       of: [{ type: 'string' }],
     }),
     defineField({
-      name: 'learningObjectives',
-      title: 'Learning Objectives',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({
       name: 'certificate',
       title: 'Certificate',
       type: 'boolean',
       description: 'Does this training provide a certificate?',
-    }),
-    defineField({
-      name: 'maxParticipants',
-      title: 'Maximum Participants',
-      type: 'number',
-    }),
-    defineField({
-      name: 'minParticipants',
-      title: 'Minimum Participants',
-      type: 'number',
     }),
     defineField({
       name: 'startDate',
@@ -199,61 +148,6 @@ export const trainingType = defineType({
       name: 'endDate',
       title: 'End Date',
       type: 'datetime',
-    }),
-    defineField({
-      name: 'registrationDeadline',
-      title: 'Registration Deadline',
-      type: 'datetime',
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'object',
-      fields: [
-        {
-          name: 'name',
-          type: 'string',
-          title: 'Location Name',
-        },
-        {
-          name: 'address',
-          type: 'text',
-          title: 'Address',
-        },
-        {
-          name: 'city',
-          type: 'string',
-          title: 'City',
-        },
-        {
-          name: 'country',
-          type: 'string',
-          title: 'Country',
-        },
-        {
-          name: 'onlineLink',
-          type: 'url',
-          title: 'Online Link (if applicable)',
-        },
-      ],
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      description: 'Show this training as featured',
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published At',
-      type: 'datetime',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'status',

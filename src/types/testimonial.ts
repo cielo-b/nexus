@@ -20,6 +20,4 @@ export interface Testimonial {
   clientImage?: TestimonialImage
   testimonial: string
   rating: number
-  featured: boolean
-  order: number
 }

@@ -299,24 +299,12 @@ export default function BlogPostPage() {
                   <Icon icon="mdi:eye-outline" className="w-4 h-4 text-[#474747]" />
                   <span>{blog.views || 0}</span>
                 </div>
-                <div className="flex items-center gap-1 bg-[#E6E6E6] px-3 py-2  border border-[#AAAAAA] text-sm">
-                  <Icon icon="mdi:share-outline" className="w-4 h-4 text-[#474747]" />
-                  <span>{blog.shares || 0}</span>
-                </div>
               </div>
               {/* Blog Metadata */}
               <div className=" mb-8 pr-[8vw] pl-[3vw] py-[4vh] space-y-4 ">
                 <h3 className="font-bold text-gray-900 mb-4">Blog Details</h3>
                 <div className="space-y-3 text-sm">
 
-                  <div>
-                    <span className="font-medium text-gray-600">Publication Date:</span>
-                    <div className="text-gray-900">{formatDate(blog.publishedAt)}</div>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-600">Reading Time:</span>
-                    <div className="text-gray-900">{blog.readingTime} Min</div>
-                  </div>
                   <div>
                     <span className="font-medium text-gray-600">Category:</span>
                     <div className="text-gray-900">

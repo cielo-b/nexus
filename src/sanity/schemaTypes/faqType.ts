@@ -18,40 +18,16 @@ export const faqType = defineType({
       rows: 4,
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'order',
-      title: 'Display Order',
-      type: 'number',
-      description: 'Lower numbers appear first',
-      initialValue: 0,
-    }),
-    defineField({
-      name: 'active',
-      title: 'Active',
-      type: 'boolean',
-      description: 'Show this FAQ on the website',
-      initialValue: true,
-    }),
   ],
   preview: {
     select: {
       title: 'title',
-      order: 'order',
     },
     prepare(selection) {
-      const { title, order } = selection
+      const { title } = selection
       return {
-        title: `${title} (Order: ${order || 0})`,
+        title,
       }
     },
   },
-  orderings: [
-    {
-      title: 'Order',
-      name: 'orderAsc',
-      by: [
-        { field: 'order', direction: 'asc' },
-      ],
-    },
-  ],
 })

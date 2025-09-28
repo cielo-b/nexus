@@ -43,14 +43,9 @@ export interface BlogPost {
   coverVideo?: BlogVideo
   category: string
   authors: Author[]
-  publishedAt: string
-  readingTime: number
-  featured: boolean
   showOnRecent: boolean
   likes: number
   views: number
-  shares: number
-  tags?: string[]
 }
 
 export interface BlogFilters {
