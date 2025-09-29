@@ -42,6 +42,7 @@ export interface BlogPost {
   coverImage?: BlogImage
   coverVideo?: BlogVideo
   category: string
+  tags?: string[]
   authors: Author[]
   showOnRecent: boolean
   likes: number

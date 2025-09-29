@@ -10,6 +10,7 @@ import { Publication } from '@/types/publication'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
+import TagCard from '@/components/TagCard'
 
 const categories = ['All', 'Economics', 'Agriculture', 'Technology', 'Politics', 'Health', 'Environment', 'Sports']
 
@@ -87,13 +88,16 @@ function PublicationsContent() {
       )
     }
 
-    // Filter by search query (title, excerpt, content, and author names)
+    // Filter by search query (title, excerpt, content, author names, and tags)
     if (searchQuery.trim()) {
       filtered = filtered.filter(publication =>
         publication.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         publication.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (publication.authors && publication.authors.some(author =>
           author.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )) ||
+        (publication.tags && publication.tags.some(tag =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
         ))
       )
     }
@@ -221,7 +225,7 @@ function PublicationsContent() {
                   <div
                     key={publication._id}
                     onClick={handlePublicationClick}
-                    className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300"
+                    className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300 flex flex-col h-full"
                   >
                     {/* Image Section */}
                     {publication.coverImage && (
@@ -237,16 +241,38 @@ function PublicationsContent() {
                     )}
 
                     {/* Content Section */}
-                    <div className="p-3">
-                      <h3 className="text-xs font-semibold line-clamp-2 mb-1">
-                        {publication.title}
-                      </h3>
-                      <span className="text-[#98989A] capitalize text-xs mb-2 block">
-                        {publication.category}
-                      </span>
+                    <div className="p-3 flex flex-col flex-grow">
+                      <div className="flex-grow">
+                        <h3 className="text-xs font-semibold line-clamp-2 mb-1">
+                          {publication.title}
+                        </h3>
+                        <span className="text-[#98989A] capitalize text-xs mb-2 block">
+                          {publication.category}
+                        </span>
+                        
+                        {/* Tags */}
+                        {publication.tags && publication.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {publication.tags.slice(0, 3).map((tag, index) => (
+                              <TagCard
+                                key={index}
+                                tag={tag}
+                                variant="default"
+                                size="sm"
+                                className="text-xs"
+                              />
+                            ))}
+                            {publication.tags.length > 3 && (
+                              <span className="text-xs text-gray-500">
+                                +{publication.tags.length - 3} more
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
 
                       <button
-                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
+                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 mt-auto"
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()

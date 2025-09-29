@@ -23,6 +23,7 @@ export const blogQueries = {
         size
       },
       category,
+      tags,
       authors[]->{
         _id,
         name,
@@ -62,6 +63,7 @@ export const blogQueries = {
         size
       },
       category,
+      tags,
       authors[]->{
         _id,
         name,
@@ -299,6 +301,7 @@ export const serviceQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       externalUrl,
       likes,
@@ -356,6 +359,7 @@ export const publicationQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       downloadFile {
         asset->{
@@ -407,6 +411,7 @@ export const publicationQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       downloadFile {
         asset->{
@@ -519,6 +524,7 @@ export const expertiseQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       externalUrl,
       likes,
@@ -562,6 +568,7 @@ export const expertiseQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       downloadFile {
         asset->{
@@ -613,6 +620,7 @@ export const expertiseQueries = {
         isCorrespondingAuthor
       },
       category,
+      tags,
       downloadUrl,
       downloadFile {
         asset->{

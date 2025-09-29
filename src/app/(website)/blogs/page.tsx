@@ -9,6 +9,7 @@ import { blogQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { BlogPost } from '@/types/blog'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import TagCard from '@/components/TagCard'
 
 const categories = ['All', 'Economics', 'Agriculture', 'Technology', 'Politics', 'Health', 'Environment', 'Sports']
 
@@ -90,13 +91,16 @@ function BlogsContent() {
       )
     }
 
-    // Filter by search query (title, excerpt, content, and author names)
+    // Filter by search query (title, excerpt, content, author names, and tags)
     if (searchQuery.trim()) {
       filtered = filtered.filter(blog =>
         blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (blog.authors && blog.authors.some(author =>
           author.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )) ||
+        (blog.tags && blog.tags.some(tag =>
+          tag.toLowerCase().includes(searchQuery.toLowerCase())
         ))
       )
     }
@@ -194,7 +198,7 @@ function BlogsContent() {
             {filteredBlogs
               .filter(blog =>  selectedCategory !== 'All')
               .map((blog) => (
-              <div key={blog._id} className="overflow-hidden bg-white hover:bg-gray-50 transition-colors duration-300">
+              <div key={blog._id} className="overflow-hidden bg-white hover:bg-gray-50 transition-colors duration-300 flex flex-col h-full">
                 {blog.coverImage && (
                   <div className="overflow-hidden">
                     <Image
@@ -206,17 +210,39 @@ function BlogsContent() {
                     />
                   </div>
                 )}
-                <div className="p-3">
-                  <h3 className="text-xs font-semibold line-clamp-2 mb-1">
-                    {blog.title}
-                  </h3>
-                  <span className="text-[#98989A] capitalize text-xs mb-2 block">
-                    {blog.category}
-                  </span>
+                <div className="p-3 flex flex-col flex-grow">
+                  <div className="flex-grow">
+                    <h3 className="text-xs font-semibold line-clamp-2 mb-1">
+                      {blog.title}
+                    </h3>
+                    <span className="text-[#98989A] capitalize text-xs mb-2 block">
+                      {blog.category}
+                    </span>
+                    
+                    {/* Tags */}
+                    {blog.tags && blog.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {blog.tags.slice(0, 3).map((tag, index) => (
+                          <TagCard
+                            key={index}
+                            tag={tag}
+                            variant="default"
+                            size="sm"
+                            className="text-xs"
+                          />
+                        ))}
+                        {blog.tags.length > 3 && (
+                          <span className="text-xs text-gray-500">
+                            +{blog.tags.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
 
                   <Link
                     href={`/blogs/${blog.slug.current}`}
-                    className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group"
+                    className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 group mt-auto"
                   >
                     Read More
                     <Icon icon="mdi:arrow-right" className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

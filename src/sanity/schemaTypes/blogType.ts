@@ -141,6 +141,20 @@ export const blogType = defineType({
       type: 'number',
       initialValue: 0,
     }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [
+        {
+          type: 'string',
+        },
+      ],
+      options: {
+        layout: 'tags',
+      },
+      description: 'Add relevant tags to help categorize and search this blog post',
+    }),
   ],
   preview: {
     select: {

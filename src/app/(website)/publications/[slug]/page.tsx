@@ -12,6 +12,7 @@ import { getSanityImage } from '@/lib/getSanityImage'
 import { Icon } from '@iconify/react'
 import AuthorPopover from '@/components/AuthorPopover'
 import ImageModal from '@/components/ImageModal'
+import TagCard from '@/components/TagCard'
 
 // Skeleton component for similar publications
 const SimilarPublicationSkeleton = () => (
@@ -172,7 +173,7 @@ export default function PublicationPage({ params }: PageProps) {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative h-[50vh]  flex flex-col items-center justify-center text-white bg-transparent ">
+      <section className="relative   lg:h-[50vh]  flex flex-col items-center justify-center text-white bg-transparent ">
 
         {publication.coverVideo ? (
           <video
@@ -188,7 +189,7 @@ export default function PublicationPage({ params }: PageProps) {
         )}
         {/* <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div> */}
         <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
-        <div className="relative w-full px-[8vw] max-w-[1700px] mx-auto h-full flex flex-col justify-end  pb-[3vh] pt-[9vh]">
+        <div className="relative w-full px-[8vw] max-w-[1700px] mx-auto h-full flex flex-col justify-end  pb-[3vh] pt-[10vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/publications" className='text-white/50   '>
               Publications
@@ -198,7 +199,15 @@ export default function PublicationPage({ params }: PageProps) {
               {publication.title}
             </span>
           </div>
-          <h1 className="text-7xl font-semibold mb-6 ">{publication.title}</h1>
+          <h1 className={`font-semibold mb-6 ${
+            publication.title.length > 60 
+              ? 'text-4xl' 
+              : publication.title.length > 45 
+                ? 'text-5xl' 
+                : publication.title.length > 30 
+                  ? 'text-6xl' 
+                  : 'text-7xl'
+          }`}>{publication.title}</h1>
           
           {/* Authors List */}
           {publication.authors && publication.authors.length > 0 && (
@@ -229,13 +238,30 @@ export default function PublicationPage({ params }: PageProps) {
           {/* Publication Content */}
           <div className="lg:col-span-2 border-r border-r-[#262626]/11">
             <div className="bg-white  ">
+              {/* Tags Section */}
+              {publication.tags && publication.tags.length > 0 && (
+                <div className="pl-[8vw] pr-[3vw] py-[4vh] border-b border-b-[#262626]/11">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {publication.tags.map((tag, index) => (
+                      <TagCard
+                        key={index}
+                        tag={tag}
+                        variant="primary"
+                        size="md"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               {publication.tableOfContents && publication.tableOfContents.length > 0 ? (
-                <div className="space-y-12">
+                <div className="space-y-4">
                   {publication.tableOfContents.map((section, index) => (
                     <div
-                      key={section.id.current}
-                      id={section.id.current}
-                      className="scroll-mt-24 border-b border-b-[#262626]/11 pl-[8vw] pr-[3vw] py-[4vh]"
+                      key={section.title.toLowerCase().replaceAll(" ","-")}
+                      id={section.title.toLowerCase().replaceAll(" ","-")}
+                      className="scroll-mt-24 border-b border-b-[#262626]/11 pl-[8vw] pr-[3vw] py-[1vh]"
                     >
                       <h2 className="text-2xl font-bold text-gray-900 mb-6  pb-2">
                         {section.title}
@@ -382,10 +408,10 @@ export default function PublicationPage({ params }: PageProps) {
                   <h3 className="font-bold text-gray-900 mb-4">Table of Contents</h3>
                   <ul className="space-y-2 text-sm bg-[#E8E8E8]  p-6">
                     {publication.tableOfContents.map((section) => (
-                      <li key={section.id.current}>
+                      <li key={section.title.toLowerCase().replaceAll(" ","-")}>
                         <button
-                          onClick={() => scrollToSection(section.id.current)}
-                          className={`text-left w-full py-1 px-2  transition-colors ${activeSection === section.id.current
+                          onClick={() => scrollToSection(section.title.toLowerCase().replaceAll(" ","-"))}
+                          className={`text-left w-full py-1 px-2  transition-colors ${activeSection === section.title.toLowerCase().replaceAll(" ","-")
                             ? 'text-primary bg-blue-50  font-medium'
                             : 'text-gray-600 hover:text-primary hover:'
                             }`}
@@ -408,22 +434,6 @@ export default function PublicationPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Tags */}
-        {publication.tags && publication.tags.length > 0 && (
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {publication.tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="inline-block bg-gray-100 text-gray-700 text-sm px-3 py-1 "
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Actions */}
         <div className="mt-8 flex flex-wrap gap-4">
@@ -505,7 +515,7 @@ export default function PublicationPage({ params }: PageProps) {
                   <div
                     key={similarPub._id}
                     onClick={handleSimilarClick}
-                    className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300"
+                    className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300 flex flex-col h-full"
                   >
                     {/* Image Section */}
                     {similarPub.coverImage && (
@@ -521,16 +531,38 @@ export default function PublicationPage({ params }: PageProps) {
                     )}
 
                     {/* Content Section */}
-                    <div className="p-3">
-                      <h3 className="text-xs font-semibold line-clamp-2 mb-1">
-                        {similarPub.title}
-                      </h3>
-                      <span className="text-[#98989A] capitalize text-xs mb-2 block">
-                        {similarPub.category}
-                      </span>
+                    <div className="p-3 flex flex-col flex-grow">
+                      <div className="flex-grow">
+                        <h3 className="text-xs font-semibold line-clamp-2 mb-1">
+                          {similarPub.title}
+                        </h3>
+                        <span className="text-[#98989A] capitalize text-xs mb-2 block">
+                          {similarPub.category}
+                        </span>
+                        
+                        {/* Tags */}
+                        {similarPub.tags && similarPub.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {similarPub.tags.slice(0, 2).map((tag, index) => (
+                              <TagCard
+                                key={index}
+                                tag={tag}
+                                variant="default"
+                                size="sm"
+                                className="text-xs"
+                              />
+                            ))}
+                            {similarPub.tags.length > 2 && (
+                              <span className="text-xs text-gray-500">
+                                +{similarPub.tags.length - 2} more
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </div>
 
                       <button
-                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300"
+                        className="w-full bg-white text-black border-2 border-black px-4 py-2 flex items-center gap-1 justify-center text-sm font-medium hover:bg-black hover:text-white transition-all duration-300 mt-auto"
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()

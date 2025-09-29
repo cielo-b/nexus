@@ -12,6 +12,7 @@ import { BlogPost } from '@/types/blog'
 import { Icon } from '@iconify/react'
 import AuthorPopover from '@/components/AuthorPopover'
 import ImageModal from '@/components/ImageModal'
+import TagCard from '@/components/TagCard'
 
 // Skeleton component for related blogs
 const RelatedBlogSkeleton = () => (
@@ -158,7 +159,7 @@ export default function BlogPostPage() {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex flex-col items-center justify-center text-white ">
+      <section className="relative lg:h-[50vh] flex flex-col items-center justify-center text-white ">
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)]   w-full h-full"></div>
         {blog.coverVideo ? (
           <video
@@ -172,7 +173,7 @@ export default function BlogPostPage() {
         ) : (
           <Image src={getSanityImage(blog.coverImage)} alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
         )}
-        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[9vh]">
+        <div className="relative w-full px-[8vw] h-full flex flex-col justify-between  pb-[3vh] pt-[10vh]">
           <div className="flex gap-2 mb-4 w-full text-white">
             <Link href="/blogs" className='text-white/50   '>
               Blogs
@@ -182,7 +183,15 @@ export default function BlogPostPage() {
               {blog.title}
             </span>
           </div>
-          <h1 className="text-7xl font-semibold mb-6 text-center">{blog.title}</h1>
+          <h1 className={`font-semibold mb-6 text-center ${
+            blog.title.length > 60 
+              ? 'text-4xl' 
+              : blog.title.length > 45 
+                ? 'text-5xl' 
+                : blog.title.length > 30 
+                  ? 'text-6xl' 
+                  : 'text-7xl'
+          }`}>{blog.title}</h1>
           
           {/* Authors List */}
           {blog.authors && blog.authors.length > 0 && (
@@ -212,6 +221,23 @@ export default function BlogPostPage() {
           {/* Blog Content */}
           <div className="lg:col-span-2 border-r border-r-[#262626]/11">
             <div className="bg-white  ">
+              {/* Tags Section */}
+              {blog.tags && blog.tags.length > 0 && (
+                <div className="pl-[8vw] pr-[3vw] py-[4vh] border-b border-b-[#262626]/11">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {blog.tags.map((tag, index) => (
+                      <TagCard
+                        key={index}
+                        tag={tag}
+                        variant="secondary"
+                        size="md"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               {blog.tableOfContents && blog.tableOfContents.length > 0 ? (
                 <div className="space-y-12">
                   {blog.tableOfContents.map((section, index) => (
@@ -353,7 +379,7 @@ export default function BlogPostPage() {
           ) : relatedBlogs.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {relatedBlogs.map((relatedBlog) => (
-                <div key={relatedBlog._id} className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300">
+                <div key={relatedBlog._id} className="overflow-hidden bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-300 flex flex-col h-full">
                   {relatedBlog.coverImage && (
                     <div className="overflow-hidden">
                       <Image
@@ -365,15 +391,37 @@ export default function BlogPostPage() {
                       />
                     </div>
                   )}
-                  <div className="p-3">
-                    <h3 className="text-xs font-semibold line-clamp-2 mb-1">
-                      {relatedBlog.title}
-                    </h3>
-                    <span className="text-[#98989A] capitalize text-xs mb-2 block">
-                      {relatedBlog.category}
-                    </span>
+                  <div className="p-3 flex flex-col flex-grow">
+                    <div className="flex-grow">
+                      <h3 className="text-xs font-semibold line-clamp-2 mb-1">
+                        {relatedBlog.title}
+                      </h3>
+                      <span className="text-[#98989A] capitalize text-xs mb-2 block">
+                        {relatedBlog.category}
+                      </span>
+                      
+                      {/* Tags */}
+                      {relatedBlog.tags && relatedBlog.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          {relatedBlog.tags.slice(0, 2).map((tag, index) => (
+                            <TagCard
+                              key={index}
+                              tag={tag}
+                              variant="default"
+                              size="sm"
+                              className="text-xs"
+                            />
+                          ))}
+                          {relatedBlog.tags.length > 2 && (
+                            <span className="text-xs text-gray-500">
+                              +{relatedBlog.tags.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-auto">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1 bg-[#E6E6E6] px-2 py-1  border-[#AAAAAA] border text-xs">
                           <Icon icon="mdi:heart-outline" className="w-3 h-3 text-[#474747]" />
