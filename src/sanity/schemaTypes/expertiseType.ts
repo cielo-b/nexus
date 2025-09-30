@@ -73,7 +73,7 @@ export default defineType({
     }),
   ],
   validation: (Rule) => Rule.custom((doc) => {
-    if (!doc.coverImage && !doc.coverVideo) {
+    if (!doc || (!doc.coverImage && !doc.coverVideo)) {
       return 'Either cover image or cover video must be provided'
     }
     return true
