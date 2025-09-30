@@ -143,12 +143,23 @@ export default function ExpertisePage() {
       {/* Hero Section */}
       <section className="relative h-[50vh]  flex flex-col items-center justify-end text-white">
         {/* <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)] w-full h-full"></div> */}
-        <Image 
-          src={getSanityImage(expertise.coverImage)} 
-          alt="Hero Background" 
-          fill 
-          className="object-cover absolute inset-0 w-full h-full" 
-        />
+        {expertise.coverVideo ? (
+          <video
+            src={expertise.coverVideo.asset.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="object-cover absolute inset-0 w-full h-full"
+          />
+        ) : (
+          <Image 
+            src={getSanityImage(expertise.coverImage)} 
+            alt="Hero Background" 
+            fill 
+            className="object-cover absolute inset-0 w-full h-full" 
+          />
+        )}
         <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
         <div className="relative w-full px-[8vw] max-w-[1700px] h-full flex flex-col justify-end pb-[3vh] pt-[9vh]">
           <div className="flex gap-2 mb-4 w-full text-white">

@@ -11,12 +11,20 @@ export interface Expertise {
   slug: {
     current: string
   }
-  coverImage: {
+  coverImage?: {
     asset: {
       _id: string
       url: string
     }
     alt?: string
+  }
+  coverVideo?: {
+    asset: {
+      _id: string
+      url: string
+    }
+    filename?: string
+    size?: number
   }
   quote?: ExpertiseQuote
 }

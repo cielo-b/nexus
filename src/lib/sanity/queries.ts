@@ -445,6 +445,14 @@ export const expertiseQueries = {
         },
         alt
       },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
+      },
       quote {
         text,
         author,
@@ -467,6 +475,14 @@ export const expertiseQueries = {
           url
         },
         alt
+      },
+      coverVideo {
+        asset->{
+          _id,
+          url
+        },
+        filename,
+        size
       },
       quote {
         text,

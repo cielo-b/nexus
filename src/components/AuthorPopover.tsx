@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import { Author } from '@/types/author'
+import * as Popover from '@radix-ui/react-popover'
 
 interface AuthorPopoverProps {
   author: Author
@@ -11,63 +11,8 @@ interface AuthorPopoverProps {
 }
 
 export default function AuthorPopover({ author, children }: AuthorPopoverProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [position, setPosition] = useState({ top: 0, left: 0 })
-  const popoverRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const pathname = usePathname()
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      const viewportWidth = window.innerWidth
-      const viewportHeight = window.innerHeight
-      const popoverWidth = 320 // Approximate popover width
-      const popoverHeight = 400 // Approximate popover height
-      
-      let top = rect.bottom + 8
-      let left = rect.left
-      
-      // Adjust if popover would go off screen
-      if (left + popoverWidth > viewportWidth) {
-        left = viewportWidth - popoverWidth - 16
-      }
-      if (left < 16) {
-        left = 16
-      }
-      
-      // If popover would go below viewport, show above trigger
-      if (top + popoverHeight > viewportHeight) {
-        top = rect.top - popoverHeight - 8
-      }
-      
-      setPosition({ top, left })
-    }
-    
-    setIsOpen(!isOpen)
-  }
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(event.target as Node) && 
-          triggerRef.current && !triggerRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen])
 
   const getOrcidUrl = (orcidId: string) => {
     return `https://orcid.org/${orcidId}`
@@ -95,37 +40,21 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
       // Default to publications if we can't determine the context
       router.push(`/publications?author=${encodedAuthorName}`)
     }
-    
-    setIsOpen(false)
   }
 
   return (
-    <div className='relative'>
-      <div
-        ref={triggerRef}
-        onClick={handleClick}
-        className="cursor-pointer hover:text-blue-600 transition-colors"
-      >
-        {children}
-      </div>
-
-      {isOpen && (
-        <div
-          ref={popoverRef}
-          className="absolute top-[100%] left-[50%] z-20 bg-white border border-gray-200 rounded-xl shadow-2xl w-2xl  overflow-y-auto"
-          // style={{
-          //   top: position.top,
-          //   left: position.left,
-          // }}
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <div className="cursor-pointer hover:text-blue-600 transition-colors">
+          {children}
+        </div>
+      </Popover.Trigger>
+      
+      <Popover.Portal>
+        <Popover.Content
+          className="z-20 bg-white border border-gray-200 rounded-xl shadow-2xl w-2xl max-h-96 overflow-y-auto data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"
+          sideOffset={8}
         >
-          {/* Close Button */}
-          <button
-            onClick={handleClose}
-            className="absolute top-3 right-3 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors z-10"
-          >
-            <Icon icon="mdi:close" className="w-4 h-4" />
-          </button>
-
           <div className="p-5">
             {/* Header */}
             <div className="flex items-center mb-4">
@@ -158,7 +87,7 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
             )}
 
             {/* Contact Links */}
-            <div className="border-t border-gray-200 pt-4 mb-4 ">
+            <div className="border-t border-gray-200 pt-4 mb-4">
               <div className="flex items-center justify-between gap-2">
                 {author.email && (
                   <a
@@ -214,7 +143,7 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
             {/* Search Links */}
             <div className="border-t border-gray-200 pt-4">
               <h4 className="text-sm font-medium text-gray-800 mb-3">Search Publications</h4>
-              <div className=" flex items-center gap-3">
+              <div className="flex items-center gap-3">
                 <a
                   href={getPubMedSearchUrl(author.name)}
                   target="_blank"
@@ -236,8 +165,10 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+          
+          <Popover.Arrow className="fill-white" />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   )
 }

@@ -41,7 +41,14 @@ export default defineType({
           type: 'string',
         }),
       ],
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'coverVideo',
+      title: 'Cover Video',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
     }),
     defineField({
       name: 'quote',
@@ -65,6 +72,12 @@ export default defineType({
       description: 'Optional quote to highlight the expertise area',
     }),
   ],
+  validation: (Rule) => Rule.custom((doc) => {
+    if (!doc.coverImage && !doc.coverVideo) {
+      return 'Either cover image or cover video must be provided'
+    }
+    return true
+  }),
   preview: {
     select: {
       title: 'title',
