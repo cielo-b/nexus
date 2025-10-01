@@ -628,7 +628,7 @@ export default function HomePage() {
         {/* Featured Videos Section - Only show if there are videos */}
         {videos.length > 0 && (
           <section className="py-8 bg-blue-50">
-        <div className="max-w-[1700px] mx-auto px-[8vw]">
+        <div className="max-w-[1700px] mx-auto px-[2vw]">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800">Beyond the paved road, the reality of our Fieldwork</h2>
             <div className="flex items-center gap-4">
@@ -679,7 +679,7 @@ export default function HomePage() {
                   className="flex gap-6 transition-transform duration-500 ease-in-out"
                   style={{
                     transform: `translateX(-${currentVideoIndex * (100 / Math.min(3, videos.length))}%)`,
-                    width: `${(videos.length / Math.min(4, videos.length)) * 100}%`
+                    width: `${(videos.length / Math.min(4, videos.length)) * 90}%`
                   }}
                 >
                   {videos.map((video, index) => (
