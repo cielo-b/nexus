@@ -11,10 +11,16 @@ import { client } from '@/lib/sanity/client'
 import { teamMemberQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { TeamMember } from '@/types/teamMember'
+import TeamMemberModal from '@/components/TeamMemberModal'
 
 export default function AboutPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedTeamMember, setSelectedTeamMember] = useState<TeamMember | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  // Character limit for showing "Read More" button
+  const BIO_CHAR_LIMIT = 150
   
   // Refs for animations
   const heroRef = useRef(null)
@@ -56,6 +62,28 @@ export default function AboutPage() {
     visible: { opacity: 1, y: 0 }
   }
 
+  // Function to open modal with selected team member
+  const openModal = (member: TeamMember) => {
+    setSelectedTeamMember(member)
+    setIsModalOpen(true)
+  }
+
+  // Function to close modal
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setSelectedTeamMember(null)
+  }
+
+  // Function to check if bio is longer than limit
+  const isBioLong = (bio: string | undefined) => {
+    return bio && bio.length > BIO_CHAR_LIMIT
+  }
+
+  // Function to truncate bio for preview
+  const truncateBio = (bio: string | undefined) => {
+    if (!bio) return ''
+    return bio.length > BIO_CHAR_LIMIT ? bio.substring(0, BIO_CHAR_LIMIT) + '...' : bio
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -414,7 +442,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.6 }}
                   className='space-y-4 sm:space-y-6 text-center'
                 >
-                  <div className="w-full h-[600px] mx-auto mb-6 sm:mb-8 overflow-hidden shadow-2xl">
+                  <div className="w-[400px] h-[400px] mx-auto mb-6 sm:mb-8 overflow-hidden ">
                     <Image
                       src={getSanityImage(member.image)}
                       alt={member.image.alt || member.name}
@@ -423,16 +451,26 @@ export default function AboutPage() {
                       className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold mb-2 sm:mb-3">
+                  <h3 className="text-lg font-bold mb-2 sm:mb-3">
                     {member.name}
                   </h3>
-                  <p className="text-xs sm:text-sm mb-2 sm:mb-3 text-blue-100 font-medium">
+                  <p className=" mb-2 sm:mb-3 text-blue-100 font-medium">
                     {member.title}
                   </p>
                   {member.bio && (
-                    <p className="text-xs text-blue-200 leading-relaxed">
-                      {member.bio}
-                    </p>
+                    <div className="space-y-2">
+                      <p className=" text-blue-200 leading-relaxed">
+                        {truncateBio(member.bio)}
+                      </p>
+                      {isBioLong(member.bio) && (
+                        <button
+                          onClick={() => openModal(member)}
+                          className="border-white border py-4 px-10  font-medium outline-none underline transition-colors duration-200"
+                        >
+                          Read More
+                        </button>
+                      )}
+                    </div>
                   )}
                 </motion.div>
               ))}
@@ -448,6 +486,13 @@ export default function AboutPage() {
           )}
         </div>
       </motion.section>
+
+      {/* Team Member Modal */}
+      <TeamMemberModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        teamMember={selectedTeamMember}
+      />
     </div>
   )
 }
