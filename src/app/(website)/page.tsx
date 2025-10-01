@@ -341,7 +341,7 @@ export default function HomePage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative h-screen">
+      <section className="relative pt-[30vh] xl:pt-0 xl:h-screen">
         <video
           ref={heroVideoRef}
           key={currentHeroVideo}
@@ -359,9 +359,9 @@ export default function HomePage() {
           <source src={heroVideos[currentHeroVideo]} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/60 w-full h-full"></div>
-        <div className="relative z-10 flex items-center justify-start w-full h-full px-4 sm:px-6 lg:px-8">
-          <div className="text-white px-[8vw] max-w-[1700px] mx-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-4 sm:mb-6 leading-tight">
+        <div className="relative z-10 flex items-center justify-center xl:justify-start w-full h-full px-4 sm:px-6 lg:px-8">
+          <div className="text-white px-[8vw] max-w-[1700px] mx-auto ">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-4 sm:mb-6 leading-tight">
               {displayedTitle}
               {!titleComplete && <span className="typewriter-cursor text-white">|</span>}
             </h1>
