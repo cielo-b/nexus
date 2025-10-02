@@ -108,7 +108,7 @@ function PublicationsContent() {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative lg:h-[60vh]  flex flex-col items-center justify-end pb-4 text-white ">
+      <section className="relative pt-[200px] xl:h-[60vh]  flex flex-col items-center justify-end pb-4 text-white ">
         <div className="absolute inset-0 bg-black/80  w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 

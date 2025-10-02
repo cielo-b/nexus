@@ -273,7 +273,7 @@ export default function AboutPage() {
                       {item.description}
                     </p>
                   <Link href="/contact" className="border-2 border-white text-white px-3 sm:px-4 py-1.5 font-medium hover:bg-white hover:text-blue-600 transition-colors text-xs sm:text-sm w-fit mx-auto inline-block text-center flex-shrink-0">
-                    Get in touch
+                    Let's connect
                   </Link>
                 </motion.div>
               ))}
@@ -440,7 +440,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.6 }}
                   className='space-y-4 sm:space-y-6 text-center'
                 >
-                  <div className="w-[400px] h-[400px] mx-auto mb-6 sm:mb-8 overflow-hidden ">
+                  <div className=" w-[250px]  h-[250px] xl:w-[400px] xl:h-[400px] mx-auto mb-6 sm:mb-8 overflow-hidden ">
                     <Image
                       src={getSanityImage(member.image)}
                       alt={member.image.alt || member.name}

@@ -90,6 +90,7 @@ export default function HomePage() {
   const [currentHeroVideo, setCurrentHeroVideo] = useState(0)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const [isModalOverflowing, setIsModalOverflowing] = useState(false)
   
   // Character limit for showing "Read More" button for video descriptions
   const VIDEO_DESC_CHAR_LIMIT = 100
@@ -103,6 +104,15 @@ export default function HomePage() {
   const truncateVideoDesc = (description: string | undefined) => {
     if (!description) return ''
     return description.length > VIDEO_DESC_CHAR_LIMIT ? description.substring(0, VIDEO_DESC_CHAR_LIMIT) + '...' : description
+  }
+
+  // Function to check if modal content overflows vertically
+  const checkModalOverflow = () => {
+    const modalElement = document.getElementById('video-modal-content')
+    if (modalElement) {
+      const isOverflowing = modalElement.scrollHeight > modalElement.clientHeight
+      setIsModalOverflowing(isOverflowing)
+    }
   }
   
   const swiperRef = useRef<any>(null)
@@ -305,6 +315,20 @@ export default function HomePage() {
     setPlayingVideos(new Set<number>())
   }, [currentVideoIndex])
 
+  // Handle window resize to recalculate modal overflow
+  useEffect(() => {
+    const handleResize = () => {
+      if (isVideoModalOpen) {
+        setTimeout(() => {
+          checkModalOverflow()
+        }, 100)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [isVideoModalOpen])
+
   const toggleVideoMute = (index: number) => {
     setMutedVideos(prev => {
       const newSet = new Set(prev)
@@ -320,6 +344,10 @@ export default function HomePage() {
   const openVideoModal = (video: Video) => {
     setSelectedVideo(video)
     setIsVideoModalOpen(true)
+    // Check overflow after modal opens
+    setTimeout(() => {
+      checkModalOverflow()
+    }, 100)
   }
 
   const closeVideoModal = () => {
@@ -1054,39 +1082,54 @@ export default function HomePage() {
       {/* Video Modal */}
       {isVideoModalOpen && selectedVideo && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl">
-            {/* Close Button */}
+          <div 
+            id="video-modal-content"
+            className="relative w-full max-w-7xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl"
+          >
+            {/* Close Button - Dynamic color based on layout */}
             <button
               onClick={closeVideoModal}
-              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110"
+              className={`absolute top-4 right-4 z-10 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110 ${
+                isModalOverflowing 
+                  ? 'bg-black/20 hover:bg-black/30' 
+                  : 'bg-white/20 hover:bg-white/30'
+              }`}
             >
-              <Icon icon="mdi:close" className="w-6 h-6 text-white" />
+              <Icon 
+                icon="mdi:close" 
+                className={`w-6 h-6 ${isModalOverflowing ? 'text-black' : 'text-white'}`} 
+              />
             </button>
             
-            {/* Video Container */}
-            <div className="relative w-full aspect-video bg-black">
-              <video
-                src={selectedVideo.videoFile.asset.url || ''}
-                className="w-full h-full object-contain"
-                controls
-                autoPlay
-                playsInline
-                onEnded={closeVideoModal}
-              />
-            </div>
-            
-            {/* Video Info Section */}
-            <div className="p-6 bg-white">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-gray-900">{selectedVideo.title}</h3>
-                {selectedVideo.description && (
-                  <div className="space-y-3">
-                    <h4 className="text-lg font-semibold text-gray-800">Description</h4>
-                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                      {selectedVideo.description}
-                    </p>
-                  </div>
-                )}
+            {/* Dynamic Layout - Row if overflowing, Column if not */}
+            <div className={`flex h-full max-h-[90vh] ${isModalOverflowing ? 'flex-row' : 'flex-col'}`}>
+              {/* Video Container - Takes more space when in row layout */}
+              <div className={`relative bg-black ${isModalOverflowing ? 'w-3/4' : 'w-full aspect-video'}`}>
+                <video
+                  src={selectedVideo.videoFile.asset.url || ''}
+                  className="w-full h-full object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                  onEnded={closeVideoModal}
+                />
+              </div>
+              
+              {/* Video Info Section - Takes less space when in row layout */}
+              <div className={`p-4 lg:p-6 bg-white overflow-y-auto ${
+                isModalOverflowing ? 'w-1/4' : 'w-full'
+              }`}>
+                <div className="space-y-4">
+                  <h3 className="text-xl lg:text-2xl font-bold text-gray-900">{selectedVideo.title}</h3>
+                  {selectedVideo.description && (
+                    <div className="space-y-3">
+                      <h4 className="text-base lg:text-lg font-semibold text-gray-800">Description</h4>
+                      <p className="text-sm lg:text-base text-gray-700 leading-relaxed whitespace-pre-wrap">
+                        {selectedVideo.description}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -173,7 +173,7 @@ export default function PublicationPage({ params }: PageProps) {
   return (
     <div className="min-h-screen ">
       {/* Hero Section */}
-      <section className="relative   lg:h-[50vh]  flex flex-col items-center justify-center text-white bg-transparent ">
+      <section className="relative   pt-[200px] xl:h-[60vh]  flex flex-col items-center justify-center text-white bg-transparent ">
 
         {publication.coverVideo ? (
           <video
