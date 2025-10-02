@@ -141,7 +141,7 @@ export default function ExpertisePage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative h-[50vh]  flex flex-col items-center justify-end text-white">
+      <section className="relative pt-[200px] xl:h-[60vh]  flex flex-col items-center justify-end text-white">
         {/* <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(20,20,20,0)_0%,rgba(20,20,20,0.88)_78%,rgba(20,20,20,1)_100%)] w-full h-full"></div> */}
         {expertise.coverVideo ? (
           <video
