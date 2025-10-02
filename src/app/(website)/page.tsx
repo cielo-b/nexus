@@ -341,7 +341,7 @@ export default function HomePage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative pt-[30vh] xl:pt-0 xl:h-screen">
+      <section className="relative pt-[200px] xl:pt-0 xl:h-screen">
         <video
           ref={heroVideoRef}
           key={currentHeroVideo}
@@ -422,13 +422,13 @@ export default function HomePage() {
                   {companyData.map((item) => (
                     <SwiperSlide key={item.type} className='p-10'>
 
-                      <div className="shadow-md">
+                      <div >
                         <Image
                           src={item.image}
                           alt={item.title}
                           width={400}
                           height={220}
-                          className="w-full h-80 object-cover"
+                          className="w-full h-80 object-cover rounded-xl"
                         />
                         <div className="flex w-full flex-col items-start justify-center gap-2 p-8">
                           <span className="text-2xl font-semibold text-[#2563eb] max-sm:text-lg">
@@ -919,7 +919,7 @@ export default function HomePage() {
                               alt={testimonial.clientImage.alt || testimonial.clientName}
                               width={64}
                               height={64}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover rounded-xl"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-600 flex items-center justify-center">

@@ -175,7 +175,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className=' order-1 lg:order-2 relative'
             >
-              <Image src="/images/about1.png" alt="Get To Know Nexus" width={10} height={100000} className="w-[500px] h-80  object-cover  shadow-lg" />
+              <Image src="/images/about1.png" alt="Get To Know Nexus" width={10} height={100000} className="w-[500px] h-80  object-cover  shadow-lg rounded-xl" />
             </motion.div>
           </motion.div>
           
@@ -191,7 +191,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               className=' max-w-xl order-1 relative'
             >
-              <Image src="/images/about2.png" alt="What We Do" width={10000} height={100000} className="w-[500px] h-80 object-cover  shadow-lg" />
+              <Image src="/images/about2.png" alt="What We Do" width={10000} height={100000} className="w-[500px] h-80 object-cover  shadow-lg rounded-xl" />
             </motion.div>
             <motion.div 
               variants={fadeInRight}
@@ -263,9 +263,8 @@ export default function AboutPage() {
                   key={index}
                   variants={staggerItem}
                   transition={{ duration: 0.6 }}
-                  className="mx-4 text-center p-6 sm:p-8 transition-all duration-300 w-80 sm:w-96 h-[300px] flex flex-col justify-between flex-shrink-0 overflow-hidden"
+                  className="mx-4  text-center p-6 sm:p-8 transition-all duration-300 w-80 sm:w-96 h-[300px]  flex flex-col  justify-between flex-shrink-0 overflow-hidden"
                 >
-                  <div className="flex-1 flex flex-col justify-start">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-4 sm:mb-6 bg-white/20 rounded-lg">
                       <Icon icon={item.icon} className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                     </div>
@@ -273,7 +272,6 @@ export default function AboutPage() {
                     <p className="text-white/90 mb-3 sm:mb-4 text-xs sm:text-sm text-left leading-relaxed flex-1 overflow-hidden">
                       {item.description}
                     </p>
-                  </div>
                   <Link href="/contact" className="border-2 border-white text-white px-3 sm:px-4 py-1.5 font-medium hover:bg-white hover:text-blue-600 transition-colors text-xs sm:text-sm w-fit mx-auto inline-block text-center flex-shrink-0">
                     Get in touch
                   </Link>
@@ -448,7 +446,7 @@ export default function AboutPage() {
                       alt={member.image.alt || member.name}
                       width={100000}
                       height={100000}
-                      className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover hover:scale-105 rounded-3xl transition-transform duration-500"
                     />
                   </div>
                   <h3 className="text-lg font-bold mb-2 sm:mb-3">

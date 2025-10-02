@@ -196,11 +196,13 @@ export default function ContactPage() {
             </motion.div>
             
             <motion.div variants={staggerItem} className="max-w-3xl mx-auto">
-              <p className="text-xl  text-gray-600 leading-relaxed">
-                Whether you already have an impact framework in place or you're starting from scratch, 
-                we'll chart the fastest route to getting you the sector's most credible, comparable data 
-                to help you prove and improve your social performance.
-              </p>
+            <p className="text-xl text-gray-600 leading-relaxed">
+  At Insight Nexus, we provide expert consultancy across diverse sectors to accelerate growth 
+  and sustainable development. Whether you’re optimizing existing strategies or building new 
+  frameworks from the ground up, we help you uncover credible insights, streamline decision-making, 
+  and drive measurable impact that strengthens both performance and long-term success.
+</p>
+
             </motion.div>
           </motion.div>
         </div>
@@ -217,7 +219,7 @@ export default function ContactPage() {
           >
             <motion.div variants={staggerItem} className="text-center mb-12">
               <h2 className="text-4xl  font-bold text-gray-900 mb-6">
-                Get in Touch
+                Let's connect
               </h2>
               <p className="text-lg text-gray-600">
                 Ready to start your impact journey? We'd love to hear from you.

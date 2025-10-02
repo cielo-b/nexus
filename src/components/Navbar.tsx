@@ -124,7 +124,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 px-[5vw] transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 w-full z-50  px-8 lg:px-[2vw] xl:px-[5vw] transition-all duration-300 ${
         shouldHideNavbar 
           ? 'transform -translate-y-full opacity-0' 
           : 'transform translate-y-0 opacity-100'
@@ -329,7 +329,60 @@ export default function Navbar() {
         </div>
 
         {/* Small screens (below 1000px) - Mobile menu */}
-        <div className="xl:hidden">
+        <div className="hidden lg:block xl:hidden relative">
+          <div className="flex justify-between items-center py-4">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2">
+              <Image src="/logos/logo.png" alt="Logo" width={1000} height={1000} className='w-[100px]' />
+            </Link>
+
+            {/* All Navigation Links */}
+            <div className="flex items-center space-x-4">
+              <Link href="/" className={getLinkStyles('/')}>Home</Link>
+              <Link href="/about" className={getLinkStyles('/about')}>About Us</Link>
+              <Link href="/services" className={getLinkStyles('/services')}>Services</Link>
+              
+              {/* Expertise Dropdown */}
+              <div className="relative">
+                <button
+                  data-expertise-dropdown
+                  className="flex items-center space-x-1 transition-colors duration-300"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIsDropdownOpen(!isDropdownOpen)
+                  }}
+                >
+                  <span>Expertise</span>
+                  <svg 
+                    className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+
+              <Link href="/publications" className={getLinkStyles('/publications')}>Publications</Link>
+              <Link href="/career" className={getLinkStyles('/career')}>Career</Link>
+              <Link href="/training" className={getLinkStyles('/training')}>Training</Link>
+              <Link href="/blogs" className={getLinkStyles('/blogs')}>Blog</Link>
+              <Link href="/products" className={getLinkStyles('/products')}>Products</Link>
+            </div>
+
+            {/* Contact Us Button */}
+            <Link
+              href="/contact"
+              className="px-3 py-2 text-sm font-medium transition-all duration-300 bg-white text-black hover:bg-gray-100"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+
+
+                <div className="lg:hidden">
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
