@@ -240,93 +240,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Expertise Section - Shows when dropdown is open */}
-        <div 
-          data-expertise-dropdown
-          className={`w-full transition-all duration-300 ease-in-out ${
-            isDropdownOpen ? 'block' : 'hidden'
-          } ${isOverDarkBackground ? 'text-white' : 'text-black'}`}
-        >
-          <div className="px-[8vw] pb-4">
-            <div className="max-w-7xl mx-auto">
-              {expertiseLoading ? (
-                <div className="flex items-center justify-center py-4">
-                  <div className={`animate-spin h-8 w-8 border-b-2 ${isOverDarkBackground ? 'border-white' : 'border-black'}`}></div>
-                  <span className={`ml-3 text-lg ${isOverDarkBackground ? 'text-white' : 'text-black'}`}>
-                    Loading expertise areas...
-                  </span>
-                </div>
-              ) : expertise.length > 0 ? (
-                <>
-                  {/* Mobile List View */}
-                  <div className="block md:hidden">
-                    <div className="space-y-3">
-                      {expertise.map((item) => (
-                        <Link
-                          key={item._id}
-                          href={`/expertise/${item.slug.current}`}
-                          onClick={() => setIsDropdownOpen(false)}
-                          className={`group flex items-center p-3 transition-all duration-300 ${
-                            isOverDarkBackground 
-                              ? 'bg-white/10 backdrop-blur-sm hover:bg-white/20' 
-                              : 'bg-gray-100 hover:bg-gray-200'
-                          }`}
-                        >
-                          <h4 className={`font-semibold transition-colors duration-300 ${
-                            isOverDarkBackground 
-                              ? 'text-white group-hover:text-blue-100' 
-                              : 'text-black group-hover:text-blue-600'
-                          }`}>
-                            {item.title}
-                          </h4>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
 
-                  {/* Desktop Grid View */}
-                  <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-                    {expertise.map((item) => (
-                      <Link
-                        key={item._id}
-                        href={`/expertise/${item.slug.current}`}
-                        onClick={() => setIsDropdownOpen(false)}
-                        className={`group flex flex-col items-center p-3 transition-all duration-300 hover:scale-105 ${
-                          isOverDarkBackground 
-                            ? 'bg-white/10 backdrop-blur-sm hover:bg-white/20' 
-                            : 'bg-gray-100 hover:bg-gray-200'
-                        }`}
-                      >
-                        <h4 className={`font-semibold text-center transition-colors duration-300 ${
-                          isOverDarkBackground 
-                            ? 'text-white group-hover:text-blue-100' 
-                            : 'text-black group-hover:text-blue-600'
-                        }`}>
-                          {item.title}
-                        </h4>
-                      </Link>
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-12">
-                  <div className={`w-16 h-16 mx-auto mb-4 flex items-center justify-center ${
-                    isOverDarkBackground ? 'text-white/60' : 'text-gray-400'
-                  }`}>
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
-                    </svg>
-                  </div>
-                  <p className={`text-lg ${
-                    isOverDarkBackground ? 'text-white/80' : 'text-gray-600'
-                  }`}>
-                    No expertise areas available yet
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
 
         {/* Small screens (below 1000px) - Mobile menu */}
 <div className="hidden lg:block xl:hidden relative">
@@ -424,6 +338,95 @@ export default function Navbar() {
                 </svg>
               )}
             </button>
+          </div>
+        </div>
+
+
+                {/* Expertise Section - Shows when dropdown is open */}
+                <div 
+          data-expertise-dropdown
+          className={`w-full transition-all duration-300 ease-in-out ${
+            isDropdownOpen ? 'block' : 'hidden'
+          } ${isOverDarkBackground ? 'text-white' : 'text-black'}`}
+        >
+          <div className="px-[8vw] pb-4">
+            <div className="max-w-7xl mx-auto">
+              {expertiseLoading ? (
+                <div className="flex items-center justify-center py-4">
+                  <div className={`animate-spin h-8 w-8 border-b-2 rounded-full ${isOverDarkBackground ? 'border-white' : 'border-black'}`}></div>
+                  <span className={`ml-3 text-lg ${isOverDarkBackground ? 'text-white' : 'text-black'}`}>
+                    Loading expertise areas...
+                  </span>
+                </div>
+              ) : expertise.length > 0 ? (
+                <>
+                  {/* Mobile List View */}
+                  <div className="block md:hidden">
+                    <div className="space-y-3">
+                      {expertise.map((item) => (
+                        <Link
+                          key={item._id}
+                          href={`/expertise/${item.slug.current}`}
+                          onClick={() => setIsDropdownOpen(false)}
+                          className={`group flex items-center p-3 transition-all duration-300 ${
+                            isOverDarkBackground 
+                              ? 'bg-white/10 backdrop-blur-sm hover:bg-white/20' 
+                              : 'bg-gray-100 hover:bg-gray-200'
+                          }`}
+                        >
+                          <h4 className={`font-semibold transition-colors duration-300 ${
+                            isOverDarkBackground 
+                              ? 'text-white group-hover:text-blue-100' 
+                              : 'text-black group-hover:text-blue-600'
+                          }`}>
+                            {item.title}
+                          </h4>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Desktop Grid View */}
+                  <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+                    {expertise.map((item) => (
+                      <Link
+                        key={item._id}
+                        href={`/expertise/${item.slug.current}`}
+                        onClick={() => setIsDropdownOpen(false)}
+                        className={`group flex flex-col items-center p-3 transition-all duration-300 hover:scale-105 ${
+                          isOverDarkBackground 
+                            ? 'bg-white/10 backdrop-blur-sm hover:bg-white/20' 
+                            : 'bg-gray-100 hover:bg-gray-200'
+                        }`}
+                      >
+                        <h4 className={`font-semibold text-center transition-colors duration-300 ${
+                          isOverDarkBackground 
+                            ? 'text-white group-hover:text-blue-100' 
+                            : 'text-black group-hover:text-blue-600'
+                        }`}>
+                          {item.title}
+                        </h4>
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-12">
+                  <div className={`w-16 h-16 mx-auto mb-4 flex items-center justify-center ${
+                    isOverDarkBackground ? 'text-white/60' : 'text-gray-400'
+                  }`}>
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+                    </svg>
+                  </div>
+                  <p className={`text-lg ${
+                    isOverDarkBackground ? 'text-white/80' : 'text-gray-600'
+                  }`}>
+                    No expertise areas available yet
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
