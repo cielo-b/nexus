@@ -12,6 +12,9 @@
     "deploy-studio": "sanity deploy",
     "seed": "node scripts/seed-sanity.js"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@changey/react-leaflet-markercluster": "4.0.0-rc1",
     "@faker-js/faker": "^9.6.0",
