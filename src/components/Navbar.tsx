@@ -329,57 +329,77 @@ export default function Navbar() {
         </div>
 
         {/* Small screens (below 1000px) - Mobile menu */}
-        <div className="hidden lg:block xl:hidden relative">
-          <div className="flex justify-between items-center py-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logos/logo.png" alt="Logo" width={1000} height={1000} className='w-[100px]' />
-            </Link>
+<div className="hidden lg:block xl:hidden relative">
+  <div className="py-4">
+    {/* First Row */}
+    <div className="flex justify-between items-center">
+      {/* Logo */}
+      <Link href="/" className="flex items-center space-x-2">
+        <Image
+          src="/logos/logo.png"
+          alt="Logo"
+          width={1000}
+          height={1000}
+          className="w-[230px]"
+        />
+      </Link>
 
-            {/* All Navigation Links */}
-            <div className="flex items-center space-x-4">
-              <Link href="/" className={getLinkStyles('/')}>Home</Link>
-              <Link href="/about" className={getLinkStyles('/about')}>About Us</Link>
-              <Link href="/services" className={getLinkStyles('/services')}>Services</Link>
-              
-              {/* Expertise Dropdown */}
-              <div className="relative">
-                <button
-                  data-expertise-dropdown
-                  className="flex items-center space-x-1 transition-colors duration-300"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setIsDropdownOpen(!isDropdownOpen)
-                  }}
-                >
-                  <span>Expertise</span>
-                  <svg 
-                    className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
+      {/* Top Navigation Links */}
+      <div className="flex items-center space-x-6">
+        <Link href="/" className={getLinkStyles("/")}>Home</Link>
+        <Link href="/about" className={getLinkStyles("/about")}>About Us</Link>
+        <Link href="/services" className={getLinkStyles("/services")}>Services</Link>
 
-              <Link href="/publications" className={getLinkStyles('/publications')}>Publications</Link>
-              <Link href="/career" className={getLinkStyles('/career')}>Career</Link>
-              <Link href="/training" className={getLinkStyles('/training')}>Training</Link>
-              <Link href="/blogs" className={getLinkStyles('/blogs')}>Blog</Link>
-              <Link href="/products" className={getLinkStyles('/products')}>Products</Link>
-            </div>
-
-            {/* Contact Us Button */}
-            <Link
-              href="/contact"
-              className="px-3 py-2 text-sm font-medium transition-all duration-300 bg-white text-black hover:bg-gray-100"
+        {/* Expertise Dropdown */}
+        <div className="relative">
+          <button
+            data-expertise-dropdown
+            className="flex items-center space-x-1 transition-colors duration-300"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsDropdownOpen(!isDropdownOpen);
+            }}
+          >
+            <span>Expertise</span>
+            <svg
+              className={`w-4 h-4 transition-transform duration-200 ${
+                isDropdownOpen ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              Contact Us
-            </Link>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
         </div>
+              <Link
+        href="/contact"
+        className="px-3 py-2 text-sm font-medium transition-all duration-300 bg-white text-black hover:bg-gray-100"
+      >
+        Contact Us
+      </Link>
+      </div>
+    </div>
+
+    {/* Second Row */}
+    <div className="mt-3 flex justify-end space-x-8">
+      <Link href="/publications" className={getLinkStyles("/publications")}>
+        Publications
+      </Link>
+      <Link href="/career" className={getLinkStyles("/career")}>Career</Link>
+      <Link href="/training" className={getLinkStyles("/training")}>Training</Link>
+      <Link href="/blogs" className={getLinkStyles("/blogs")}>Blog</Link>
+      <Link href="/products" className={getLinkStyles("/products")}>Products</Link>
+    </div>
+  </div>
+</div>
+
 
 
                 <div className="lg:hidden">
@@ -411,16 +431,16 @@ export default function Navbar() {
       {/* Mobile Menu Popover */}
       {isMobileMenuOpen && (
         <div 
-          className="xl:hidden fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300" 
+          className="xl:hidden fixed inset-0 z-40   transition-opacity duration-300" 
           onClick={closeMobileMenu}
           style={{ animation: 'fadeIn 0.3s ease-out' }}
         >
           <div 
-            className="absolute top-16 left-0 right-0 bg-gray-900 shadow-lg border-t border-white/10 transform transition-transform duration-300 ease-out"
+            className={`absolute top-[100%] left-0 right-0   shadow-lg border-t border-white/10 transform transition-transform duration-300 ease-out`}
             onClick={(e) => e.stopPropagation()}
             style={{ animation: 'slideDown 0.3s ease-out' }}
           >
-            <div className="px-6 py-4 space-y-4">
+            <div className="px-6 py-4 space-y-4 bg-black/80 backdrop-blur-2xl">
               {/* Primary Navigation Links */}
               <div className="space-y-2">
                 <Link 

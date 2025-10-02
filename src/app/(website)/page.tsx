@@ -90,6 +90,21 @@ export default function HomePage() {
   const [currentHeroVideo, setCurrentHeroVideo] = useState(0)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  
+  // Character limit for showing "Read More" button for video descriptions
+  const VIDEO_DESC_CHAR_LIMIT = 100
+  
+  // Function to check if video description is longer than limit
+  const isVideoDescLong = (description: string | undefined) => {
+    return description && description.length > VIDEO_DESC_CHAR_LIMIT
+  }
+
+  // Function to truncate video description for preview
+  const truncateVideoDesc = (description: string | undefined) => {
+    if (!description) return ''
+    return description.length > VIDEO_DESC_CHAR_LIMIT ? description.substring(0, VIDEO_DESC_CHAR_LIMIT) + '...' : description
+  }
+  
   const swiperRef = useRef<any>(null)
   const coreValuesRef = useRef<HTMLDivElement>(null)
   const getToKnowRef = useRef<HTMLDivElement>(null)
@@ -688,7 +703,10 @@ export default function HomePage() {
                       className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3"
                       style={{ minWidth: '300px' }}
                     >
-                      <div className="bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer h-full">
+                      <div 
+                        className="bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer h-full"
+                        onClick={() => openVideoModal(video)}
+                      >
                         <div className="relative aspect-video bg-gray-900 group/video">
                           <video
                             ref={(el) => {
@@ -754,7 +772,22 @@ export default function HomePage() {
                         {video.description && (
                           <div className="p-4 flex-1 flex flex-col">
                             <h3 className="text-lg font-semibold text-gray-900 mb-2">{video.title}</h3>
-                            <p className="text-sm text-gray-600 leading-relaxed flex-1">{video.description}</p>
+                            <div className="space-y-2 flex-1">
+                              <p className="text-sm text-gray-600 leading-relaxed">
+                                {truncateVideoDesc(video.description)}
+                              </p>
+                              {isVideoDescLong(video.description) && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    openVideoModal(video)
+                                  }}
+                                  className="text-sm text-blue-600 hover:text-blue-800 font-medium underline transition-colors duration-200 text-left"
+                                >
+                                  Read More
+                                </button>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -1020,26 +1053,18 @@ export default function HomePage() {
 
       {/* Video Modal */}
       {isVideoModalOpen && selectedVideo && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-0 sm:p-4">
-          <div className="relative w-full h-full sm:w-3/5 sm:h-4/5 max-w-4xl">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl">
             {/* Close Button */}
             <button
               onClick={closeVideoModal}
-              className="absolute -top-12 right-0 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110 hidden sm:block"
-            >
-              <Icon icon="mdi:close" className="w-6 h-6 text-white" />
-            </button>
-            
-            {/* Mobile Close Button */}
-            <button
-              onClick={closeVideoModal}
-              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110 sm:hidden"
+              className="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 transition-all duration-200 hover:scale-110"
             >
               <Icon icon="mdi:close" className="w-6 h-6 text-white" />
             </button>
             
             {/* Video Container */}
-            <div className="relative w-full h-full bg-black sm:rounded-lg overflow-hidden">
+            <div className="relative w-full aspect-video bg-black">
               <video
                 src={selectedVideo.videoFile.asset.url || ''}
                 className="w-full h-full object-contain"
@@ -1050,12 +1075,19 @@ export default function HomePage() {
               />
             </div>
             
-            {/* Video Info */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 sm:relative sm:bg-transparent sm:mt-4 sm:text-center">
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">{selectedVideo.title}</h3>
-              {selectedVideo.description && (
-                <p className="text-gray-300 text-sm">{selectedVideo.description}</p>
-              )}
+            {/* Video Info Section */}
+            <div className="p-6 bg-white">
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-gray-900">{selectedVideo.title}</h3>
+                {selectedVideo.description && (
+                  <div className="space-y-3">
+                    <h4 className="text-lg font-semibold text-gray-800">Description</h4>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {selectedVideo.description}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
