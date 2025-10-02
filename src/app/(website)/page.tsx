@@ -356,8 +356,6 @@ export default function HomePage() {
   }
 
 
-  console.log(recentBlogs)
-
 
   return (
     <div className="min-h-screen bg-white">
