@@ -32,9 +32,9 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
     const encodedAuthorName = encodeURIComponent(author.name)
     
     // Determine if we're on a publication or blog page
-    if (pathname.includes('/publications')) {
+    if (pathname?.includes('/publications')) {
       router.push(`/publications?author=${encodedAuthorName}`)
-    } else if (pathname.includes('/blogs')) {
+    } else if (pathname?.includes('/blogs')) {
       router.push(`/blogs?author=${encodedAuthorName}`)
     } else {
       // Default to publications if we can't determine the context
@@ -136,7 +136,7 @@ export default function AuthorPopover({ author, children }: AuthorPopoverProps) 
                 className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
                 <Icon icon="mdi:file-document-multiple" className="w-4 h-4" />
-                View Other {pathname.includes('/blogs') ? 'Blogs' : 'Publications'}
+                View Other {pathname?.includes('/blogs') ? 'Blogs' : 'Publications'}
               </button>
             </div>
 

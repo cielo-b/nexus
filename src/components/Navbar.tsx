@@ -84,6 +84,8 @@ export default function Navbar() {
 
   // Check if a link is active
   const isActiveLink = (href: string) => {
+    if (!pathname) return false
+    
     if (href === '/') {
       return pathname === '/'
     }
