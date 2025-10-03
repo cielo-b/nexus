@@ -75,6 +75,8 @@ function BlogsContent() {
 
   // Handle author query parameter from URL
   useEffect(() => {
+    if (!searchParams) return
+    
     const authorParam = searchParams.get('author')
     if (authorParam) {
       setSearchQuery(authorParam)
