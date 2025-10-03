@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from 'zod';
 import { MailService } from '@/services/mail.service';
 
+export const runtime = 'edge';
 // Validation schema
 const contactFormSchema = z.object({
   firstName: z.string().min(1, 'First name is required').max(50, 'First name is too long'),
