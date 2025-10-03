@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { z } from 'zod'
-export const runtime = 'nodejs';
+
+// Use Node.js runtime for nodemailer compatibility
+export const runtime = 'nodejs'
 
 
 // Validation schema
