@@ -45,6 +45,7 @@ interface Publication {
 
 export default function ExpertisePage() {
   const params = useParams()
+  const slug = params?.slug as string
   const [expertise, setExpertise] = useState<Expertise | null>(null)
   const [services, setServices] = useState<Service[]>([])
   const [publications, setPublications] = useState<Publication[]>([])
@@ -53,9 +54,11 @@ export default function ExpertisePage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!slug) return
+      
       try {
         const [expertiseData, servicesData, publicationsData] = await Promise.all([
-          client.fetch(expertiseQueries.getExpertiseBySlug, { slug: params.slug }),
+          client.fetch(expertiseQueries.getExpertiseBySlug, { slug }),
           client.fetch(expertiseQueries.getServicesByExpertise, { expertiseId: null }), // Will be updated after expertise is fetched
           client.fetch(expertiseQueries.getPublicationsByExpertise, { expertiseId: null }) // Will be updated after expertise is fetched
         ])
@@ -79,10 +82,8 @@ export default function ExpertisePage() {
       }
     }
 
-    if (params.slug) {
-      fetchData()
-    }
-  }, [params.slug])
+    fetchData()
+  }, [slug])
 
   const scrollLeft = () => {
     if (sliderRef.current) {

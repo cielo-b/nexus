@@ -42,6 +42,7 @@ const RelatedBlogSkeleton = () => (
 
 export default function BlogPostPage() {
   const params = useParams()
+  const slug = params?.slug as string
   const [blog, setBlog] = useState<BlogPost | null>(null)
   const [relatedBlogs, setRelatedBlogs] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
@@ -51,8 +52,10 @@ export default function BlogPostPage() {
 
   useEffect(() => {
     const fetchBlog = async () => {
+      if (!slug) return
+      
       try {
-        const blogData = await client.fetch(blogQueries.getBlogBySlug, { slug: params.slug })
+        const blogData = await client.fetch(blogQueries.getBlogBySlug, { slug })
         setBlog(blogData)
       } catch (error) {
         console.error('Error fetching blog:', error)
@@ -61,10 +64,8 @@ export default function BlogPostPage() {
       }
     }
 
-    if (params.slug) {
-      fetchBlog()
-    }
-  }, [params.slug])
+    fetchBlog()
+  }, [slug])
 
   // Fetch related blogs when blog is loaded
   useEffect(() => {

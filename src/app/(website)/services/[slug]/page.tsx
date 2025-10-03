@@ -14,7 +14,7 @@ export const runtime = 'edge';
 
 export default function ServiceDetailPage() {
   const params = useParams()
-  const slug = params.slug as string
+  const slug = params?.slug as string
 
   const [service, setService] = useState<Service | null>(null)
   const [relatedPublications, setRelatedPublications] = useState<Publication[]>([])
@@ -22,6 +22,8 @@ export default function ServiceDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!slug) return
+      
       try {
         const serviceData = await client.fetch(serviceQueries.getServiceBySlug, { slug })
         setService(serviceData)
@@ -40,9 +42,7 @@ export default function ServiceDetailPage() {
       }
     }
 
-    if (slug) {
-      fetchData()
-    }
+    fetchData()
   }, [slug, service?._id])
 
   const renderHighlightedTitle = (title: string, highlightedText?: string) => {

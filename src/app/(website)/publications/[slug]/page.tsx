@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import { client } from '@/lib/sanity'
 import { publicationQueries } from '@/lib/sanity/queries'
 import { Publication } from '@/types/publication'
@@ -43,12 +44,6 @@ const SimilarPublicationSkeleton = () => (
   </div>
 )
 
-interface PageProps {
-  params: Promise<{
-    slug: string
-  }>
-}
-
 async function getPublication(slug: string): Promise<Publication | null> {
   const query = `*[_type == "publication" && slug.current == $slug][0] {
     _id, title, slug, excerpt, content, tableOfContents,
@@ -77,8 +72,9 @@ async function getSimilarPublications(category: string, excludeId: string): Prom
   return await client.fetch(query, { category, excludeId })
 }
 
-export default function PublicationPage({ params }: PageProps) {
-  const resolvedParams = use(params)
+export default function PublicationPage() {
+  const params = useParams()
+  const slug = params?.slug as string
   const [publication, setPublication] = useState<Publication | null>(null)
   const [similarPublications, setSimilarPublications] = useState<Publication[]>([])
   const [loading, setLoading] = useState(true)
@@ -88,8 +84,10 @@ export default function PublicationPage({ params }: PageProps) {
 
   useEffect(() => {
     const fetchPublication = async () => {
+      if (!slug) return
+      
       try {
-        const data = await getPublication(resolvedParams.slug)
+        const data = await getPublication(slug)
         console.log(data)
         if (!data) {
           notFound()
@@ -103,10 +101,8 @@ export default function PublicationPage({ params }: PageProps) {
       }
     }
 
-    if (resolvedParams.slug) {
-      fetchPublication()
-    }
-  }, [resolvedParams.slug])
+    fetchPublication()
+  }, [slug])
 
   // Fetch similar publications when publication is loaded
   useEffect(() => {
