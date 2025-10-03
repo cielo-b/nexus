@@ -10,6 +10,9 @@ import { expertiseQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { Expertise } from '@/types/expertise'
 
+export const runtime = 'edge';
+
+
 interface Service {
   _id: string
   title: string

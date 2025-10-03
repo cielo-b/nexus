@@ -9,6 +9,8 @@ import { serviceQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
 import { Service } from '@/types/service'
 import { Publication } from '@/types/publication'
+export const runtime = 'edge';
+
 
 export default function ServiceDetailPage() {
   const params = useParams()

@@ -14,6 +14,8 @@ import AuthorPopover from '@/components/AuthorPopover'
 import ImageModal from '@/components/ImageModal'
 import TagCard from '@/components/TagCard'
 
+export const runtime = 'edge';
+
 // Skeleton component for similar publications
 const SimilarPublicationSkeleton = () => (
   <div className="bg-[#F3F3F3]  overflow-hidden flex h-60 animate-pulse">

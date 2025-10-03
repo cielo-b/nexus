@@ -13,6 +13,7 @@ import { Icon } from '@iconify/react'
 import AuthorPopover from '@/components/AuthorPopover'
 import ImageModal from '@/components/ImageModal'
 import TagCard from '@/components/TagCard'
+export const runtime = 'edge';
 
 // Skeleton component for related blogs
 const RelatedBlogSkeleton = () => (

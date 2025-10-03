@@ -7,6 +7,8 @@ import { client } from '@/lib/sanity/client'
 import { jobQueries } from '@/lib/sanity/queries'
 import { Job } from '@/types/job'
 import BlockContentRenderer from '@/components/BlockContentRenderer'
+export const runtime = 'edge';
+
 
 export default function JobDetailPage() {
   const [job, setJob] = useState<Job | null>(null)
