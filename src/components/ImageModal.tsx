@@ -69,7 +69,7 @@ export default function ImageModal({ isOpen, onClose, imageSrc, imageAlt }: Imag
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.3, ease: [0, 0, 0.58, 1] }}
           className="relative w-[90vw] h-[90vh] max-w-7xl max-h-[90vh]"
           onClick={(e) => e.stopPropagation()}
         >

@@ -9,7 +9,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import Marquee from 'react-fast-marquee'
 import { Icon } from '@iconify/react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView,Variants } from 'framer-motion'
 import { client } from '@/lib/sanity/client'
 import { blogQueries, partnerQueries, testimonialQueries, faqQueries, videoQueries, howWeDoQueries } from '@/lib/sanity/queries'
 import { getSanityImage } from '@/lib/getSanityImage'
@@ -146,34 +146,36 @@ export default function HomePage() {
   const { displayedText: displayedDescription, isComplete: descriptionComplete } = useTypewriter(heroDescription, 10, 0, titleComplete)
 
   // Animation variants - reduced for better performance
-  const fadeInUp = {
+  
+
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeInOut" }
     }
   }
-
-  const fadeInLeft = {
+  
+  const fadeInLeft: Variants = {
     hidden: { opacity: 0, x: -10 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeInOut" }
     }
   }
-
-  const fadeInRight = {
+  
+  const fadeInRight: Variants = {
     hidden: { opacity: 0, x: 10 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
+      transition: { duration: 0.4, ease: "easeInOut" }
     }
   }
-
-  const staggerContainer = {
+  
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -183,15 +185,16 @@ export default function HomePage() {
       }
     }
   }
-
-  const staggerItem = {
+  
+  const staggerItem: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3, ease: "easeOut" }
+      transition: { duration: 0.3, ease: "easeInOut" }
     }
   }
+  
 
   useEffect(() => {
     const fetchData = async () => {

@@ -323,13 +323,13 @@ export default function ServicesPage() {
 
                     {/* Right Column - Video/Image Display */}
                     <div className="lg:sticky lg:top-8">
-                      <motion.div
-                        key={activeAccordionItem}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl"
-                      >
+                    <motion.div
+  key={activeAccordionItem}
+  initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.5, ease: [0, 0, 0.58, 1] }}
+  className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl"
+>
                         <div className="aspect-video">
                           {activeAccordionItem !== null && accordionItems[activeAccordionItem]?.video ? (
                             <video 

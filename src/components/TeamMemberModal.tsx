@@ -70,7 +70,7 @@ export default function TeamMemberModal({ isOpen, onClose, teamMember }: TeamMem
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
+          transition={{ duration: 0.3, ease: [0, 0, 0.58, 1] }}
           className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
