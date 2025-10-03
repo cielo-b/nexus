@@ -1,10 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
-import { z } from 'zod'
-
-// Use Node.js runtime for nodemailer compatibility
-export const runtime = 'nodejs'
-
+import type { NextApiRequest, NextApiResponse } from "next";
+import { z } from 'zod';
+import { MailService } from '@/services/mail.service';
 
 // Validation schema
 const contactFormSchema = z.object({
@@ -21,28 +17,24 @@ const contactFormSchema = z.object({
     message: 'You must consent to the privacy policy'
   }),
   newsletterConsent: z.boolean().optional()
-})
+});
 
-export async function POST(request: NextRequest) {
+export default async function POST(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ 
+      success: false, 
+      message: 'Method not allowed' 
+    });
+  }
+
+  const mailService = new MailService();
+  
   try {
-    const body = await request.json()
-    
     // Validate the form data
-    const validatedData = contactFormSchema.parse(body)
-    
-    // Create SMTP transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
-
-    // Verify SMTP connection
-    await transporter.verify()
+    const validatedData = contactFormSchema.parse(req.body);
 
     // Email content
     const emailContent = `
@@ -79,53 +71,39 @@ export async function POST(request: NextRequest) {
           <p>Submitted on: ${new Date().toLocaleString()}</p>
         </div>
       </div>
-    `
+    `;
 
-    // Send email
-    const info = await transporter.sendMail({
-      from: `"Insight Nexus Contact Form" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
+    // Send email using MailService
+    await mailService.sendEmail({
+      email: process.env.CONTACT_EMAIL || process.env.EMAIL || "",
       subject: `New Contact Form Submission from ${validatedData.firstName} ${validatedData.lastName}`,
-      html: emailContent,
-      replyTo: validatedData.email,
-    })
+      body: emailContent,
+    });
 
-    console.log('Email sent successfully:', info.messageId)
+    return res.status(200).json({
+      success: true,
+      message: 'Thank you for your message! We will get back to you soon.'
+    });
 
-    return NextResponse.json(
-      { 
-        success: true, 
-        message: 'Thank you for your message! We will get back to you soon.' 
-      },
-      { status: 200 }
-    )
-
-  } catch (error) {
-    console.error('Contact form error:', error)
+  } catch (error: any) {
+    console.log("ERROR: ", error);
     
     // Handle validation errors
     if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Please check your form data and try again.',
-          errors: error.errors.map(err => ({
-            field: err.path.join('.'),
-            message: err.message
-          }))
-        },
-        { status: 400 }
-      )
+      return res.status(400).json({
+        success: false,
+        message: 'Please check your form data and try again.',
+        errors: error.errors.map(err => ({
+          field: err.path.join('.'),
+          message: err.message
+        }))
+      });
     }
 
     // Handle other errors
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: 'There was an error sending your message. Please try again later.' 
-      },
-      { status: 500 }
-    )
+    return res.status(500).json({
+      success: false,
+      message: 'There was an error sending your message. Please try again later.'
+    });
   }
 }
-
