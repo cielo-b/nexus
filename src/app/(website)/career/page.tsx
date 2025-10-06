@@ -157,13 +157,13 @@ export default function CareerPage() {
 
       {/* Our Teams Section */}
       <section className="py-16 px-4">
-        <div className="max-w-[1700px] px-[8vw] mx-auto">
+        <div className="max-w-[1700px] px-4 md:px-8 lg:px-[8vw] mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Our teams</h2>
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 ">
             {teamsData.map((team, index) => (
               <div key={index} className="group p-6 md:p-8 rounded-xl bg-card hover:bg-accent/50 transition-colors duration-300 border border-gray-300">
-                <div className="flex  items-start gap-4">
-                  <div className=" p-4 w-100 ">
+                <div className="flex  flex-col md:flex-row items-start gap-4">
+                  <div className=" p-4 lg:w-100 ">
                     <Image
                       src={team.icon}
                       alt={`${team.title} icon`}
@@ -172,7 +172,7 @@ export default function CareerPage() {
                       className="w-20 h-16"
                     />
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-4 flex-grow">
                     <h3 className="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors duration-300">
                       {team.title}
                     </h3>

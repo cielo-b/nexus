@@ -103,7 +103,7 @@ export default function AboutPage() {
 
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen overflow-hidden bg-white">
       {/* Hero Section */}
       <motion.section 
         ref={heroRef}
@@ -292,7 +292,7 @@ export default function AboutPage() {
         variants={staggerContainer}
         className="py-4 sm:py-6 md:py-8 lg:py-12 xl:py-16 bg-white"
       >
-        <div className="px-[8vw] max-w-[1700px] mx-auto ">
+        <div className="px-4 md:px-8 lg:px-[8vw] max-w-[1700px] mx-auto ">
           <motion.div 
             variants={fadeInUp}
             transition={{ duration: 0.8 }}
@@ -365,7 +365,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-12 sm:mt-16 lg:mt-20 text-center"
           >
-            <div className="max-w-5xl mx-auto flex  bg-primary rounded-tl-4xl rounded-br-4xl  items-center px-8 gap-10">
+            <div className="max-w-5xl mx-auto flex flex-col lg:flex-row  bg-primary rounded-tl-4xl rounded-br-4xl  items-center px-2 lg:px-8 gap-10">
               <Image
                 src="/images/about4.png"
                 alt="Our commitment to reaching every participant"

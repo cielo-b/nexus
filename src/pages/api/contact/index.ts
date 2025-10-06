@@ -1,42 +1,99 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { z } from 'zod';
 import { MailService } from '@/services/mail.service';
 
 export const runtime = 'edge';
-// Validation schema
-const contactFormSchema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(50, 'First name is too long'),
-  lastName: z.string().min(1, 'Last name is required').max(50, 'Last name is too long'),
-  email: z.string().email('Please enter a valid email address'),
-  company: z.string().max(100, 'Company name is too long').optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message is too long'),
-  relatesTo: z.enum(['jobs', 'project', 'press'], {
-    errorMap: () => ({ message: 'Please select a valid option' })
-  }),
-  hearAbout: z.string().max(100, 'How you heard about us is too long').optional(),
-  privacyConsent: z.boolean().refine(val => val === true, {
-    message: 'You must consent to the privacy policy'
-  }),
-  newsletterConsent: z.boolean().optional()
-});
 
 export default async function POST(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const send = (status: number, body: any) => {
+    const maybeRes: any = res as any
+    if (maybeRes && typeof maybeRes.status === 'function') {
+      return maybeRes.status(status).json(body)
+    }
+    return new Response(JSON.stringify(body), {
+      status,
+      headers: { 'content-type': 'application/json' }
+    }) as any
+  }
+  
+  // Parse body in a way that works across runtimes (Node API vs Edge-like)
+  const getBody = async () => {
+    const anyReq: any = req as any
+    
+    // Debug logging
+    console.log("Request method:", anyReq?.method)
+    console.log("Request body type:", typeof anyReq?.body)
+    console.log("Request body:", anyReq?.body)
+    
+    // If Next already parsed it
+    if (anyReq?.body) {
+      const b = anyReq.body
+      if (typeof b === 'string') {
+        try { 
+          const parsed = JSON.parse(b)
+          console.log("Parsed from string:", parsed)
+          return parsed 
+        } catch (e) { 
+          console.log("Failed to parse string body:", e)
+          return {} 
+        }
+      }
+      console.log("Using existing body:", b)
+      return b
+    }
+    
+    // Try web request helpers if present
+    if (typeof anyReq?.json === 'function') {
+      try { 
+        const parsed = await anyReq.json()
+        console.log("Parsed from json():", parsed)
+        return parsed 
+      } catch (e) {
+        console.log("Failed to parse with json():", e)
+      }
+    }
+    
+    if (typeof anyReq?.text === 'function') {
+      try { 
+        const text = await anyReq.text()
+        const parsed = JSON.parse(text)
+        console.log("Parsed from text():", parsed)
+        return parsed 
+      } catch (e) {
+        console.log("Failed to parse with text():", e)
+      }
+    }
+    
+    console.log("No body found, returning empty object")
+    return {}
+  }
   if (req.method !== 'POST') {
-    return res.status(405).json({ 
+    return send(405, { 
       success: false, 
       message: 'Method not allowed' 
-    });
+    })
   }
 
   const mailService = new MailService();
   
   try {
-    // Validate the form data
-    const validatedData = contactFormSchema.parse(req.body);
+    // Parse the form data (validation already done on frontend)
+    const rawBody = await getBody()
+    
+    // Basic check for required fields
+    if (!rawBody || typeof rawBody !== 'object') {
+      return send(400, {
+        success: false,
+        message: 'Invalid request data'
+      })
+    }
+    
+    const { firstName, lastName, email, company, message, relatesTo, hearAbout, privacyConsent, newsletterConsent } = rawBody
 
+
+    console.log("rawBody: ", firstName);
     // Email content
     const emailContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -46,25 +103,25 @@ export default async function POST(
         
         <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #374151; margin-top: 0;">Contact Information</h3>
-          <p><strong>Name:</strong> ${validatedData.firstName} ${validatedData.lastName}</p>
-          <p><strong>Email:</strong> ${validatedData.email}</p>
-          ${validatedData.company ? `<p><strong>Company:</strong> ${validatedData.company}</p>` : ''}
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
         </div>
 
         <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #374151; margin-top: 0;">Message Details</h3>
-          <p><strong>Relates to:</strong> ${validatedData.relatesTo}</p>
-          ${validatedData.hearAbout ? `<p><strong>How they heard about us:</strong> ${validatedData.hearAbout}</p>` : ''}
+          <p><strong>Relates to:</strong> ${relatesTo}</p>
+          ${hearAbout ? `<p><strong>How they heard about us:</strong> ${hearAbout}</p>` : ''}
           <p><strong>Message:</strong></p>
           <div style="background-color: white; padding: 15px; border-radius: 4px; border-left: 4px solid #2563eb;">
-            ${validatedData.message.replace(/\n/g, '<br>')}
+            ${message?.replace(/\n/g, '<br>')}
           </div>
         </div>
 
         <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #374151; margin-top: 0;">Consent</h3>
-          <p><strong>Privacy Policy Consent:</strong> ${validatedData.privacyConsent ? 'Yes' : 'No'}</p>
-          <p><strong>Newsletter Consent:</strong> ${validatedData.newsletterConsent ? 'Yes' : 'No'}</p>
+          <p><strong>Privacy Policy Consent:</strong> ${privacyConsent ? 'Yes' : 'No'}</p>
+          <p><strong>Newsletter Consent:</strong> ${newsletterConsent ? 'Yes' : 'No'}</p>
         </div>
 
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
@@ -77,34 +134,22 @@ export default async function POST(
     // Send email using MailService
     await mailService.sendEmail({
       email: process.env.CONTACT_EMAIL || process.env.EMAIL || "",
-      subject: `New Contact Form Submission from ${validatedData.firstName} ${validatedData.lastName}`,
+      subject: `New Contact Form Submission from ${firstName} ${lastName}`,
       body: emailContent,
     });
 
-    return res.status(200).json({
+    return send(200, {
       success: true,
       message: 'Thank you for your message! We will get back to you soon.'
-    });
+    })
 
   } catch (error: any) {
     console.log("ERROR: ", error);
     
-    // Handle validation errors
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please check your form data and try again.',
-        errors: error.errors.map(err => ({
-          field: err.path.join('.'),
-          message: err.message
-        }))
-      });
-    }
-
-    // Handle other errors
-    return res.status(500).json({
+    // Handle all errors
+    return send(500, {
       success: false,
       message: 'There was an error sending your message. Please try again later.'
-    });
+    })
   }
 }

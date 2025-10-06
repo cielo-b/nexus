@@ -423,10 +423,10 @@ export default function HomePage() {
         initial="hidden"
         animate={isGetToKnowInView ? "visible" : "hidden"}
         variants={staggerContainer}
-        className=" "
+        className="mt-10 md:mt-0 "
       >
-        <div className="px-[8vw] max-w-[1700px] mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+        <div className="px-4 lg:px-[8vw] max-w-[1700px] mx-auto">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center">
             {/* Left side - Title and description */}
             <div
               className="w-full lg:w-1/2"
@@ -443,7 +443,7 @@ export default function HomePage() {
 
             {/* Right side - Carousel */}
             <div
-              className="w-full lg:w-1/2 p-10"
+              className="w-full lg:w-1/2 lg:p-10 "
             >
               <div className="relative">
                 <Swiper
@@ -464,7 +464,7 @@ export default function HomePage() {
                   className="company-info-swiper"
                 >
                   {companyData.map((item) => (
-                    <SwiperSlide key={item.type} className='p-10'>
+                    <SwiperSlide key={item.type} className='lg:p-10'>
 
                       <div >
                         <Image
@@ -474,7 +474,7 @@ export default function HomePage() {
                           height={220}
                           className="w-full h-80 object-cover rounded-xl"
                         />
-                        <div className="flex w-full flex-col items-start justify-center gap-2 p-8">
+                        <div className="flex w-full flex-col items-start justify-center gap-2 lg:p-8">
                           <span className="text-2xl font-semibold text-[#2563eb] max-sm:text-lg">
                             {item.title}
                           </span>
