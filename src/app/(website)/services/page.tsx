@@ -180,7 +180,7 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[50vh] pt-[20vh] flex flex-col items-center justify-center text-white">
+      <section className="relative pt-[200px] xl:h-[60vh] flex flex-col items-center justify-center text-white">
         <div className="absolute inset-0 bg-black/80 w-full h-full"></div>
         <Image src="/images/hero.png" alt="Hero Background" fill className="object-cover absolute inset-0 w-full h-full opacity-20" />
 
