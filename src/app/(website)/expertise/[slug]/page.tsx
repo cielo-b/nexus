@@ -190,14 +190,14 @@ export default function ExpertisePage() {
 
       {/* Services Section */}
       <section className="py-8 bg-white">
-        <div className="px-[8vw] max-w-[1700px] mx-auto">
+        <div className="max-w-[1700px] mx-auto">
           <div className="">
           <div className=" mb-4">
               <h2 className="text-4xl  font-semibold  mb-4">
                 Our <span className="text-blue-500">Solutions</span>
               </h2>
                {expertise.content && (
-        <section className="py-12 bg-white">
+        <section className="bg-white">
           <div className="px-[8vw] max-w-[1700px] mx-auto">
             <div className="prose prose-lg max-w-none">
               <PortableText
