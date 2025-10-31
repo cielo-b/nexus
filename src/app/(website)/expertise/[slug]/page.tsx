@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { PortableText } from '@portabletext/react'
 import { Icon } from '@iconify/react'
 import { client } from '@/lib/sanity/client'
 import { expertiseQueries } from '@/lib/sanity/queries'
@@ -183,6 +184,63 @@ export default function ExpertisePage() {
           </div>
         </div>
       </section>
+
+      {/* Content Section */}
+      {expertise.content && (
+        <section className="py-12 bg-white">
+          <div className="px-[8vw] max-w-[1700px] mx-auto">
+            <div className="prose prose-lg max-w-none">
+              <PortableText
+                value={expertise.content}
+                components={{
+                  block: {
+                    h1: ({ children }) => <h1 className="text-4xl font-bold mb-4">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-3xl font-semibold mb-3 mt-8">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-2xl font-semibold mb-2 mt-6">{children}</h3>,
+                    h4: ({ children }) => <h4 className="text-xl font-semibold mb-2 mt-4">{children}</h4>,
+                    blockquote: ({ children }) => (
+                      <blockquote className="border-l-4 border-blue-500 pl-4 italic my-4 text-gray-700">
+                        {children}
+                      </blockquote>
+                    ),
+                    normal: ({ children }) => <p className="mb-4 text-gray-700 leading-relaxed">{children}</p>,
+                  },
+                  marks: {
+                    strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                    em: ({ children }) => <em className="italic">{children}</em>,
+                    link: ({ value, children }) => (
+                      <a
+                        href={value?.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 underline"
+                      >
+                        {children}
+                      </a>
+                    ),
+                  },
+                  types: {
+                    image: ({ value }) => (
+                      <div className="my-8">
+                        <Image
+                          src={getSanityImage(value)}
+                          alt={value.alt || 'Content image'}
+                          width={800}
+                          height={450}
+                          className="w-full h-auto rounded-lg"
+                        />
+                        {value.alt && (
+                          <p className="text-sm text-gray-500 mt-2 text-center">{value.alt}</p>
+                        )}
+                      </div>
+                    ),
+                  },
+                }}
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Services Section */}
       <section className="py-8 bg-white">

@@ -484,6 +484,7 @@ export const expertiseQueries = {
         filename,
         size
       },
+      content,
       quote {
         text,
         author,

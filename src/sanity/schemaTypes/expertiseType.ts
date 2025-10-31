@@ -51,6 +51,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'content',
+      title: 'Content',
+      type: 'blockContent',
+      description: 'Rich text content displayed above the services section',
+    }),
+    defineField({
       name: 'quote',
       title: 'Quote',
       type: 'object',

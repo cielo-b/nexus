@@ -26,5 +26,6 @@ export interface Expertise {
     filename?: string
     size?: number
   }
+  content?: any // Block content (Portable Text)
   quote?: ExpertiseQuote
 }
