@@ -186,7 +186,17 @@ export default function ExpertisePage() {
       </section>
 
       {/* Content Section */}
-      {expertise.content && (
+     
+
+      {/* Services Section */}
+      <section className="py-8 bg-white">
+        <div className="px-[8vw] max-w-[1700px] mx-auto">
+          <div className="">
+          <div className=" mb-4">
+              <h2 className="text-4xl  font-semibold  mb-4">
+                Our <span className="text-blue-500">Solutions</span>
+              </h2>
+               {expertise.content && (
         <section className="py-12 bg-white">
           <div className="px-[8vw] max-w-[1700px] mx-auto">
             <div className="prose prose-lg max-w-none">
@@ -241,18 +251,6 @@ export default function ExpertisePage() {
           </div>
         </section>
       )}
-
-      {/* Services Section */}
-      <section className="py-8 bg-white">
-        <div className="px-[8vw] max-w-[1700px] mx-auto">
-          <div className="">
-          <div className=" mb-4">
-              <h2 className="text-4xl  font-semibold  mb-4">
-                Our <span className="text-blue-500">Solutions</span>
-              </h2>
-              <p className="text-lg ">
-              We offer tailored training programs designed to empower organizations with the skills and knowledge needed to drive data-driven transformation. 
-              </p>
             </div>
             {services.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
